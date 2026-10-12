@@ -306,19 +306,22 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4.4.1/dist/email.min.js"></script>
 <script type="module">
-const LOGO_DATA_URI = "data:image/png;base64,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";
-/* ================= FIREBASE ================= */
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+
 import {
   getFirestore, collection, doc, getDoc, getDocs, setDoc, updateDoc,
   onSnapshot, query, orderBy, runTransaction, arrayUnion, writeBatch
 } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
+
 import {
   getAuth, signInWithEmailAndPassword, signOut
 } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
+
 import {
   getStorage, ref as storageRef, uploadBytes, getDownloadURL
 } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-storage.js";
+
+/* ================= CONFIGURACIÓN — datos propios de la tienda (llaves, banco, local, tarifas, catálogo inicial) ================= */
 
 const firebaseConfig = {
   apiKey: "AIzaSyDFOzlha3EqCgRpNpuIpkK0K9erDJj7quY",
@@ -328,93 +331,57 @@ const firebaseConfig = {
   messagingSenderId: "1005831827868",
   appId: "1:1005831827868:web:77e0a11c43adfaaa47d859",
 };
+
 const fbApp = initializeApp(firebaseConfig);
+
 const db = getFirestore(fbApp);
+
 const auth = getAuth(fbApp);
+
 const storage = getStorage(fbApp);
 
-function slug(str){
-  return String(str).trim().toLowerCase()
-    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
-}
+// Llave de Google Maps (Maps JavaScript API + Places API (New) + Routes API), restringida al dominio de la tienda.
+// Mientras diga 'PENDIENTE' se usa el cálculo básico (OpenStreetMap, línea recta x1.3) sin mapa.
+const GOOGLE_MAPS_KEY = 'AIzaSyBEs4ek4T6pHpXh69RIRuDNngUCiFtFwAI';
 
-async function loadListas(){
-  const snap = await getDocs(collection(db, 'listas'));
-  const g = {};
-  snap.forEach(d => {
-    const data = d.data();
-    g[data.nombre] = { docId: d.id, items: data.items, total_libros: data.total_libros, total_paquete: data.total_paquete };
-  });
-  GRADES = g;
-}
-async function loadInventario(){
-  const snap = await getDocs(collection(db, 'inventario'));
-  const inv = {};
-  snap.forEach(d => { inv[d.id] = d.data().stock || 0; });
-  state.inventory = inv;
-}
+// EmailJS (avisos por correo): plantilla con To Email = {{to_email}}, asunto {{asunto}} y cuerpo con {{to_name}} / {{mensaje}}.
+// Si la Public Key dice 'PENDIENTE', la tienda funciona igual pero no manda correos.
+const EMAILJS_PUBLIC_KEY = 'SDMK4Gp5bKvJA5VUh';
 
-async function loadUniformes(){
-  const porId = {};
-  UNIFORMES_BASE.forEach((u,i) => { porId[u.id] = normalizarUniforme(u, i); });
-  try{
-    const snap = await getDocs(collection(db, 'uniformes'));
-    snap.forEach(d => { porId[d.id] = normalizarUniforme(Object.assign({}, porId[d.id]||{}, d.data(), { id:d.id }), 999); });
-  }catch(err){ console.error('No se pudo leer el catálogo de uniformes, se usa el de arranque:', err); }
-  UNIFORMS = Object.values(porId).sort((a,b) => (a.orden??999) - (b.orden??999));
-}
+const EMAILJS_SERVICE_ID = 'liceo-alexander-dul';
 
-let ordersUnsub = null;
-function subscribeOrders(){
-  if(ordersUnsub) return;
-  const q = query(collection(db, 'pedidos'), orderBy('createdAt', 'desc'));
-  let primeraCarga = true;
-  ordersUnsub = onSnapshot(q, (snap) => {
-    state.orders = snap.docs.map(d => d.data());
-    // pedidos que llegan con el panel abierto (no los que ya estaban al entrar): letrero + sonido
-    if(!primeraCarga){
-      const nuevos = snap.docChanges().filter(c => c.type === 'added').map(c => c.doc.data().folio);
-      if(nuevos.length){ state.pedidosNuevos = [...new Set([...(state.pedidosNuevos||[]), ...nuevos])]; sonarAviso(); }
-    }
-    primeraCarga = false;
-    render();
-  }, (err) => console.error('Error escuchando pedidos:', err));
-}
-function sonarAviso(){
-  try{
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    [0, 0.18].forEach((t, i) => {
-      const o = ctx.createOscillator(), g = ctx.createGain();
-      o.frequency.value = i ? 1046 : 784; g.gain.setValueAtTime(0.15, ctx.currentTime + t);
-      g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + t + 0.3);
-      o.connect(g); g.connect(ctx.destination); o.start(ctx.currentTime + t); o.stop(ctx.currentTime + t + 0.3);
-    });
-  }catch(e){}
-}
-function unsubscribeOrders(){
-  if(ordersUnsub){ ordersUnsub(); ordersUnsub = null; }
-  unsubscribeAvisos();
-}
+const EMAILJS_TEMPLATE_ID = 'template_lgoyigc';
 
-// avisos de "ya hay existencias": solo el personal los lee (ver firestore.rules)
-let avisosUnsub = null;
-function subscribeAvisos(){
-  if(avisosUnsub) return;
-  const q = query(collection(db, 'avisos'), orderBy('createdAt', 'desc'));
-  avisosUnsub = onSnapshot(q, (snap) => {
-    state.avisos = snap.docs.map(d => Object.assign({ id: d.id }, d.data()));
-    render();
-  }, (err) => console.error('Error escuchando avisos:', err));
-}
-function unsubscribeAvisos(){
-  if(avisosUnsub){ avisosUnsub(); avisosUnsub = null; }
-  state.avisos = [];
-}
+const STAFF_NOTIFY_EMAIL = 'karenarumil@hotmail.com';
 
-/* ================= DATOS ================= */
+const STAFF_NOTIFY_NAME = 'Liceo Alexander Dul';
 
-let GRADES = {};
+// datos para que los papás transfieran (BBVA, Libretón)
+const BANCO = { banco: 'BBVA', beneficiario: 'Irma Hidu Uranga Hernandez', clabe: '0121 8002 6617 4023 78' };
+
+const STORE_COORDS = { lat: 19.366021, lng: -99.199932 };   // puerta del local, Azcapotzalco 5, Merced Gómez (confirmado por Karen)
+
+const ROAD_FACTOR = 1.3;                                   // la distancia en línea recta se ajusta x1.3 para aproximar calles reales
+
+const STORE_HOURS_TEXT = 'Lunes a Viernes, 8:00 a 15:00 hrs.';
+
+// Envío a domicilio: tarifa por zonas según los km POR CALLES desde el local (sin límite de distancia)
+const ZONAS_ENVIO = [
+  { hastaKm: 3,        costo: 50 },
+  { hastaKm: 7,        costo: 90 },
+  { hastaKm: 12,       costo: 130 },
+  { hastaKm: 20,       costo: 180 },
+  { hastaKm: Infinity, costo: 250 },
+];
+
+const STAGES = [
+  { key:'recibido', label:'Pedido recibido' },
+  { key:'preparando', label:'Preparando pedido' },
+  { key:'listo', labelPickup:'Listo para recoger', labelDelivery:'En camino' },
+  { key:'entregado', labelPickup:'Recogido', labelDelivery:'Entregado' },
+];
+
+const SIZES = ['6','8','10','12','14','16','32','34','36','38','40'];   // tallas por omisión de una prenda nueva
 
 // Catálogo de uniformes. Estos son los valores de arranque (fotos en public/img/uniformes/);
 // el Administrador los edita desde el panel → Uniformes y se guardan en la colección "uniformes",
@@ -437,94 +404,21 @@ const UNIFORMES_BASE = [
   { id:'corbata',             name:'Corbata',                                         price:210,  icon:'👔', tallas:['Única'] },
   { id:'escudo',              name:'Escudo suelto',                                   price:60,   icon:'🛡️', tallas:['Única'] },
 ];
-const SIZES = ['6','8','10','12','14','16','32','34','36','38','40'];   // tallas por omisión de una prenda nueva
-let UNIFORMS = [];             // catálogo completo (incluye prendas ocultas, para pedidos viejos y carritos)
-// una prenda puede tener varias fotos (fotos[]); foto = la principal (fotos[0])
-function normalizarUniforme(u, i){
-  const o = Object.assign({ price:null, tallas:SIZES.slice(), activo:true, orden:i, foto:'' }, u);
-  o.fotos = (o.fotos && o.fotos.length) ? o.fotos.slice() : (o.foto ? [o.foto] : []);
-  o.foto = o.fotos[0] || '';
-  return o;
-}
-function uniformesVisibles(){ return UNIFORMS.filter(u => u.activo !== false); }
-function uniInfo(id){ return UNIFORMS.find(u => u.id === id) || { id, name:'Prenda', price:0, tallas:[], foto:'' }; }
 
-// Envío a domicilio: tarifa por zonas según los km POR CALLES desde el local (sin límite de distancia)
-const ZONAS_ENVIO = [
-  { hastaKm: 3,        costo: 50 },
-  { hastaKm: 7,        costo: 90 },
-  { hastaKm: 12,       costo: 130 },
-  { hastaKm: 20,       costo: 180 },
-  { hastaKm: Infinity, costo: 250 },
-];
-// Llave de Google Maps (Maps JavaScript API + Places API (New) + Routes API), restringida al dominio de la tienda.
-// Mientras diga 'PENDIENTE' se usa el cálculo básico (OpenStreetMap, línea recta x1.3) sin mapa.
-const GOOGLE_MAPS_KEY = 'AIzaSyBEs4ek4T6pHpXh69RIRuDNngUCiFtFwAI';
-const STORE_HOURS_TEXT = 'Lunes a Viernes, 8:00 a 15:00 hrs.';
-const STAGES = [
-  { key:'recibido', label:'Pedido recibido' },
-  { key:'preparando', label:'Preparando pedido' },
-  { key:'listo', labelPickup:'Listo para recoger', labelDelivery:'En camino' },
-  { key:'entregado', labelPickup:'Recogido', labelDelivery:'Entregado' },
-];
+const SECCIONES_LISTA = ['MATERIAL DIARIO','PARA FORRAR','LIBROS'];
 
-/* ================= CORREO AUTOMÁTICO (EmailJS) =================
-   Para activar los avisos por correo:
-   1. Crea una cuenta gratis en https://www.emailjs.com
-   2. En "Email Services" conecta tu Gmail (o el correo del Liceo) — es nada más iniciar sesión, no pide contraseñas raras.
-   3. En "Email Templates" crea UNA plantilla. En el campo "To email" de la plantilla escribe exactamente: {{to_email}}
-      Y en el cuerpo usa las variables {{to_name}}, {{folio}} y {{mensaje}} donde quieras que aparezcan.
-   4. Copia aquí abajo tu Public Key (Account → General), el Service ID y el Template ID.
-   5. Pon también el correo donde quieres que te lleguen los avisos de cada pedido (STAFF_NOTIFY_EMAIL).
-   Mientras estos valores digan "PENDIENTE", el sitio sigue funcionando normal, solo no manda los correos. */
-const EMAILJS_PUBLIC_KEY = 'SDMK4Gp5bKvJA5VUh';
-const EMAILJS_SERVICE_ID = 'liceo-alexander-dul';
-const EMAILJS_TEMPLATE_ID = 'template_lgoyigc';
-const STAFF_NOTIFY_EMAIL = 'karenarumil@hotmail.com';
-const STAFF_NOTIFY_NAME = 'Liceo Alexander Dul';
+const PALABRAS_COMPROBANTE = ['transferencia','spei','rastreo','referencia','operacion','importe','monto','clabe','cuenta','beneficiario',
+  'destino','ordenante','comprobante','enviado','enviaste','exitosa','aprobada','autorizacion','folio','concepto',
+  '2378','0237',   // terminación de la CLABE / cuenta destino del Liceo
+  'bbva','banorte','santander','banamex','citibanamex','hsbc','scotiabank','azteca','inbursa','banregio','bancoppel','afirme','nu mexico','mercado pago','spin','hey banco'];
 
-let emailjsListo = false;
-function emailjsDisponible(){
-  if(emailjsListo) return true;
-  if(typeof emailjs === 'undefined') return false;
-  if(EMAILJS_PUBLIC_KEY === 'PENDIENTE') return false;
-  try{ emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY }); emailjsListo = true; }
-  catch(err){ console.error('No se pudo inicializar EmailJS:', err); return false; }
-  return true;
-}
-// manda el aviso de cambio de estado por correo al papá/mamá (si dejó correo). Sin copia al personal:
-// el personal es quien cambia el estado, y así se ahorra cupo del plan gratis de EmailJS (200 al mes).
-// nunca truena el flujo del pedido: si el correo falla, solo se queda en la consola.
-async function enviarCorreoEstado(order, mensaje){
-  if(!(order.cliente && order.cliente.correo)) return;
-  await enviarCorreo(order.cliente.correo, alumnosLabel(order), order.folio, mensaje, `Tu pedido ${order.folio} - Liceo Alexander Dul`);
-}
-// aviso al personal de que entró un pedido nuevo
-function avisarStaffPedidoNuevo(order){
-  if(STAFF_NOTIFY_EMAIL === 'PENDIENTE') return;
-  const entrega = order.fulfillment === 'delivery'
-    ? `envío a domicilio (${order.direccion}${order.referencias ? '; ref.: '+order.referencias : ''})${order.destino ? ' — mapa: https://www.google.com/maps/search/?api=1&query='+order.destino.lat.toFixed(6)+','+order.destino.lng.toFixed(6) : ''}`
-    : 'recoger en el local';
-  const pago = order.payment === 'transferencia' ? 'transferencia (revisar comprobante)' : 'efectivo';
-  const mensaje = `Entró el pedido ${order.folio} por ${money(order.total)}. Alumno(s): ${alumnosLabel(order)}. Entrega: ${entrega}. Pago: ${pago}. Tel. ${order.cliente.telefono}. Revísalo en el panel de personal.`;
-  enviarCorreo(STAFF_NOTIFY_EMAIL, STAFF_NOTIFY_NAME, order.folio, mensaje, `Nuevo pedido ${order.folio} - ${money(order.total)}`);
-}
-// {{asunto}} es el asunto de la plantilla; name/message: la plantilla base de EmailJS usa esos nombres
-async function enviarCorreo(to_email, to_name, folio, mensaje, asunto){
-  if(!emailjsDisponible()) return false;
-  try{
-    await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, { to_email, to_name, folio, mensaje, asunto, name: to_name, message: mensaje });
-    return true;
-  }catch(err){ console.error('No se pudo enviar el correo a ' + to_email + ':', err); return false; }
-}
-// cuando una prenda/talla agotada vuelve a tener existencias y hay papás esperando, avisa al personal por correo
-function avisarStaffExistencias(uniName, talla, cuantos){
-  if(STAFF_NOTIFY_EMAIL === 'PENDIENTE') return;
-  const mensaje = `Ya hay existencias de ${uniName} talla ${talla} y ${cuantos} ${cuantos===1?'papá está esperando':'papás están esperando'} el aviso. Entra al panel de personal → Avisos para avisarles.`;
-  enviarCorreo(STAFF_NOTIFY_EMAIL, STAFF_NOTIFY_NAME, '', mensaje, `Hay papás esperando: ${uniName} talla ${talla}`);
-}
+const LOGO_DATA_URI = "data:image/png;base64,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";
 
 /* ================= ESTADO ================= */
+
+let GRADES = {};
+
+let UNIFORMS = [];             // catálogo completo (incluye prendas ocultas, para pedidos viejos y carritos)
 
 let state = {
   mode: 'cliente',            // 'cliente' | 'admin'
@@ -581,15 +475,19 @@ let state = {
 /* ================= UTILIDADES ================= */
 
 function money(n){ return '$' + Number(n||0).toLocaleString('es-MX', {minimumFractionDigits:0, maximumFractionDigits:2}); }
+
 function esc(s){ return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
 function idSafe(s){ return String(s).replace(/[^a-zA-Z0-9_-]/g, '_'); }
-// existencias: un artículo que no está dado de alta en inventario cuenta como 0 (igual que en el panel)
-function stockDe(invKey){ return state.inventory[invKey] ?? 0; }
-function utilDisponible(grade, i){ return stockDe(GRADES[grade].docId+'_'+i) > 0; }
-function uniTallaSel(uniId){ const t = uniInfo(uniId).tallas || []; return t.includes(state.uniSel[uniId]) ? state.uniSel[uniId] : (t[0] || ''); }
-function avisosPendientes(){ return state.avisos.filter(a => a.estado === 'pendiente'); }
-// avisos pendientes cuya prenda/talla ya tiene existencias: hay que avisarle a esos papás
-function avisosListos(){ return avisosPendientes().filter(a => stockDe(a.uniformeId+'_'+a.talla) > 0); }
+
+function slug(str){
+  return String(str).trim().toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
+}
+
+function normTexto(t){ return String(t||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,' ').trim(); }
+
 function fmtDate(d){ return new Date(d).toLocaleDateString('es-MX', {weekday:'long', day:'numeric', month:'long'}); }
 
 function addBusinessDays(date, days){
@@ -603,20 +501,171 @@ function addBusinessDays(date, days){
   return d;
 }
 
+// "1ro PRIMARIA" → "1ro" / "1ro de primaria"
+function gradoCorto(g){ return String(g||'').replace(' PRIMARIA','').trim(); }
+
+function gradoLargo(g){ return gradoCorto(g) + ' de primaria'; }
+
+function telValido(t){ return String(t||'').replace(/\D/g,'').length === 10; }
+
+function correoValido(c){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(c||'').trim()); }
+
+function quienPersonal(){ return (state.auth && state.auth.name) || 'Personal'; }
+
+function haversineKm(a, b){
+  const R = 6371, toRad = d => d*Math.PI/180;
+  const dLat = toRad(b.lat-a.lat), dLng = toRad(b.lng-a.lng);
+  const x = Math.sin(dLat/2)**2 + Math.cos(toRad(a.lat))*Math.cos(toRad(b.lat))*Math.sin(dLng/2)**2;
+  return 2*R*Math.asin(Math.sqrt(x));
+}
+
+// distancia aproximada por calles: línea recta x ROAD_FACTOR, redondeada a 0.1 km
+function kmAproximados(a, b){ return Math.round(haversineKm(a, b) * ROAD_FACTOR * 10) / 10; }
+
+async function sha256Corto(datos){
+  const buf = await crypto.subtle.digest('SHA-256', typeof datos === 'string' ? new TextEncoder().encode(datos) : datos);
+  return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join('').slice(0, 32);
+}
+
+// Al teclear NO se re-renderiza la página (eso movía el cursor, parpadeaba y cerraba el teclado en
+// celular): se guarda en state y solo se actualiza lo que depende de ese campo con estas ayudas.
+function habilitar(sel, ok){ const b = document.querySelector(sel); if(b) b.disabled = !ok; }
+
+let renderDiferidoTimer = null;
+
+function renderDiferido(ms){ clearTimeout(renderDiferidoTimer); renderDiferidoTimer = setTimeout(render, ms || 350); }
+
+/* ================= DATOS EN FIREBASE — carga inicial y escucha en tiempo real (panel) ================= */
+
+async function loadListas(){
+  const snap = await getDocs(collection(db, 'listas'));
+  const g = {};
+  snap.forEach(d => {
+    const data = d.data();
+    g[data.nombre] = { docId: d.id, items: data.items, total_libros: data.total_libros, total_paquete: data.total_paquete };
+  });
+  GRADES = g;
+}
+
+async function loadInventario(){
+  const snap = await getDocs(collection(db, 'inventario'));
+  const inv = {};
+  snap.forEach(d => { inv[d.id] = d.data().stock || 0; });
+  state.inventory = inv;
+}
+
+async function loadUniformes(){
+  const porId = {};
+  UNIFORMES_BASE.forEach((u,i) => { porId[u.id] = normalizarUniforme(u, i); });
+  try{
+    const snap = await getDocs(collection(db, 'uniformes'));
+    snap.forEach(d => { porId[d.id] = normalizarUniforme(Object.assign({}, porId[d.id]||{}, d.data(), { id:d.id }), 999); });
+  }catch(err){ console.error('No se pudo leer el catálogo de uniformes, se usa el de arranque:', err); }
+  UNIFORMS = Object.values(porId).sort((a,b) => (a.orden??999) - (b.orden??999));
+}
+
+let ordersUnsub = null;
+
+function subscribeOrders(){
+  if(ordersUnsub) return;
+  const q = query(collection(db, 'pedidos'), orderBy('createdAt', 'desc'));
+  let primeraCarga = true;
+  ordersUnsub = onSnapshot(q, (snap) => {
+    state.orders = snap.docs.map(d => d.data());
+    // pedidos que llegan con el panel abierto (no los que ya estaban al entrar): letrero + sonido
+    if(!primeraCarga){
+      const nuevos = snap.docChanges().filter(c => c.type === 'added').map(c => c.doc.data().folio);
+      if(nuevos.length){ state.pedidosNuevos = [...new Set([...(state.pedidosNuevos||[]), ...nuevos])]; sonarAviso(); }
+    }
+    primeraCarga = false;
+    render();
+  }, (err) => console.error('Error escuchando pedidos:', err));
+}
+
+function unsubscribeOrders(){
+  if(ordersUnsub){ ordersUnsub(); ordersUnsub = null; }
+  unsubscribeAvisos();
+}
+
+function sonarAviso(){
+  try{
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    [0, 0.18].forEach((t, i) => {
+      const o = ctx.createOscillator(), g = ctx.createGain();
+      o.frequency.value = i ? 1046 : 784; g.gain.setValueAtTime(0.15, ctx.currentTime + t);
+      g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + t + 0.3);
+      o.connect(g); g.connect(ctx.destination); o.start(ctx.currentTime + t); o.stop(ctx.currentTime + t + 0.3);
+    });
+  }catch(e){}
+}
+
+// avisos de "ya hay existencias": solo el personal los lee (ver firestore.rules)
+let avisosUnsub = null;
+
+function subscribeAvisos(){
+  if(avisosUnsub) return;
+  const q = query(collection(db, 'avisos'), orderBy('createdAt', 'desc'));
+  avisosUnsub = onSnapshot(q, (snap) => {
+    state.avisos = snap.docs.map(d => Object.assign({ id: d.id }, d.data()));
+    render();
+  }, (err) => console.error('Error escuchando avisos:', err));
+}
+
+function unsubscribeAvisos(){
+  if(avisosUnsub){ avisosUnsub(); avisosUnsub = null; }
+  state.avisos = [];
+}
+
+/* ================= CATÁLOGO E INVENTARIO ================= */
+
+// una prenda puede tener varias fotos (fotos[]); foto = la principal (fotos[0])
+function normalizarUniforme(u, i){
+  const o = Object.assign({ price:null, tallas:SIZES.slice(), activo:true, orden:i, foto:'' }, u);
+  o.fotos = (o.fotos && o.fotos.length) ? o.fotos.slice() : (o.foto ? [o.foto] : []);
+  o.foto = o.fotos[0] || '';
+  return o;
+}
+
+function uniformesVisibles(){ return UNIFORMS.filter(u => u.activo !== false); }
+
+function uniInfo(id){ return UNIFORMS.find(u => u.id === id) || { id, name:'Prenda', price:0, tallas:[], foto:'' }; }
+
+// existencias: un artículo que no está dado de alta en inventario cuenta como 0 (igual que en el panel)
+function stockDe(invKey){ return state.inventory[invKey] ?? 0; }
+
+// clave de inventario: útiles = {docId de la lista}_{posición}; uniformes = {id}_{talla}
+function invKeyUtil(grade, i){ return GRADES[grade].docId + '_' + i; }
+
+function utilDisponible(grade, i){ return stockDe(invKeyUtil(grade, i)) > 0; }
+
+function uniTallaSel(uniId){ const t = uniInfo(uniId).tallas || []; return t.includes(state.uniSel[uniId]) ? state.uniSel[uniId] : (t[0] || ''); }
+
+function avisosPendientes(){ return state.avisos.filter(a => a.estado === 'pendiente'); }
+
+// avisos pendientes cuya prenda/talla ya tiene existencias: hay que avisarle a esos papás
+function avisosListos(){ return avisosPendientes().filter(a => stockDe(a.uniformeId+'_'+a.talla) > 0); }
+
+function seccionDe(t){ const n = normTexto(t); return n.includes('libro') ? 'LIBROS' : n.includes('forr') ? 'PARA FORRAR' : 'MATERIAL DIARIO'; }
+
+/* ================= CARRITO Y ALUMNOS — canastas por grado, hermanos y gemelos ================= */
+
 // una "canasta" (basketId) es normalmente el nombre del grado tal cual ("1° PRIMARIA"), pero cuando
 // hay gemelos/cuates en el mismo grado se crean canastas extra con sufijo ("1° PRIMARIA#2", "#3"...)
 // para que cada alumno tenga su propia lista independiente del mismo grado.
 function gradeNameOf(basketId){
   return basketId.split('#')[0];
 }
+
 function basketsForGrade(grade){
   return Object.keys(state.gradeQtys).filter(k => gradeNameOf(k)===grade);
 }
+
 function newBasketId(grade){
   let n = 2;
   while(state.gradeQtys[grade+'#'+n] !== undefined) n++;
   return grade+'#'+n;
 }
+
 function ensureGradeQtys(basketId){
   if(!state.gradeQtys[basketId]){
     const qtys = {};
@@ -631,34 +680,219 @@ function gradeSubtotal(basketId){
   if(!qtys) return 0;
   return GRADES[gradeNameOf(basketId)].items.reduce((sum, it, i) => sum + ((qtys[i]||0) * it.precio_unitario), 0);
 }
+
 function utilesTotal(){
   return Object.keys(state.gradeQtys).reduce((s,g) => s + gradeSubtotal(g), 0);
 }
+
 function utilesCount(){
   return Object.keys(state.gradeQtys).reduce((s,g) => s + Object.values(state.gradeQtys[g]).reduce((a,b)=>a+(b||0),0), 0);
 }
+
 function uniformsTotal(){
   return state.uniformCart.reduce((s,u) => s + (uniInfo(u.id).price * u.qty), 0);
 }
+
 function uniformsCount(){
   return state.uniformCart.reduce((s,u)=>s+u.qty, 0);
 }
+
 function cartCount(){ return utilesCount() + uniformsCount(); }
+
 function cartSubtotal(){ return utilesTotal() + uniformsTotal(); }
+
+// artículos de una lista que no hay en existencia (no se pudieron elegir): el papá debe saber que no
+// se lleva el paquete completo. Lo que él desmarcó a propósito no cuenta aquí.
+function noDisponiblesDeLista(basketId){
+  const grade = gradeNameOf(basketId);
+  return GRADES[grade].items.map((it,i) => ({ it, i })).filter(({i}) => !utilDisponible(grade, i)).map(({it}) => it);
+}
+
+function gradosActivosEnCarrito(){
+  return Object.keys(state.gradeQtys).filter(g => Object.values(state.gradeQtys[g]).some(q=>q>0));
+}
+
+function newStudentId(){
+  return 'al_' + Date.now().toString(36) + Math.random().toString(36).slice(2,7);
+}
+
+function studentById(id){
+  return state.students.find(s=>s.id===id) || null;
+}
+
+function nombreCompleto(cliente){
+  return [cliente.nombres, cliente.apellidoPaterno, cliente.apellidoMaterno].filter(Boolean).join(' ').trim();
+}
+
+function clienteValido(){
+  return telValido(state.cliente.telefono) && state.students.length>0;
+}
+
+function uniformAssignTotal(u){
+  return Object.values(u.assign||{}).reduce((a,b)=>a+(b||0),0);
+}
+
+// ¿hay algo en el carrito (lista de útiles con subtotal>0, o uniforme) sin asignar a un alumno?
+function siguienteAsignacionPendiente(){
+  for(const g of Object.keys(state.gradeQtys)){
+    if(gradeSubtotal(g) > 0 && !state.gradeAssign[g]) return { kind:'grade', grade:g };
+  }
+  for(let i=0;i<state.uniformCart.length;i++){
+    const u = state.uniformCart[i];
+    if(uniformAssignTotal(u) < u.qty) return { kind:'uniform', uniIndex:i };
+  }
+  return null;
+}
+
+function abrirSiguienteAsignacionSiHaceFalta(){
+  if(state.pendingAssign) return;
+  const next = siguienteAsignacionPendiente();
+  if(!next) return;
+  const step = state.students.length===0 ? 'nuevo' : (state.students.length===1 ? 'mismo' : 'elegir');
+  state.pendingAssign = Object.assign(next, { step, nuevo:{ nombres:'', apellidoPaterno:'', apellidoMaterno:'', grado: next.kind==='grade' ? gradeNameOf(next.grade) : '' } });
+}
+
+function etiquetaAsignacionPendiente(){
+  const p = state.pendingAssign;
+  if(!p) return '';
+  if(p.kind==='grade'){
+    return 'la lista de ' + gradoLargo(gradeNameOf(p.grade));
+  }
+  if(p.kind==='uniform'){
+    const u = state.uniformCart[p.uniIndex];
+    if(!u) return '';
+    const info = uniInfo(u.id);
+    return u.qty + ' × ' + (info?info.name:u.id) + ', talla ' + u.size;
+  }
+  return '';
+}
+
+function asignarPendienteA(studentId){
+  const p = state.pendingAssign;
+  if(!p) return;
+  if(p.kind==='grade'){
+    state.gradeAssign[p.grade] = studentId;
+  } else if(p.kind==='uniform'){
+    const u = state.uniformCart[p.uniIndex];
+    if(u){
+      if(!u.assign) u.assign = {};
+      const falta = u.qty - uniformAssignTotal(u);
+      u.assign[studentId] = (u.assign[studentId]||0) + falta;
+    }
+  }
+  // kind 'manual' (agregar otro alumno desde el carrito): no hay nada que asignar, solo se registró el alumno.
+  state.pendingAssign = null;
+  abrirSiguienteAsignacionSiHaceFalta();
+  render();
+}
+
+function cancelarPendiente(){
+  const p = state.pendingAssign;
+  if(p){
+    if(p.kind==='grade') delete state.gradeQtys[p.grade];
+    else if(p.kind==='uniform'){
+      const u = state.uniformCart[p.uniIndex];
+      if(u){
+        const asignado = uniformAssignTotal(u);
+        if(asignado<=0) state.uniformCart.splice(p.uniIndex,1);
+        else u.qty = asignado; // descarta solo las unidades nuevas que no se habían repartido
+      }
+    }
+  }
+  state.pendingAssign = null;
+  abrirSiguienteAsignacionSiHaceFalta();
+  render();
+}
+
+// alumnos que ya tienen algo asignado en el carrito actual (para mostrarlos agrupados)
+function alumnosActivosEnCarrito(){
+  const ids = new Set();
+  Object.values(state.gradeAssign).forEach(id => { if(id) ids.add(id); });
+  state.uniformCart.forEach(u => Object.keys(u.assign||{}).forEach(id => { if((u.assign[id]||0)>0) ids.add(id); }));
+  return state.students.filter(s=>ids.has(s.id));
+}
+
+function subtotalAlumno(studentId){
+  let sum = 0;
+  Object.keys(state.gradeAssign).forEach(g => { if(state.gradeAssign[g]===studentId) sum += gradeSubtotal(g); });
+  state.uniformCart.forEach(u => {
+    const units = (u.assign||{})[studentId] || 0;
+    if(units>0){ const info = uniInfo(u.id); sum += info.price * units; }
+  });
+  return sum;
+}
+
+// ¿todas las piezas de uniforme con varios alumnos quedaron completamente repartidas?
+function carritoRepartidoCompleto(){
+  if(siguienteAsignacionPendiente()) return false;
+  return state.uniformCart.every(u => uniformAssignTotal(u) === u.qty);
+}
+
+// mueve 1 unidad de una pieza de uniforme hacia/desde un alumno. Con 2 alumnos se balancea solo;
+// con 3 o más, cada +/- es independiente (y el carrito marca en rojo si no suman la cantidad total).
+function ajustarReparto(uniIdx, studentId, delta){
+  const u = state.uniformCart[uniIdx];
+  if(!u) return;
+  if(!u.assign) u.assign = {};
+  const ids = state.students.map(s=>s.id);
+  if(ids.length === 2){
+    const otherId = ids.find(id=>id!==studentId);
+    const cur = u.assign[studentId]||0, otherCur = u.assign[otherId]||0;
+    const next = cur + delta, otherNext = otherCur - delta;
+    if(next < 0 || next > u.qty || otherNext < 0 || otherNext > u.qty) return;
+    u.assign[studentId] = next;
+    u.assign[otherId] = otherNext;
+  } else {
+    const cur = u.assign[studentId]||0;
+    const sumOtros = Object.keys(u.assign).reduce((s,id) => id===studentId ? s : s+(u.assign[id]||0), 0);
+    let next = cur + delta;
+    if(next < 0) next = 0;
+    if(next + sumOtros > u.qty) next = u.qty - sumOtros;
+    u.assign[studentId] = next;
+  }
+  render();
+}
+
+/* ================= ENVÍO A DOMICILIO — tarifa por zonas y cálculo básico (sin mapa) ================= */
 
 function deliveryKm(){
   return (state.kmAuto !== null && state.kmAuto !== undefined) ? state.kmAuto : null;
 }
 
-const STORE_ADDRESS = 'Azcapotzalco 5, Merced Gómez, Álvaro Obregón, 01600 Ciudad de México, CDMX';
-const STORE_COORDS = { lat: 19.366021, lng: -99.199932 };   // puerta del local, Azcapotzalco 5, Merced Gómez (confirmado por Karen)
-const ROAD_FACTOR = 1.3;                                   // la distancia en línea recta se ajusta x1.3 para aproximar calles reales
-function haversineKm(a, b){
-  const R = 6371, toRad = d => d*Math.PI/180;
-  const dLat = toRad(b.lat-a.lat), dLng = toRad(b.lng-a.lng);
-  const x = Math.sin(dLat/2)**2 + Math.cos(toRad(a.lat))*Math.cos(toRad(b.lat))*Math.sin(dLng/2)**2;
-  return 2*R*Math.asin(Math.sqrt(x));
+function zonaEnvio(km){ return ZONAS_ENVIO.find(z => km <= z.hastaKm); }
+
+function deliveryFee(){
+  if(state.fulfillment !== 'delivery') return 0;
+  const km = deliveryKm();
+  if(km === null) return null;
+  return zonaEnvio(km).costo;
 }
+
+function grandTotal(){
+  const fee = deliveryFee();
+  return cartSubtotal() + (fee || 0);
+}
+
+function tarifasEnvioTexto(){
+  let desde = 0;
+  return ZONAS_ENVIO.map(z => {
+    const t = z.hastaKm === Infinity ? `más de ${desde} km ${money(z.costo)}` : `${desde ? desde+'–' : 'hasta '}${z.hastaKm} km ${money(z.costo)}`;
+    desde = z.hastaKm; return t;
+  }).join(' · ');
+}
+
+function computeEstimatedReady(){
+  const days = state.fulfillment === 'delivery' ? 2 : 1;
+  return addBusinessDays(new Date(), days);
+}
+
+function canContinueFromDelivery(){
+  if(state.fulfillment === 'pickup') return true;
+  if(state.fulfillment === 'delivery') return deliveryFee() !== null && state.direccion.trim().length > 8
+    && state.geoStatus !== 'loading' && (!usarGoogleMaps() || (!!state.destino && state.ubicacionConfirmada));
+  return false;
+}
+
 async function geocodeAddress(q){
   const url = 'https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=mx&accept-language=es&q=' + encodeURIComponent(q);
   const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
@@ -667,6 +901,7 @@ async function geocodeAddress(q){
   if(!arr.length) return null;
   return { lat: parseFloat(arr[0].lat), lng: parseFloat(arr[0].lon) };
 }
+
 async function calcularDistancia(){
   const dir = state.direccion.trim();
   if(dir.length < 8) return;
@@ -677,7 +912,7 @@ async function calcularDistancia(){
       state.geoStatus = 'error'; state.kmAuto = null;
       state.geoMessage = 'No pudimos ubicar esa dirección. Agrega colonia, alcaldía/municipio o código postal, y vuelve a intentar.';
     } else {
-      state.kmAuto = Math.round(haversineKm(STORE_COORDS, dest) * ROAD_FACTOR * 10) / 10;
+      state.kmAuto = kmAproximados(STORE_COORDS, dest);
       state.geoStatus = 'ok'; state.geoMessage = '';
     }
   }catch(e){
@@ -687,20 +922,7 @@ async function calcularDistancia(){
   }
   render();
 }
-function zonaEnvio(km){ return ZONAS_ENVIO.find(z => km <= z.hastaKm); }
-function deliveryFee(){
-  if(state.fulfillment !== 'delivery') return 0;
-  const km = deliveryKm();
-  if(km === null) return null;
-  return zonaEnvio(km).costo;
-}
-function tarifasEnvioTexto(){
-  let desde = 0;
-  return ZONAS_ENVIO.map(z => {
-    const t = z.hastaKm === Infinity ? `más de ${desde} km ${money(z.costo)}` : `${desde ? desde+'–' : 'hasta '}${z.hastaKm} km ${money(z.costo)}`;
-    desde = z.hastaKm; return t;
-  }).join(' · ');
-}
+
 // ligas para que el repartidor navegue al punto exacto que marcó el papá
 function ligasNavegacion(o){
   if(!o.destino) return '';
@@ -713,13 +935,18 @@ function ligasNavegacion(o){
   </div>`;
 }
 
-/* ---------- mapa de Google para envío a domicilio ---------- */
+/* ================= ENVÍO A DOMICILIO — mapa de Google ================= */
+
 // El mapa vive en un nodo que se crea UNA vez (mapaUI) y que después de cada render() se vuelve a
 // colocar en #mapaSlot: así el re-render de toda la página no destruye el mapa ni el buscador.
 let gmPromesa = null, gmFallo = false;
+
 let mapaUI = null, gMapa = null, gRuta = null, gPin = null, rutaTimer = null;
+
 function usarGoogleMaps(){ return GOOGLE_MAPS_KEY !== 'PENDIENTE' && !gmFallo; }
+
 window.gm_authFailure = () => { gmFallo = true; console.error('Google Maps rechazó la llave (revisa restricciones y APIs habilitadas).'); render(); };
+
 function cargarGoogleMaps(){
   if(gmPromesa) return gmPromesa;
   gmPromesa = new Promise((resolve, reject) => {
@@ -731,6 +958,7 @@ function cargarGoogleMaps(){
   });
   return gmPromesa;
 }
+
 function crearMapaUI(){
   mapaUI = document.createElement('div');
   mapaUI.className = 'mapa-ui';
@@ -781,6 +1009,14 @@ function crearMapaUI(){
     }
   })();
 }
+
+function montarMapa(){
+  const slot = document.getElementById('mapaSlot');
+  if(!slot) return;
+  if(!mapaUI) crearMapaUI();
+  slot.appendChild(mapaUI);
+}
+
 // coloca (o mueve) el pin de la casa; cualquier cambio obliga a volver a confirmar la ubicación.
 // Si el papá no ha escrito su dirección a mano, se llena sola con la dirección del punto.
 function ponerPin(pnt, centrar, direccionYaPuesta){
@@ -798,6 +1034,7 @@ function ponerPin(pnt, centrar, direccionYaPuesta){
     });
   }
 }
+
 // dirección (calle y número, colonia, alcaldía, CP) de un punto del mapa: Google Geocoding si está
 // habilitado en el proyecto; si no, OpenStreetMap (gratis, menos preciso con números de casa)
 async function direccionDePunto(p){
@@ -814,12 +1051,7 @@ async function direccionDePunto(p){
     return [calle, a.neighbourhood || a.suburb, a.city_district || a.borough || a.town || a.city, a.postcode].filter(Boolean).join(', ');
   }catch(err){ console.warn('No se pudo obtener la dirección del punto.', err); return ''; }
 }
-function montarMapa(){
-  const slot = document.getElementById('mapaSlot');
-  if(!slot) return;
-  if(!mapaUI) crearMapaUI();
-  slot.appendChild(mapaUI);
-}
+
 async function calcularRuta(){
   const d = state.destino;
   if(!d) return;
@@ -852,95 +1084,92 @@ async function calcularRuta(){
     console.error(err);
     if(state.destino !== d) return;
     // si falla la ruta, se cobra con la distancia aproximada para no frenar el pedido
-    state.kmAuto = Math.round(haversineKm(STORE_COORDS, d) * ROAD_FACTOR * 10) / 10;
+    state.kmAuto = kmAproximados(STORE_COORDS, d);
     state.rutaMin = null; state.geoStatus = 'ok';
     state.geoMessage = 'No pudimos trazar la ruta; el envío se calculó con la distancia aproximada.';
     gRuta.setPath([]);
   }
   render();
 }
-function grandTotal(){
-  const fee = deliveryFee();
-  return cartSubtotal() + (fee || 0);
-}
-function computeEstimatedReady(){
-  const days = state.fulfillment === 'delivery' ? 2 : 1;
-  return addBusinessDays(new Date(), days);
-}
-function stageLabel(order, idx){
-  const s = STAGES[idx];
-  if(s.labelPickup) return order.fulfillment==='delivery' ? s.labelDelivery : s.labelPickup;
-  return s.label;
-}
-function stageColor(idx){ return ['#8a93ac','var(--marigold)','var(--navy)','var(--green)'][idx] || '#8a93ac'; }
 
-function makeQrHtml(text, sizePx){
-  sizePx = sizePx || 120;
-  const url = `https://api.qrserver.com/v1/create-qr-code/?size=${sizePx}x${sizePx}&data=${encodeURIComponent(text)}`;
-  return `<div style="text-align:center;">
-    <img src="${url}" width="${sizePx}" height="${sizePx}" alt="Código del pedido"
-      style="background:#fff; border-radius:4px; padding:6px; box-sizing:content-box; display:block; margin:0 auto;"
-      onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-    <div style="display:none; font-size:0.85rem; color:var(--ink-soft); font-weight:800; padding:20px; border:1.5px dashed var(--border); border-radius:4px;">${esc(text)}</div>
-    <div style="font-size:0.7rem; color:var(--ink-soft); margin-top:4px; font-weight:800;">${esc(text)}</div>
-  </div>`;
-}
+/* ================= PAGO POR TRANSFERENCIA — revisión automática del comprobante ================= */
 
-function smsLogHtml(order, title){
-  if(!order.smsLog || !order.smsLog.length) return '';
-  return `<div class="pay-detail">
-    <h3 style="margin-top:0;">${esc(title)}</h3>
-    ${order.smsLog.map(s => `<div class="rline"><span>${esc(s.message)}</span><span style="color:var(--ink-soft); white-space:nowrap;">${new Date(s.at).toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit'})}</span></div>`).join('')}
-  </div>`;
-}
+// Se lee el texto de la imagen en el navegador (Tesseract.js, gratis, sin servidor) y se exige que
+// aparezca el monto exacto del pedido y al menos 2 palabras típicas de un comprobante bancario.
+let tesseractPromesa = null;
 
-function downloadListaPDF(grade){
-  const data = GRADES[grade];
-  const label = grade.replace(' PRIMARIA','').trim() + ' de primaria';
-  const sectionLabels = { 'MATERIAL DIARIO': 'Material de uso diario', 'PARA FORRAR': 'Para forrar', 'LIBROS': 'Libros de texto' };
-
-  let rowsHtml = '';
-  let currentSection = null;
-  data.items.forEach(it => {
-    if(it.seccion !== currentSection){
-      currentSection = it.seccion;
-      rowsHtml += `<tr><td colspan="4" style="background:#eef1f7; font-weight:700; padding:6px 8px;">${esc(sectionLabels[currentSection] || currentSection)}</td></tr>`;
-    }
-    rowsHtml += `<tr>
-      <td style="text-align:center;">${it.cantidad}</td>
-      <td>${esc(it.descripcion)}</td>
-      <td style="text-align:right;">${money(it.precio_unitario)}</td>
-      <td style="text-align:right;">${money(it.total != null ? it.total : it.cantidad*it.precio_unitario)}</td>
-    </tr>`;
+function cargarTesseract(){
+  if(window.Tesseract) return Promise.resolve();
+  if(tesseractPromesa) return tesseractPromesa;
+  tesseractPromesa = new Promise((resolve, reject) => {
+    const sc = document.createElement('script');
+    sc.src = 'https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js';
+    sc.onload = resolve; sc.onerror = () => { tesseractPromesa = null; reject(new Error('No cargó el lector de texto')); };
+    document.head.appendChild(sc);
   });
-
-  const win = window.open('', '_blank');
-  if(!win){ alert('Tu navegador bloqueó la ventana de impresión. Permite ventanas emergentes para este sitio e intenta de nuevo.'); return; }
-  win.document.write(`<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><title>Lista de útiles - ${esc(label)}</title>
-  <style>
-    body{ font-family: Arial, Helvetica, sans-serif; color:#23304a; margin:24px; }
-    h1{ font-size:18px; margin:0 0 2px; } h2{ font-size:14px; margin:0 0 16px; font-weight:400; color:#5b6785; }
-    table{ width:100%; border-collapse:collapse; font-size:13px; }
-    td, th{ border:1px solid #cfd5e3; padding:5px 8px; }
-    th{ background:#22355F; color:#fff; text-align:left; }
-    .totales{ margin-top:14px; text-align:right; font-size:14px; }
-    .totales b{ font-size:16px; }
-  </style>
-  </head><body>
-    <h1>Liceo Alexander Dul</h1>
-    <h2>Lista de útiles — ${esc(label)} — Ciclo 2026-2027</h2>
-    <table>
-      <thead><tr><th>Cant.</th><th>Material</th><th>P. unitario</th><th>Total</th></tr></thead>
-      <tbody>${rowsHtml}</tbody>
-    </table>
-    <div class="totales">
-      <div>Total libros: ${money(data.total_libros)}</div>
-      <div><b>Total paquete completo: ${money(data.total_paquete)}</b></div>
-    </div>
-    <script>window.onload = function(){ window.print(); };<\/script>
-  </body></html>`);
-  win.document.close();
+  return tesseractPromesa;
 }
+
+// todos los importes que aparezcan en el texto, como números ($1,110.00 → 1110)
+function montosEnTexto(t){
+  const out = [];
+  (t.match(/\$?\s?\d{1,3}(?:[,\s]\d{3})+(?:\.\d{1,2})?|\$?\s?\d+(?:\.\d{1,2})?/g) || []).forEach(m => {
+    const n = parseFloat(m.replace(/[$\s,]/g, ''));
+    if(isFinite(n)) out.push(n);
+  });
+  return out;
+}
+
+// clave de rastreo SPEI: lo que viene después de "rastreo" (misma línea o la siguiente)
+function claveRastreoDe(texto){
+  const lineas = texto.split(/\n/);
+  for(let i = 0; i < lineas.length; i++){
+    if(!/rastreo/i.test(lineas[i])) continue;
+    const resto = (lineas[i].split(/rastreo/i)[1] || '') + ' ' + (lineas[i+1] || '');
+    const m = resto.toUpperCase().replace(/[^A-Z0-9]+/g, ' ').match(/\b(?=[A-Z0-9]*\d)[A-Z0-9]{8,32}\b/);
+    if(m) return m[0];
+  }
+  const m = texto.toUpperCase().match(/\bMBAN\d{14,26}\b/);
+  return m ? m[0] : null;
+}
+
+// "huellas" del comprobante para que no se pueda usar en dos pedidos: la clave de rastreo (si tiene),
+// el texto leído y el archivo mismo. Se guardan en comprobantes/{huella} al crear el pedido.
+async function huellasComprobante(file, texto, clave){
+  const h = ['t_' + await sha256Corto(normTexto(texto)), 'i_' + await sha256Corto(await file.arrayBuffer())];
+  if(clave) h.unshift('r_' + clave);
+  return h;
+}
+
+async function revisarComprobante(file, total){
+  await cargarTesseract();
+  const worker = await Tesseract.createWorker('spa');
+  let texto = '';
+  try{
+    const { data } = await worker.recognize(file);
+    texto = data.text || '';
+  } finally {
+    await worker.terminate();
+  }
+  const plano = normTexto(texto);
+  const palabras = PALABRAS_COMPROBANTE.filter(w => plano.includes(w));
+  const montoOk = montosEnTexto(texto).some(n => Math.abs(n - total) < 0.5);
+  const claveRastreo = claveRastreoDe(texto);
+  const huellas = await huellasComprobante(file, texto, claveRastreo);
+  let duplicado = false;
+  for(const id of huellas){
+    if((await getDoc(doc(db, 'comprobantes', id))).exists()){ duplicado = true; break; }
+  }
+  return { montoOk, palabras, claveRastreo, huellas, duplicado, ok: montoOk && palabras.length >= 2 && !duplicado };
+}
+
+function canConfirmOrder(){
+  if(state.payment === 'transferencia') return !!state.comprobante && !!state.comprobanteRevision && state.comprobanteRevision.estado === 'ok';
+  if(state.payment === 'efectivo') return true;
+  return false;
+}
+
+/* ================= PEDIDOS ================= */
 
 async function buildOrder(){
   const utilesItems = [];
@@ -948,7 +1177,7 @@ async function buildOrder(){
     const realGrade = gradeNameOf(g);
     GRADES[realGrade].items.forEach((it,i) => {
       const qty = state.gradeQtys[g][i] || 0;
-      if(qty>0) utilesItems.push({ descripcion: it.descripcion, qty, precio_unitario: it.precio_unitario, seccion: it.seccion || 'MATERIAL DIARIO', grade: realGrade, studentId: state.gradeAssign[g]||null, invKey: GRADES[realGrade].docId+'_'+i });
+      if(qty>0) utilesItems.push({ descripcion: it.descripcion, qty, precio_unitario: it.precio_unitario, seccion: it.seccion || 'MATERIAL DIARIO', grade: realGrade, studentId: state.gradeAssign[g]||null, invKey: invKeyUtil(realGrade, i) });
     });
   });
   const uniformItems = state.uniformCart.map(u => {
@@ -1052,19 +1281,111 @@ async function buildOrder(){
   return order;
 }
 
-function setTab(tab){
-  state.activeTab = tab;
-  render();
-  window.scrollTo({top:0, behavior:'instant'});
+// deja la tienda lista para un pedido nuevo (carrito, alumnos, entrega, pago y mapa en blanco)
+function reiniciarPedido(){
+  state.grade = null; state.gradeQtys = {}; state.gradeAssign = {}; state.uniformCart = []; state.fulfillment = null;
+  state.students = []; state.pendingAssign = null;
+  state.payment = null;
+  state.comprobante = null; state.comprobanteFile = null; state.comprobanteRevision = null; state.currentFolio = null;
+  state.cliente = { telefono:'', correo:'' };
+  state.direccion = ''; state.kmAuto = null; state.geoStatus = 'idle'; state.geoMessage = '';
+  state.destino = null; state.referencias = ''; state.rutaMin = null; state.ubicacionConfirmada = false; state.direccionAuto = false;
+  mapaUI = null; gMapa = null; gRuta = null; gPin = null;   // el siguiente pedido arranca con mapa nuevo
 }
 
-/* ================= RENDER ================= */
+function stageLabel(order, idx){
+  const s = STAGES[idx];
+  if(s.labelPickup) return order.fulfillment==='delivery' ? s.labelDelivery : s.labelPickup;
+  return s.label;
+}
 
-// Al teclear NO se re-renderiza la página (eso movía el cursor, parpadeaba y cerraba el teclado en
-// celular): se guarda en state y solo se actualiza lo que depende de ese campo con estas ayudas.
-function habilitar(sel, ok){ const b = document.querySelector(sel); if(b) b.disabled = !ok; }
-let renderDiferidoTimer = null;
-function renderDiferido(ms){ clearTimeout(renderDiferidoTimer); renderDiferidoTimer = setTimeout(render, ms || 350); }
+function stageColor(idx){ return ['#8a93ac','var(--marigold)','var(--navy)','var(--green)'][idx] || '#8a93ac'; }
+
+function orderTotals(o){
+  if(o.totales && o.totales.uniformesDetalle) return o.totales;
+  const t = { papeleria:0, libros:0, uniformesDetalle:{} };
+  ((o.items && o.items.utiles) || []).forEach(it => { const v = it.qty*it.precio_unitario; if(it.seccion==='LIBROS') t.libros += v; else t.papeleria += v; });
+  ((o.items && o.items.uniformes) || []).forEach(u => { t.uniformesDetalle[u.name] = (t.uniformesDetalle[u.name]||0) + u.qty*u.price; });
+  return t;
+}
+
+function uniformesTotalOrden(o){
+  const d = orderTotals(o).uniformesDetalle || {};
+  return Object.values(d).reduce((a,b)=>a+b, 0);
+}
+
+// une los nombres de los alumnos de un pedido ya guardado, con compatibilidad para pedidos viejos sin "alumnos"
+function alumnosLabel(order){
+  const al = (order.alumnos && order.alumnos.length) ? order.alumnos : (order.cliente && order.cliente.nombres ? [order.cliente] : []);
+  return al.map(nombreCompleto).filter(Boolean).join(' y ') || '—';
+}
+
+function gradosLabel(order){
+  const al = (order.alumnos && order.alumnos.length) ? order.alumnos : (order.cliente && order.cliente.grado ? [order.cliente] : []);
+  const grados = al.map(a => gradoCorto(a.grado)).filter(Boolean);
+  return [...new Set(grados)].join(', ');
+}
+
+function nombreAlumnoPorId(order, id){
+  const al = (order.alumnos||[]).find(a=>a.id===id);
+  return al ? nombreCompleto(al) : '';
+}
+
+// un pedido por transferencia solo puede pasar de "preparando" (listo / en camino / entregado)
+// cuando el personal confirmó en el banco que el dinero llegó: un comprobante falso no termina en entrega
+function pagoPendienteBloquea(order, siguienteEtapa){
+  return order.payment === 'transferencia' && !order.pagoConfirmado && siguienteEtapa >= 2;
+}
+
+/* ================= CORREOS (EmailJS) ================= */
+
+let emailjsListo = false;
+
+function emailjsDisponible(){
+  if(emailjsListo) return true;
+  if(typeof emailjs === 'undefined') return false;
+  if(EMAILJS_PUBLIC_KEY === 'PENDIENTE') return false;
+  try{ emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY }); emailjsListo = true; }
+  catch(err){ console.error('No se pudo inicializar EmailJS:', err); return false; }
+  return true;
+}
+
+// {{asunto}} es el asunto de la plantilla; name/message: la plantilla base de EmailJS usa esos nombres
+async function enviarCorreo(to_email, to_name, folio, mensaje, asunto){
+  if(!emailjsDisponible()) return false;
+  try{
+    await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, { to_email, to_name, folio, mensaje, asunto, name: to_name, message: mensaje });
+    return true;
+  }catch(err){ console.error('No se pudo enviar el correo a ' + to_email + ':', err); return false; }
+}
+
+// manda el aviso de cambio de estado por correo al papá/mamá (si dejó correo). Sin copia al personal:
+// el personal es quien cambia el estado, y así se ahorra cupo del plan gratis de EmailJS (200 al mes).
+// nunca truena el flujo del pedido: si el correo falla, solo se queda en la consola.
+async function enviarCorreoEstado(order, mensaje){
+  if(!(order.cliente && order.cliente.correo)) return;
+  await enviarCorreo(order.cliente.correo, alumnosLabel(order), order.folio, mensaje, `Tu pedido ${order.folio} - Liceo Alexander Dul`);
+}
+
+// aviso al personal de que entró un pedido nuevo
+function avisarStaffPedidoNuevo(order){
+  if(STAFF_NOTIFY_EMAIL === 'PENDIENTE') return;
+  const entrega = order.fulfillment === 'delivery'
+    ? `envío a domicilio (${order.direccion}${order.referencias ? '; ref.: '+order.referencias : ''})${order.destino ? ' — mapa: https://www.google.com/maps/search/?api=1&query='+order.destino.lat.toFixed(6)+','+order.destino.lng.toFixed(6) : ''}`
+    : 'recoger en el local';
+  const pago = order.payment === 'transferencia' ? 'transferencia (revisar comprobante)' : 'efectivo';
+  const mensaje = `Entró el pedido ${order.folio} por ${money(order.total)}. Alumno(s): ${alumnosLabel(order)}. Entrega: ${entrega}. Pago: ${pago}. Tel. ${order.cliente.telefono}. Revísalo en el panel de personal.`;
+  enviarCorreo(STAFF_NOTIFY_EMAIL, STAFF_NOTIFY_NAME, order.folio, mensaje, `Nuevo pedido ${order.folio} - ${money(order.total)}`);
+}
+
+// cuando una prenda/talla agotada vuelve a tener existencias y hay papás esperando, avisa al personal por correo
+function avisarStaffExistencias(uniName, talla, cuantos){
+  if(STAFF_NOTIFY_EMAIL === 'PENDIENTE') return;
+  const mensaje = `Ya hay existencias de ${uniName} talla ${talla} y ${cuantos} ${cuantos===1?'papá está esperando':'papás están esperando'} el aviso. Entra al panel de personal → Avisos para avisarles.`;
+  enviarCorreo(STAFF_NOTIFY_EMAIL, STAFF_NOTIFY_NAME, '', mensaje, `Hay papás esperando: ${uniName} talla ${talla}`);
+}
+
+/* ================= RENDER y piezas compartidas ================= */
 
 function render(){
   const active = document.activeElement;
@@ -1090,6 +1411,26 @@ function render(){
       el.focus();
       if(selStart !== null && el.setSelectionRange){ try{ el.setSelectionRange(selStart, selEnd); }catch(e){} }
     }
+  }
+}
+
+function setTab(tab){
+  state.activeTab = tab;
+  render();
+  window.scrollTo({top:0, behavior:'instant'});
+}
+
+function viewFor(tab){
+  switch(tab){
+    case 'utiles': return state.gradePendingChoice ? gradeChooserView(state.gradePendingChoice) : (state.grade ? gradeListView(state.grade) : gradeGridView());
+    case 'uniformes': return uniformsView();
+    case 'carrito': return cartView();
+    case 'rastreo': return trackView();
+    case 'datos': return clienteView();
+    case 'entrega': return deliveryView();
+    case 'pago': return paymentView();
+    case 'confirmacion': return confirmationView();
+    default: return homeView();
   }
 }
 
@@ -1124,6 +1465,21 @@ function stepIndicator(current){
   }).join('')}</div>`;
 }
 
+function disclaimer(){
+  return `<div class="disclaimer">Liceo Alexander Dul — tienda escolar. La distancia de envío es aproximada; el costo final se confirma al preparar tu pedido.</div>`;
+}
+
+function makeQrHtml(text, sizePx){
+  sizePx = sizePx || 120;
+  const url = `https://api.qrserver.com/v1/create-qr-code/?size=${sizePx}x${sizePx}&data=${encodeURIComponent(text)}`;
+  return `<div style="text-align:center;">
+    <img src="${url}" width="${sizePx}" height="${sizePx}" alt="Código del pedido"
+      style="background:#fff; border-radius:4px; padding:6px; box-sizing:content-box; display:block; margin:0 auto;"
+      onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+    <div style="display:none; font-size:0.85rem; color:var(--ink-soft); font-weight:800; padding:20px; border:1.5px dashed var(--border); border-radius:4px;">${esc(text)}</div>
+    <div style="font-size:0.7rem; color:var(--ink-soft); margin-top:4px; font-weight:800;">${esc(text)}</div>
+  </div>`;
+}
 
 function payBadge(o){
   const isTransfer = o.payment === 'transferencia';
@@ -1132,116 +1488,43 @@ function payBadge(o){
   return `<span class="badge" style="background:${bg}">${txt}</span>`;
 }
 
-function trackView(){
-  const t = state.track;
-  let result = '';
-  if(t.loading) result = '<p style="color:var(--ink-soft)">Buscando tu pedido…</p>';
-  else if(t.error) result = `<div class="note-box error">${esc(t.error)}</div>`;
-  else if(t.order){
-    const o = t.order;
-    result = `
-    <div class="pay-detail">
-      <h3 style="margin-top:0">Pedido ${esc(o.folio)}</h3>
-      ${adminStageTrack(o)}
-      <div class="rline"><span>Total:</span><span>${money(o.total)}</span></div>
-      <div class="rline"><span>Entrega:</span><span>${o.fulfillment==='delivery' ? 'A domicilio: '+esc(o.direccion||'') : 'Recoger en el local ('+STORE_HOURS_TEXT+')'}</span></div>
-      <div class="rline"><span>Fecha estimada:</span><span>${fmtDate(o.estimatedReady)}</span></div>
-    </div>
-    ${smsLogHtml(o, '💬 Seguimiento de tu pedido')}`;
-  }
-  const porFolio = `
-    <div class="field-col"><label>Folio</label><input type="text" id="tFolio" value="${esc(t.folio)}" placeholder="AD-1234"></div>
-    <div class="field-col"><label>Teléfono (10 dígitos)</label><input type="tel" id="tTel" value="${esc(t.tel)}" placeholder="5512345678" maxlength="10"></div>
-    <button class="btn btn-primary btn-block" id="trackBtn">Consultar</button>
-    <button class="backlink" data-track-mode="nombre" style="margin-top:10px;">¿No tienes tu folio? Busca con el nombre del alumno</button>`;
-  const porNombre = `
-    <div class="field-col"><label>Nombre(s) del alumno</label><input type="text" id="tNombres" value="${esc(t.nombres)}" placeholder="Ej. María Fernanda"></div>
-    <div class="field-col"><label>Apellido paterno</label><input type="text" id="tApPaterno" value="${esc(t.apPaterno)}" placeholder="Ej. Gómez"></div>
-    <div class="field-col"><label>Apellido materno</label><input type="text" id="tApMaterno" value="${esc(t.apMaterno)}" placeholder="Ej. Ruiz"></div>
-    <div class="field-col"><label>Teléfono (10 dígitos)</label><input type="tel" id="tTel2" value="${esc(t.tel)}" placeholder="5512345678" maxlength="10"></div>
-    <p style="font-size:0.78rem; color:var(--ink-soft); margin:-4px 0 10px;">Debes escribir el nombre exactamente como lo diste al hacer el pedido.</p>
-    <button class="btn btn-primary btn-block" id="trackBtnNombre">Consultar</button>
-    <button class="backlink" data-track-mode="folio" style="margin-top:10px;">← Mejor busco con mi folio</button>`;
-  return `
-  <section class="view">
-    <h2 style="margin-top:0">Rastrear mi pedido</h2>
-    <p style="color:var(--ink-soft); margin-top:-6px">${t.mode==='folio' ? 'Escribe tu folio (viene en tu recibo, ej. AD-1234) y el teléfono que dejaste al hacer el pedido.' : 'Escribe el nombre completo del alumno y el teléfono que dejaste al hacer el pedido.'}</p>
-    <div class="pay-detail" style="max-width:420px">
-      ${t.mode==='folio' ? porFolio : porNombre}
-    </div>
-    <div style="margin-top:16px;">${result}</div>
-  </section>`;
+function adminStageTrack(order){
+  return `<div class="steps">${STAGES.map((s,i)=>{
+    const cls = i<order.stageIndex ? 'done' : (i===order.stageIndex ? 'current' : '');
+    return `<span class="s ${cls}">${i<order.stageIndex?'✓ ':(i+1)+'. '}${stageLabel(order,i)}</span>${i<STAGES.length-1?'<span class="sep">→</span>':''}`;
+  }).join('')}</div>`;
 }
 
-function disclaimer(){
-  return `<div class="disclaimer">Liceo Alexander Dul — tienda escolar. La distancia de envío es aproximada; el costo final se confirma al preparar tu pedido.</div>`;
-}
-
-function asignacionModalHtml(){
-  const p = state.pendingAssign;
-  if(!p) return '';
-  const n = p.nuevo || { nombres:'', apellidoPaterno:'', apellidoMaterno:'', grado:'' };
-  let body = '';
-  if(p.step==='mismo'){
-    const primero = state.students[0];
-    body = `
-      <p>¿<b>${esc(etiquetaAsignacionPendiente())}</b> también es para <b>${esc(nombreCompleto(primero))}</b>?</p>
-      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;">
-        <button class="btn btn-primary" data-assign-pick="${esc(primero.id)}">Sí, es para ${esc(primero.nombres)}</button>
-        <button class="btn btn-secondary" data-assign-other="1">No, es para otro alumno(a)</button>
-      </div>`;
-  } else if(p.step==='elegir'){
-    body = `
-      <p>¿Para quién es <b>${esc(etiquetaAsignacionPendiente())}</b>?</p>
-      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;">
-        ${state.students.map(s => `<button class="btn btn-secondary" data-assign-pick="${esc(s.id)}">${esc(nombreCompleto(s))}${s.grado?' · '+esc(s.grado.replace(' PRIMARIA','').trim()):''}</button>`).join('')}
-        <button class="btn btn-primary" data-assign-other="1">Es para otro alumno(a) nuevo</button>
-      </div>`;
-  } else {
-    // paso 'nuevo'
-    const titulo = state.students.length===0 ? '¿Para qué alumno(a) es este pedido?' : 'Datos del nuevo alumno(a)';
-    const etiqueta = etiquetaAsignacionPendiente();
-    body = `
-      <p style="margin-bottom:12px;">${esc(titulo)}${etiqueta ? ' — para '+esc(etiqueta) : ''}</p>
-      <div class="field-col"><label>Nombre(s) *</label><input type="text" id="panNombres" value="${esc(n.nombres)}" placeholder="Ej. María Fernanda"></div>
-      <div class="field-col"><label>Apellido paterno *</label><input type="text" id="panApPaterno" value="${esc(n.apellidoPaterno)}" placeholder="Ej. Gómez"></div>
-      <div class="field-col"><label>Apellido materno *</label><input type="text" id="panApMaterno" value="${esc(n.apellidoMaterno)}" placeholder="Ej. Ruiz"></div>
-      <div class="field-col">
-        <label>Grado</label>
-        <select id="panGrado">
-          <option value="">Selecciona un grado</option>
-          ${Object.keys(GRADES).map(g=>{
-            const short = g.replace(' PRIMARIA','').trim();
-            return `<option value="${esc(g)}" ${n.grado===g?'selected':''}>${esc(short)} de primaria</option>`;
-          }).join('')}
-        </select>
-      </div>
-      <button class="btn btn-primary btn-block" id="panGuardarBtn" style="margin-top:10px;" ${(n.nombres||'').trim().length>1 && (n.apellidoPaterno||'').trim().length>1 && (n.apellidoMaterno||'').trim().length>1 ? '' : 'disabled'}>Guardar y continuar</button>
-    `;
-  }
-  return `
-  <div class="asign-overlay">
-    <div class="asign-modal">
-      <h3 style="margin-top:0;">👧🧒 ${state.students.length? 'Hermanos en el mismo pedido' : 'Primero, ¿quién va a usar esto?'}</h3>
-      ${body}
-      <button class="btn-ghost" data-assign-cancel="1" style="margin-top:14px;">Quitar esto del carrito</button>
-    </div>
+function smsLogHtml(order, title){
+  if(!order.smsLog || !order.smsLog.length) return '';
+  return `<div class="pay-detail">
+    <h3 style="margin-top:0;">${esc(title)}</h3>
+    ${order.smsLog.map(s => `<div class="rline"><span>${esc(s.message)}</span><span style="color:var(--ink-soft); white-space:nowrap;">${new Date(s.at).toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit'})}</span></div>`).join('')}
   </div>`;
 }
 
-function viewFor(tab){
-  switch(tab){
-    case 'utiles': return state.gradePendingChoice ? gradeChooserView(state.gradePendingChoice) : (state.grade ? gradeListView(state.grade) : gradeGridView());
-    case 'uniformes': return uniformsView();
-    case 'carrito': return cartView();
-    case 'rastreo': return trackView();
-    case 'datos': return clienteView();
-    case 'entrega': return deliveryView();
-    case 'pago': return paymentView();
-    case 'confirmacion': return confirmationView();
-    default: return homeView();
+function pedidoItemsHtml(order){
+  const multi = order.alumnos && order.alumnos.length > 1;
+  if(!multi){
+    let html = '';
+    order.items.utiles.forEach(it => { html += `<div class="rline"><span>${esc(it.descripcion)} x${it.qty}</span><span>${money(it.qty*it.precio_unitario)}</span></div>`; });
+    order.items.uniformes.forEach(u => { html += `<div class="rline"><span>${esc(u.name)} (talla ${esc(u.size)}) x${u.qty}</span><span>${money(u.price*u.qty)}</span></div>`; });
+    return html;
   }
+  let html = '';
+  order.alumnos.forEach(al => {
+    let sub = '';
+    order.items.utiles.filter(it=>it.studentId===al.id).forEach(it => { sub += `<div class="rline"><span>${esc(it.descripcion)} x${it.qty}</span><span>${money(it.qty*it.precio_unitario)}</span></div>`; });
+    order.items.uniformes.forEach(u => {
+      const split = (u.splits||[]).find(s=>s.studentId===al.id);
+      if(split && split.qty>0) sub += `<div class="rline"><span>${esc(u.name)} (talla ${esc(u.size)}) x${split.qty}</span><span>${money(u.price*split.qty)}</span></div>`;
+    });
+    if(sub) html += `<div style="font-weight:800; margin:10px 0 4px; color:var(--navy);">👤 ${esc(nombreCompleto(al))}</div>${sub}`;
+  });
+  return html;
 }
+
+/* ================= VISTAS — TIENDA ================= */
 
 function homeView(){
   return `
@@ -1271,7 +1554,7 @@ function gradeGridView(){
     <p style="color:var(--ink-soft); margin-top:-6px">Primaria · Ciclo escolar 2026‑2027</p>
     <div class="grade-grid">
       ${keys.map(g => {
-        const label = g.replace(' PRIMARIA','').trim();
+        const label = gradoCorto(g);
         const n = basketsForGrade(g).length;
         return `<button class="grade-card" data-grade="${esc(g)}">
           <div class="num">${esc(label)}</div>
@@ -1288,7 +1571,7 @@ function gradeListView(basketId){
   const grade = gradeNameOf(basketId);
   const data = GRADES[grade];
   const qtys = ensureGradeQtys(basketId);
-  const label = grade.replace(' PRIMARIA','').trim();
+  const label = gradoCorto(grade);
   const sections = ['MATERIAL DIARIO','PARA FORRAR','LIBROS'];
   const sectionLabels = {'MATERIAL DIARIO':'Material de uso diario', 'PARA FORRAR':'Para forrar', 'LIBROS':'Libros de texto'};
   const sub = gradeSubtotal(basketId);
@@ -1306,7 +1589,7 @@ function gradeListView(basketId){
         <button data-toggle-section="${sec}" data-grade="${esc(basketId)}">activar/desactivar todo</button>
       </div>
       ${rows.map(({it,i}) => {
-        const stock = stockDe(GRADES[grade].docId+'_'+i);
+        const stock = stockDe(invKeyUtil(grade, i));
         if(stock <= 0){
           // útiles y libros agotados: solo se marcan como no disponibles (no hay "avísame")
           return `
@@ -1367,7 +1650,7 @@ function gradeListView(basketId){
 // por ejemplo gemelos/cuates en el mismo grado — para no mezclar por accidente las dos listas.
 function gradeChooserView(grade){
   const baskets = basketsForGrade(grade);
-  const label = grade.replace(' PRIMARIA','').trim();
+  const label = gradoCorto(grade);
   return `
   <section class="view">
     <button class="backlink" data-back-grades="1">← Cambiar de grado</button>
@@ -1382,6 +1665,54 @@ function gradeChooserView(grade){
       <button class="btn btn-primary btn-block" data-new-basket="${esc(grade)}">+ Es para otro alumno(a) — hacer una lista nueva</button>
     </div>
   </section>`;
+}
+
+function downloadListaPDF(grade){
+  const data = GRADES[grade];
+  const label = gradoLargo(grade);
+  const sectionLabels = { 'MATERIAL DIARIO': 'Material de uso diario', 'PARA FORRAR': 'Para forrar', 'LIBROS': 'Libros de texto' };
+
+  let rowsHtml = '';
+  let currentSection = null;
+  data.items.forEach(it => {
+    if(it.seccion !== currentSection){
+      currentSection = it.seccion;
+      rowsHtml += `<tr><td colspan="4" style="background:#eef1f7; font-weight:700; padding:6px 8px;">${esc(sectionLabels[currentSection] || currentSection)}</td></tr>`;
+    }
+    rowsHtml += `<tr>
+      <td style="text-align:center;">${it.cantidad}</td>
+      <td>${esc(it.descripcion)}</td>
+      <td style="text-align:right;">${money(it.precio_unitario)}</td>
+      <td style="text-align:right;">${money(it.total != null ? it.total : it.cantidad*it.precio_unitario)}</td>
+    </tr>`;
+  });
+
+  const win = window.open('', '_blank');
+  if(!win){ alert('Tu navegador bloqueó la ventana de impresión. Permite ventanas emergentes para este sitio e intenta de nuevo.'); return; }
+  win.document.write(`<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><title>Lista de útiles - ${esc(label)}</title>
+  <style>
+    body{ font-family: Arial, Helvetica, sans-serif; color:#23304a; margin:24px; }
+    h1{ font-size:18px; margin:0 0 2px; } h2{ font-size:14px; margin:0 0 16px; font-weight:400; color:#5b6785; }
+    table{ width:100%; border-collapse:collapse; font-size:13px; }
+    td, th{ border:1px solid #cfd5e3; padding:5px 8px; }
+    th{ background:#22355F; color:#fff; text-align:left; }
+    .totales{ margin-top:14px; text-align:right; font-size:14px; }
+    .totales b{ font-size:16px; }
+  </style>
+  </head><body>
+    <h1>Liceo Alexander Dul</h1>
+    <h2>Lista de útiles — ${esc(label)} — Ciclo 2026-2027</h2>
+    <table>
+      <thead><tr><th>Cant.</th><th>Material</th><th>P. unitario</th><th>Total</th></tr></thead>
+      <tbody>${rowsHtml}</tbody>
+    </table>
+    <div class="totales">
+      <div>Total libros: ${money(data.total_libros)}</div>
+      <div><b>Total paquete completo: ${money(data.total_paquete)}</b></div>
+    </div>
+    <script>window.onload = function(){ window.print(); };<\/script>
+  </body></html>`);
+  win.document.close();
 }
 
 function uniformsView(){
@@ -1426,6 +1757,7 @@ function uniGaleriaHtml(u){
     </button>
     ${u.fotos.length > 1 ? `<div class="uni-thumbs">${u.fotos.map((f,i) => `<button type="button" class="uni-thumb ${i===idx?'activa':''}" data-uni-thumb="${esc(u.id)}" data-idx="${i}"><img src="${esc(f)}" alt="Foto ${i+1}"></button>`).join('')}</div>` : ''}`;
 }
+
 function lightboxHtml(){
   const lb = state.lightbox;
   if(!lb) return '';
@@ -1455,8 +1787,8 @@ function avisoUniformeHtml(u, talla){
     return `<div style="color:var(--red); font-weight:700; font-size:0.85rem; margin-bottom:6px;">No hay en talla ${esc(talla)} por ahora</div>
       <button class="btn btn-secondary btn-block btn-sm" data-aviso-abrir="${u.id}">🔔 Avísame cuando haya</button>`;
   }
-  const telOk = f.telefono.replace(/\D/g,'').length === 10;
-  const correoOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.correo.trim());
+  const telOk = telValido(f.telefono);
+  const correoOk = correoValido(f.correo);
   return `<div style="color:var(--red); font-weight:700; font-size:0.85rem; margin-bottom:6px;">No hay en talla ${esc(talla)} por ahora</div>
     <div style="font-size:0.82rem; color:var(--ink-soft); margin-bottom:6px;">Déjanos tus datos y te avisamos en cuanto llegue.</div>
     <div class="field-col"><label>Teléfono (10 dígitos)</label><input type="text" inputmode="tel" autocomplete="tel" id="avisoTel" value="${esc(f.telefono)}" placeholder="Ej. 5512345678"></div>
@@ -1466,6 +1798,58 @@ function avisoUniformeHtml(u, talla){
       <button class="btn btn-primary btn-sm" id="avisoGuardarBtn" style="flex:1;" ${telOk && correoOk && !f.saving ? '' : 'disabled'}>${f.saving ? 'Guardando…' : 'Avísenme'}</button>
       <button class="btn btn-ghost" id="avisoCancelarBtn">Cancelar</button>
     </div>`;
+}
+
+function asignacionModalHtml(){
+  const p = state.pendingAssign;
+  if(!p) return '';
+  const n = p.nuevo || { nombres:'', apellidoPaterno:'', apellidoMaterno:'', grado:'' };
+  let body = '';
+  if(p.step==='mismo'){
+    const primero = state.students[0];
+    body = `
+      <p>¿<b>${esc(etiquetaAsignacionPendiente())}</b> también es para <b>${esc(nombreCompleto(primero))}</b>?</p>
+      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;">
+        <button class="btn btn-primary" data-assign-pick="${esc(primero.id)}">Sí, es para ${esc(primero.nombres)}</button>
+        <button class="btn btn-secondary" data-assign-other="1">No, es para otro alumno(a)</button>
+      </div>`;
+  } else if(p.step==='elegir'){
+    body = `
+      <p>¿Para quién es <b>${esc(etiquetaAsignacionPendiente())}</b>?</p>
+      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;">
+        ${state.students.map(s => `<button class="btn btn-secondary" data-assign-pick="${esc(s.id)}">${esc(nombreCompleto(s))}${s.grado?' · '+esc(gradoCorto(s.grado)):''}</button>`).join('')}
+        <button class="btn btn-primary" data-assign-other="1">Es para otro alumno(a) nuevo</button>
+      </div>`;
+  } else {
+    // paso 'nuevo'
+    const titulo = state.students.length===0 ? '¿Para qué alumno(a) es este pedido?' : 'Datos del nuevo alumno(a)';
+    const etiqueta = etiquetaAsignacionPendiente();
+    body = `
+      <p style="margin-bottom:12px;">${esc(titulo)}${etiqueta ? ' — para '+esc(etiqueta) : ''}</p>
+      <div class="field-col"><label>Nombre(s) *</label><input type="text" id="panNombres" value="${esc(n.nombres)}" placeholder="Ej. María Fernanda"></div>
+      <div class="field-col"><label>Apellido paterno *</label><input type="text" id="panApPaterno" value="${esc(n.apellidoPaterno)}" placeholder="Ej. Gómez"></div>
+      <div class="field-col"><label>Apellido materno *</label><input type="text" id="panApMaterno" value="${esc(n.apellidoMaterno)}" placeholder="Ej. Ruiz"></div>
+      <div class="field-col">
+        <label>Grado</label>
+        <select id="panGrado">
+          <option value="">Selecciona un grado</option>
+          ${Object.keys(GRADES).map(g=>{
+            const short = gradoCorto(g);
+            return `<option value="${esc(g)}" ${n.grado===g?'selected':''}>${esc(short)} de primaria</option>`;
+          }).join('')}
+        </select>
+      </div>
+      <button class="btn btn-primary btn-block" id="panGuardarBtn" style="margin-top:10px;" ${(n.nombres||'').trim().length>1 && (n.apellidoPaterno||'').trim().length>1 && (n.apellidoMaterno||'').trim().length>1 ? '' : 'disabled'}>Guardar y continuar</button>
+    `;
+  }
+  return `
+  <div class="asign-overlay">
+    <div class="asign-modal">
+      <h3 style="margin-top:0;">👧🧒 ${state.students.length? 'Hermanos en el mismo pedido' : 'Primero, ¿quién va a usar esto?'}</h3>
+      ${body}
+      <button class="btn-ghost" data-assign-cancel="1" style="margin-top:14px;">Quitar esto del carrito</button>
+    </div>
+  </div>`;
 }
 
 function splitControlHtml(uniIdx, u){
@@ -1490,13 +1874,6 @@ function splitControlHtml(uniIdx, u){
       }).join('')}
       ${faltan!==0 ? `<div class="split-warning">${faltan>0 ? 'Falta asignar '+faltan : 'Sobran '+(-faltan)+' por asignar'}</div>` : ''}
     </div>`;
-}
-
-// artículos de una lista que no hay en existencia (no se pudieron elegir): el papá debe saber que no
-// se lleva el paquete completo. Lo que él desmarcó a propósito no cuenta aquí.
-function noDisponiblesDeLista(basketId){
-  const grade = gradeNameOf(basketId);
-  return GRADES[grade].items.map((it,i) => ({ it, i })).filter(({i}) => !utilDisponible(grade, i)).map(({it}) => it);
 }
 
 function cartView(){
@@ -1548,7 +1925,7 @@ function cartView(){
       </tr>`;
     });
     if(!rows) return;
-    bloques += `<tr><td class="cart-group-title" colspan="4">👤 ${esc(nombreCompleto(al))}${al.grado ? ' · '+esc(al.grado.replace(' PRIMARIA','').trim())+' de primaria' : ''} <span style="float:right; font-weight:400;">${money(subtotalAlumno(al.id))}</span></td></tr>${rows}`;
+    bloques += `<tr><td class="cart-group-title" colspan="4">👤 ${esc(nombreCompleto(al))}${al.grado ? ' · '+esc(gradoLargo(al.grado)) : ''} <span style="float:right; font-weight:400;">${money(subtotalAlumno(al.id))}</span></td></tr>${rows}`;
   });
 
   const faltaRepartir = !carritoRepartidoCompleto();
@@ -1597,7 +1974,7 @@ function clienteView(){
     <p style="color:var(--ink-soft); margin-top:-6px">Los necesitamos para preparar tu pedido y avisarte cuando esté listo.</p>
     <div class="pay-detail" style="max-width:480px">
       <label style="font-size:0.82rem; font-weight:700;">Alumnos de este pedido</label>
-      ${alumnos.map(al => `<div class="rline"><span>👤 ${esc(nombreCompleto(al))}${al.grado ? ' · '+esc(al.grado.replace(' PRIMARIA','').trim())+' de primaria' : ''}</span><span>${money(subtotalAlumno(al.id))}</span></div>`).join('')}
+      ${alumnos.map(al => `<div class="rline"><span>👤 ${esc(nombreCompleto(al))}${al.grado ? ' · '+esc(gradoLargo(al.grado)) : ''}</span><span>${money(subtotalAlumno(al.id))}</span></div>`).join('')}
       <button class="btn-ghost" data-nav="carrito" style="margin-top:4px;">← Corregir alumnos / artículos en el carrito</button>
     </div>
     <div class="pay-detail" style="max-width:480px">
@@ -1618,151 +1995,6 @@ function clienteView(){
       <button class="btn btn-primary" data-nav="entrega" ${clienteValido()?'':'disabled'}>Continuar con la entrega →</button>
     </div>
   </section>`;
-}
-function nombreCompleto(cliente){
-  return [cliente.nombres, cliente.apellidoPaterno, cliente.apellidoMaterno].filter(Boolean).join(' ').trim();
-}
-function clienteValido(){
-  const c = state.cliente;
-  const soloDigitos = (c.telefono||'').replace(/\D/g,'');
-  return soloDigitos.length === 10 && state.students.length>0;
-}
-function gradosActivosEnCarrito(){
-  return Object.keys(state.gradeQtys).filter(g => Object.values(state.gradeQtys[g]).some(q=>q>0));
-}
-
-/* ================= ALUMNOS / HERMANOS ================= */
-
-function newStudentId(){
-  return 'al_' + Date.now().toString(36) + Math.random().toString(36).slice(2,7);
-}
-function studentById(id){
-  return state.students.find(s=>s.id===id) || null;
-}
-function uniformAssignTotal(u){
-  return Object.values(u.assign||{}).reduce((a,b)=>a+(b||0),0);
-}
-// ¿hay algo en el carrito (lista de útiles con subtotal>0, o uniforme) sin asignar a un alumno?
-function siguienteAsignacionPendiente(){
-  for(const g of Object.keys(state.gradeQtys)){
-    if(gradeSubtotal(g) > 0 && !state.gradeAssign[g]) return { kind:'grade', grade:g };
-  }
-  for(let i=0;i<state.uniformCart.length;i++){
-    const u = state.uniformCart[i];
-    if(uniformAssignTotal(u) < u.qty) return { kind:'uniform', uniIndex:i };
-  }
-  return null;
-}
-function abrirSiguienteAsignacionSiHaceFalta(){
-  if(state.pendingAssign) return;
-  const next = siguienteAsignacionPendiente();
-  if(!next) return;
-  const step = state.students.length===0 ? 'nuevo' : (state.students.length===1 ? 'mismo' : 'elegir');
-  state.pendingAssign = Object.assign(next, { step, nuevo:{ nombres:'', apellidoPaterno:'', apellidoMaterno:'', grado: next.kind==='grade' ? gradeNameOf(next.grade) : '' } });
-}
-function etiquetaAsignacionPendiente(){
-  const p = state.pendingAssign;
-  if(!p) return '';
-  if(p.kind==='grade'){
-    return 'la lista de ' + gradeNameOf(p.grade).replace(' PRIMARIA','').trim() + ' de primaria';
-  }
-  if(p.kind==='uniform'){
-    const u = state.uniformCart[p.uniIndex];
-    if(!u) return '';
-    const info = uniInfo(u.id);
-    return u.qty + ' × ' + (info?info.name:u.id) + ', talla ' + u.size;
-  }
-  return '';
-}
-function asignarPendienteA(studentId){
-  const p = state.pendingAssign;
-  if(!p) return;
-  if(p.kind==='grade'){
-    state.gradeAssign[p.grade] = studentId;
-  } else if(p.kind==='uniform'){
-    const u = state.uniformCart[p.uniIndex];
-    if(u){
-      if(!u.assign) u.assign = {};
-      const falta = u.qty - uniformAssignTotal(u);
-      u.assign[studentId] = (u.assign[studentId]||0) + falta;
-    }
-  }
-  // kind 'manual' (agregar otro alumno desde el carrito): no hay nada que asignar, solo se registró el alumno.
-  state.pendingAssign = null;
-  abrirSiguienteAsignacionSiHaceFalta();
-  render();
-}
-function cancelarPendiente(){
-  const p = state.pendingAssign;
-  if(p){
-    if(p.kind==='grade') delete state.gradeQtys[p.grade];
-    else if(p.kind==='uniform'){
-      const u = state.uniformCart[p.uniIndex];
-      if(u){
-        const asignado = uniformAssignTotal(u);
-        if(asignado<=0) state.uniformCart.splice(p.uniIndex,1);
-        else u.qty = asignado; // descarta solo las unidades nuevas que no se habían repartido
-      }
-    }
-  }
-  state.pendingAssign = null;
-  abrirSiguienteAsignacionSiHaceFalta();
-  render();
-}
-// alumnos que ya tienen algo asignado en el carrito actual (para mostrarlos agrupados)
-function alumnosActivosEnCarrito(){
-  const ids = new Set();
-  Object.values(state.gradeAssign).forEach(id => { if(id) ids.add(id); });
-  state.uniformCart.forEach(u => Object.keys(u.assign||{}).forEach(id => { if((u.assign[id]||0)>0) ids.add(id); }));
-  return state.students.filter(s=>ids.has(s.id));
-}
-function subtotalAlumno(studentId){
-  let sum = 0;
-  Object.keys(state.gradeAssign).forEach(g => { if(state.gradeAssign[g]===studentId) sum += gradeSubtotal(g); });
-  state.uniformCart.forEach(u => {
-    const units = (u.assign||{})[studentId] || 0;
-    if(units>0){ const info = uniInfo(u.id); sum += info.price * units; }
-  });
-  return sum;
-}
-// une los nombres de los alumnos de un pedido ya guardado, con compatibilidad para pedidos viejos sin "alumnos"
-function alumnosLabel(order){
-  const al = (order.alumnos && order.alumnos.length) ? order.alumnos : (order.cliente && order.cliente.nombres ? [order.cliente] : []);
-  return al.map(nombreCompleto).filter(Boolean).join(' y ') || '—';
-}
-function gradosLabel(order){
-  const al = (order.alumnos && order.alumnos.length) ? order.alumnos : (order.cliente && order.cliente.grado ? [order.cliente] : []);
-  const grados = al.map(a => (a.grado||'').replace(' PRIMARIA','').trim()).filter(Boolean);
-  return [...new Set(grados)].join(', ');
-}
-// ¿todas las piezas de uniforme con varios alumnos quedaron completamente repartidas?
-function carritoRepartidoCompleto(){
-  if(siguienteAsignacionPendiente()) return false;
-  return state.uniformCart.every(u => uniformAssignTotal(u) === u.qty);
-}
-// mueve 1 unidad de una pieza de uniforme hacia/desde un alumno. Con 2 alumnos se balancea solo;
-// con 3 o más, cada +/- es independiente (y el carrito marca en rojo si no suman la cantidad total).
-function ajustarReparto(uniIdx, studentId, delta){
-  const u = state.uniformCart[uniIdx];
-  if(!u) return;
-  if(!u.assign) u.assign = {};
-  const ids = state.students.map(s=>s.id);
-  if(ids.length === 2){
-    const otherId = ids.find(id=>id!==studentId);
-    const cur = u.assign[studentId]||0, otherCur = u.assign[otherId]||0;
-    const next = cur + delta, otherNext = otherCur - delta;
-    if(next < 0 || next > u.qty || otherNext < 0 || otherNext > u.qty) return;
-    u.assign[studentId] = next;
-    u.assign[otherId] = otherNext;
-  } else {
-    const cur = u.assign[studentId]||0;
-    const sumOtros = Object.keys(u.assign).reduce((s,id) => id===studentId ? s : s+(u.assign[id]||0), 0);
-    let next = cur + delta;
-    if(next < 0) next = 0;
-    if(next + sumOtros > u.qty) next = u.qty - sumOtros;
-    u.assign[studentId] = next;
-  }
-  render();
 }
 
 function deliveryView(){
@@ -1855,107 +2087,6 @@ function deliveryView(){
   </section>`;
 }
 
-function canContinueFromDelivery(){
-  if(state.fulfillment === 'pickup') return true;
-  if(state.fulfillment === 'delivery') return deliveryFee() !== null && state.direccion.trim().length > 8
-    && state.geoStatus !== 'loading' && (!usarGoogleMaps() || (!!state.destino && state.ubicacionConfirmada));
-  return false;
-}
-
-// datos para que los papás transfieran (BBVA, Libretón)
-const BANCO = { banco: 'BBVA', beneficiario: 'Irma Hidu Uranga Hernandez', clabe: '0121 8002 6617 4023 78' };
-
-/* ---------- revisión automática del comprobante de transferencia ---------- */
-// Se lee el texto de la imagen en el navegador (Tesseract.js, gratis, sin servidor) y se exige que
-// aparezca el monto exacto del pedido y al menos 2 palabras típicas de un comprobante bancario.
-let tesseractPromesa = null;
-function cargarTesseract(){
-  if(window.Tesseract) return Promise.resolve();
-  if(tesseractPromesa) return tesseractPromesa;
-  tesseractPromesa = new Promise((resolve, reject) => {
-    const sc = document.createElement('script');
-    sc.src = 'https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js';
-    sc.onload = resolve; sc.onerror = () => { tesseractPromesa = null; reject(new Error('No cargó el lector de texto')); };
-    document.head.appendChild(sc);
-  });
-  return tesseractPromesa;
-}
-const PALABRAS_COMPROBANTE = ['transferencia','spei','rastreo','referencia','operacion','importe','monto','clabe','cuenta','beneficiario',
-  'destino','ordenante','comprobante','enviado','enviaste','exitosa','aprobada','autorizacion','folio','concepto',
-  '2378','0237',   // terminación de la CLABE / cuenta destino del Liceo
-  'bbva','banorte','santander','banamex','citibanamex','hsbc','scotiabank','azteca','inbursa','banregio','bancoppel','afirme','nu mexico','mercado pago','spin','hey banco'];
-// todos los importes que aparezcan en el texto, como números ($1,110.00 → 1110)
-function montosEnTexto(t){
-  const out = [];
-  (t.match(/\$?\s?\d{1,3}(?:[,\s]\d{3})+(?:\.\d{1,2})?|\$?\s?\d+(?:\.\d{1,2})?/g) || []).forEach(m => {
-    const n = parseFloat(m.replace(/[$\s,]/g, ''));
-    if(isFinite(n)) out.push(n);
-  });
-  return out;
-}
-// clave de rastreo SPEI: lo que viene después de "rastreo" (misma línea o la siguiente)
-function claveRastreoDe(texto){
-  const lineas = texto.split(/\n/);
-  for(let i = 0; i < lineas.length; i++){
-    if(!/rastreo/i.test(lineas[i])) continue;
-    const resto = (lineas[i].split(/rastreo/i)[1] || '') + ' ' + (lineas[i+1] || '');
-    const m = resto.toUpperCase().replace(/[^A-Z0-9]+/g, ' ').match(/\b(?=[A-Z0-9]*\d)[A-Z0-9]{8,32}\b/);
-    if(m) return m[0];
-  }
-  const m = texto.toUpperCase().match(/\bMBAN\d{14,26}\b/);
-  return m ? m[0] : null;
-}
-async function sha256Corto(datos){
-  const buf = await crypto.subtle.digest('SHA-256', typeof datos === 'string' ? new TextEncoder().encode(datos) : datos);
-  return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join('').slice(0, 32);
-}
-// "huellas" del comprobante para que no se pueda usar en dos pedidos: la clave de rastreo (si tiene),
-// el texto leído y el archivo mismo. Se guardan en comprobantes/{huella} al crear el pedido.
-async function huellasComprobante(file, texto, clave){
-  const h = ['t_' + await sha256Corto(normTexto(texto)), 'i_' + await sha256Corto(await file.arrayBuffer())];
-  if(clave) h.unshift('r_' + clave);
-  return h;
-}
-async function revisarComprobante(file, total){
-  await cargarTesseract();
-  const worker = await Tesseract.createWorker('spa');
-  let texto = '';
-  try{
-    const { data } = await worker.recognize(file);
-    texto = data.text || '';
-  } finally {
-    await worker.terminate();
-  }
-  const plano = normTexto(texto);
-  const palabras = PALABRAS_COMPROBANTE.filter(w => plano.includes(w));
-  const montoOk = montosEnTexto(texto).some(n => Math.abs(n - total) < 0.5);
-  const claveRastreo = claveRastreoDe(texto);
-  const huellas = await huellasComprobante(file, texto, claveRastreo);
-  let duplicado = false;
-  for(const id of huellas){
-    if((await getDoc(doc(db, 'comprobantes', id))).exists()){ duplicado = true; break; }
-  }
-  return { montoOk, palabras, claveRastreo, huellas, duplicado, ok: montoOk && palabras.length >= 2 && !duplicado };
-}
-function revisionComprobanteHtml(total){
-  const r = state.comprobanteRevision;
-  if(!r) return '';
-  if(r.estado === 'revisando') return `<div class="note-box neutral" style="margin-top:10px;">🔎 Revisando tu comprobante… puede tardar unos segundos.</div>`;
-  if(r.estado === 'ok') return `<div class="note-box" style="margin-top:10px;">✓ Comprobante revisado: encontramos el monto de ${money(total)} y los datos de la transferencia.</div>`;
-  const motivos = [];
-  if(r.estado === 'fallo') motivos.push('No pudimos leer la imagen en este momento. Revisa tu conexión y vuelve a subirla.');
-  else if(r.duplicado) motivos.push('Este comprobante ya se usó en otro pedido. Cada pedido necesita su propia transferencia.');
-  else {
-    if(!r.montoOk) motivos.push(`No encontramos el monto exacto de ${money(total)}. Transfiere exactamente esa cantidad.`);
-    if(r.palabras.length < 2) motivos.push('La imagen no parece un comprobante de transferencia bancaria.');
-  }
-  return `<div class="note-box error" style="margin-top:10px;">
-    ⚠️ No pudimos validar tu comprobante:
-    <ul style="margin:6px 0 6px 18px; padding:0;">${motivos.map(m => `<li>${esc(m)}</li>`).join('')}</ul>
-    <div style="font-weight:400;">Sube la <b>captura de pantalla original</b> de tu app del banco (no una foto de la pantalla), donde se vea completo el monto, la clave de rastreo y la cuenta destino.</div>
-  </div>`;
-}
-
 function paymentView(){
   const total = grandTotal();
   return `
@@ -2011,10 +2142,23 @@ function paymentView(){
   </section>`;
 }
 
-function canConfirmOrder(){
-  if(state.payment === 'transferencia') return !!state.comprobante && !!state.comprobanteRevision && state.comprobanteRevision.estado === 'ok';
-  if(state.payment === 'efectivo') return true;
-  return false;
+function revisionComprobanteHtml(total){
+  const r = state.comprobanteRevision;
+  if(!r) return '';
+  if(r.estado === 'revisando') return `<div class="note-box neutral" style="margin-top:10px;">🔎 Revisando tu comprobante… puede tardar unos segundos.</div>`;
+  if(r.estado === 'ok') return `<div class="note-box" style="margin-top:10px;">✓ Comprobante revisado: encontramos el monto de ${money(total)} y los datos de la transferencia.</div>`;
+  const motivos = [];
+  if(r.estado === 'fallo') motivos.push('No pudimos leer la imagen en este momento. Revisa tu conexión y vuelve a subirla.');
+  else if(r.duplicado) motivos.push('Este comprobante ya se usó en otro pedido. Cada pedido necesita su propia transferencia.');
+  else {
+    if(!r.montoOk) motivos.push(`No encontramos el monto exacto de ${money(total)}. Transfiere exactamente esa cantidad.`);
+    if(r.palabras.length < 2) motivos.push('La imagen no parece un comprobante de transferencia bancaria.');
+  }
+  return `<div class="note-box error" style="margin-top:10px;">
+    ⚠️ No pudimos validar tu comprobante:
+    <ul style="margin:6px 0 6px 18px; padding:0;">${motivos.map(m => `<li>${esc(m)}</li>`).join('')}</ul>
+    <div style="font-weight:400;">Sube la <b>captura de pantalla original</b> de tu app del banco (no una foto de la pantalla), donde se vea completo el monto, la clave de rastreo y la cuenta destino.</div>
+  </div>`;
 }
 
 function confirmationView(){
@@ -2082,14 +2226,48 @@ function confirmationView(){
   </section>`;
 }
 
-function adminStageTrack(order){
-  return `<div class="steps">${STAGES.map((s,i)=>{
-    const cls = i<order.stageIndex ? 'done' : (i===order.stageIndex ? 'current' : '');
-    return `<span class="s ${cls}">${i<order.stageIndex?'✓ ':(i+1)+'. '}${stageLabel(order,i)}</span>${i<STAGES.length-1?'<span class="sep">→</span>':''}`;
-  }).join('')}</div>`;
+function trackView(){
+  const t = state.track;
+  let result = '';
+  if(t.loading) result = '<p style="color:var(--ink-soft)">Buscando tu pedido…</p>';
+  else if(t.error) result = `<div class="note-box error">${esc(t.error)}</div>`;
+  else if(t.order){
+    const o = t.order;
+    result = `
+    <div class="pay-detail">
+      <h3 style="margin-top:0">Pedido ${esc(o.folio)}</h3>
+      ${adminStageTrack(o)}
+      <div class="rline"><span>Total:</span><span>${money(o.total)}</span></div>
+      <div class="rline"><span>Entrega:</span><span>${o.fulfillment==='delivery' ? 'A domicilio: '+esc(o.direccion||'') : 'Recoger en el local ('+STORE_HOURS_TEXT+')'}</span></div>
+      <div class="rline"><span>Fecha estimada:</span><span>${fmtDate(o.estimatedReady)}</span></div>
+    </div>
+    ${smsLogHtml(o, '💬 Seguimiento de tu pedido')}`;
+  }
+  const porFolio = `
+    <div class="field-col"><label>Folio</label><input type="text" id="tFolio" value="${esc(t.folio)}" placeholder="AD-1234"></div>
+    <div class="field-col"><label>Teléfono (10 dígitos)</label><input type="tel" id="tTel" value="${esc(t.tel)}" placeholder="5512345678" maxlength="10"></div>
+    <button class="btn btn-primary btn-block" id="trackBtn">Consultar</button>
+    <button class="backlink" data-track-mode="nombre" style="margin-top:10px;">¿No tienes tu folio? Busca con el nombre del alumno</button>`;
+  const porNombre = `
+    <div class="field-col"><label>Nombre(s) del alumno</label><input type="text" id="tNombres" value="${esc(t.nombres)}" placeholder="Ej. María Fernanda"></div>
+    <div class="field-col"><label>Apellido paterno</label><input type="text" id="tApPaterno" value="${esc(t.apPaterno)}" placeholder="Ej. Gómez"></div>
+    <div class="field-col"><label>Apellido materno</label><input type="text" id="tApMaterno" value="${esc(t.apMaterno)}" placeholder="Ej. Ruiz"></div>
+    <div class="field-col"><label>Teléfono (10 dígitos)</label><input type="tel" id="tTel2" value="${esc(t.tel)}" placeholder="5512345678" maxlength="10"></div>
+    <p style="font-size:0.78rem; color:var(--ink-soft); margin:-4px 0 10px;">Debes escribir el nombre exactamente como lo diste al hacer el pedido.</p>
+    <button class="btn btn-primary btn-block" id="trackBtnNombre">Consultar</button>
+    <button class="backlink" data-track-mode="folio" style="margin-top:10px;">← Mejor busco con mi folio</button>`;
+  return `
+  <section class="view">
+    <h2 style="margin-top:0">Rastrear mi pedido</h2>
+    <p style="color:var(--ink-soft); margin-top:-6px">${t.mode==='folio' ? 'Escribe tu folio (viene en tu recibo, ej. AD-1234) y el teléfono que dejaste al hacer el pedido.' : 'Escribe el nombre completo del alumno y el teléfono que dejaste al hacer el pedido.'}</p>
+    <div class="pay-detail" style="max-width:420px">
+      ${t.mode==='folio' ? porFolio : porNombre}
+    </div>
+    <div style="margin-top:16px;">${result}</div>
+  </section>`;
 }
 
-/* ---------- panel de personal ---------- */
+/* ================= VISTAS — PANEL DE PERSONAL ================= */
 
 function adminTopbar(){
   return `
@@ -2121,6 +2299,203 @@ function loginView(){
   </section>`;
 }
 
+function adminDashboard(){
+  const listos = avisosListos();
+  const tabItems = [['pedidos','Pedidos'],['cortes','Cortes / Innovat'],['avisos', 'Avisos' + (listos.length ? ` <span class="cart-count" style="display:inline-flex; vertical-align:middle;">${listos.length}</span>` : '')]];
+  if(state.auth.role==='Administrador') tabItems.push(['inventario','Inventario'], ['uniformes','Uniformes'], ['listas','Listas'], ['ventas','Ventas']);
+  // en cuanto una prenda agotada vuelve a tener existencias y hay papás esperando, sale este letrero en todo el panel
+  const banner = listos.length && state.adminTab !== 'avisos'
+    ? `<div class="note-box error" style="margin-top:12px; display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;">
+        <span>🔔 Ya hay existencias para ${listos.length} ${listos.length===1?'papá que está esperando':'papás que están esperando'} el aviso.</span>
+        <button class="btn btn-primary btn-sm" data-admin-tab="avisos">Ver avisos</button>
+      </div>` : '';
+  const nuevos = state.pedidosNuevos || [];
+  const bannerPedido = nuevos.length ? `<div class="note-box" style="margin-top:12px; display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;">
+      <span>🛎️ ${nuevos.length===1 ? 'Llegó un pedido nuevo' : `Llegaron ${nuevos.length} pedidos nuevos`}: ${nuevos.map(f => `<a href="#" data-open-order="${esc(f)}" style="color:inherit;">${esc(f)}</a>`).join(', ')}</span>
+      <button class="btn btn-secondary btn-sm" id="pedidosNuevosOkBtn">Entendido</button>
+    </div>` : '';
+  return `
+  <section class="view">
+    <div class="tabs" style="padding-left:0;">
+      ${tabItems.map(([k,l])=>`<button class="tab ${state.adminTab===k?'active':''}" data-admin-tab="${k}">${l}</button>`).join('')}
+    </div>
+    ${bannerPedido}
+    ${banner}
+    <div style="margin-top:16px;">
+      ${state.adminTab==='inventario' && state.auth.role==='Administrador' ? inventoryView()
+        : state.adminTab==='ventas' && state.auth.role==='Administrador' ? ventasView()
+        : state.adminTab==='uniformes' && state.auth.role==='Administrador' ? uniformesAdminView()
+        : state.adminTab==='listas' && state.auth.role==='Administrador' ? listasAdminView()
+        : state.adminTab==='avisos' ? avisosView()
+        : state.adminTab==='cortes' ? cortesView() : ordersView()}
+    </div>
+  </section>`;
+}
+
+function ordersView(){
+  if(state.adminOrderFolio){
+    const order = state.orders.find(o=>o.folio===state.adminOrderFolio);
+    if(order) return orderDetailView(order);
+    state.adminOrderFolio = null;
+  }
+  if(state.scannerOpen) return scannerView();
+  const scanBtn = `<div style="margin-bottom:14px; display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+    <button class="btn btn-secondary btn-sm" id="openScannerBtn">📷 Escanear folio (QR)</button>
+    <input type="text" id="ordersSearch" placeholder="Buscar por folio o nombre del alumno…" value="${esc(state.ordersSearch||'')}" style="flex:1; min-width:200px; max-width:320px;">
+  </div>`;
+  if(!state.orders.length){
+    return scanBtn + `<div class="empty-state"><div class="big">📭</div><h3>Aún no hay pedidos</h3><p>Los pedidos que los papás hagan en la tienda aparecerán aquí en cuanto los confirmen.</p></div>`;
+  }
+  const q = (state.ordersSearch||'').trim().toLowerCase();
+  const filtered = !q ? state.orders : state.orders.filter(o =>
+    o.folio.toLowerCase().includes(q) || alumnosLabel(o).toLowerCase().includes(q));
+  if(!filtered.length){
+    return scanBtn + `<div class="empty-state"><div class="big">🔎</div><p>No hay pedidos que coincidan con "${esc(state.ordersSearch)}".</p></div>`;
+  }
+  const rows = filtered.slice().reverse().map(o => `
+    <tr data-open-order="${esc(o.folio)}" style="cursor:pointer;">
+      <td>${esc(o.folio)}</td>
+      <td>${esc(alumnosLabel(o))}<br><span style="color:var(--ink-soft); font-size:0.78rem;">${gradosLabel(o) ? esc(gradosLabel(o))+' de primaria' : ''}</span></td>
+      <td>${o.fulfillment==='delivery' ? 'Domicilio' : 'Recoger en local'}</td>
+      <td>${payBadge(o)}</td>
+      <td><span class="badge" style="background:${stageColor(o.stageIndex)}">${stageLabel(o,o.stageIndex)}</span></td>
+      <td class="num">${money(o.total)}</td>
+    </tr>`).join('');
+  return scanBtn + `
+  <table class="cart-table">
+    <thead><tr><th>Folio</th><th>Cliente</th><th>Entrega</th><th>Pago</th><th>Estado</th><th class="num">Total</th></tr></thead>
+    <tbody>${rows}</tbody>
+  </table>`;
+}
+
+function orderDetailView(order){
+  const itemsHtml = pedidoItemsHtml(order);
+
+  const isFinalNext = order.stageIndex === STAGES.length-2;
+  let actionHtml = '';
+  if(order.stageIndex < STAGES.length-1 && pagoPendienteBloquea(order, order.stageIndex+1)){
+    actionHtml = `<div class="note-box error">🔒 No se puede marcar como "${esc(stageLabel(order, order.stageIndex+1))}" hasta confirmar que la transferencia llegó a la cuenta. Revisa arriba y da clic en <b>"✓ Confirmar pago recibido"</b>.</div>`;
+  } else if(order.stageIndex < STAGES.length-1){
+    actionHtml = isFinalNext ? signaturePanel(order) : `<button class="btn btn-primary" id="advanceStageBtn">Marcar como: ${stageLabel(order, order.stageIndex+1)} →</button>`;
+  } else {
+    actionHtml = `<div class="note-box">Pedido completado el ${order.completedAt ? new Date(order.completedAt).toLocaleString('es-MX') : ''}${order.recibioNombre ? '. Recibió: '+esc(order.recibioNombre) : ''}.</div>
+      ${order.signature ? `<div style="margin-top:10px;"><div style="font-size:0.78rem; color:var(--ink-soft); margin-bottom:6px;">Firma de recepción:</div><img class="preview-img" src="${order.signature}" style="max-height:100px; background:#fff;"></div>` : ''}`;
+  }
+
+  return `
+  <button class="backlink" data-close-order="1">← Volver a pedidos</button>
+  <div class="pay-detail">
+    <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:16px;">
+      <div>
+        <h3 style="margin:0 0 4px;">Folio ${esc(order.folio)}</h3>
+        <div style="font-size:0.85rem; color:var(--ink-soft);">${esc(alumnosLabel(order))}${gradosLabel(order) ? ' · '+esc(gradosLabel(order))+' de primaria' : ''} · Tel. ${esc(order.cliente.telefono)}${order.cliente.correo ? ' · '+esc(order.cliente.correo) : ''}</div>
+      </div>
+      ${makeQrHtml(order.folio, 96)}
+    </div>
+    <hr>
+    ${itemsHtml}
+    <hr>
+    <div class="rline"><span>Subtotal:</span><span>${money(order.subtotal)}</span></div>
+    <div class="rline"><span>Envío:</span><span>${order.deliveryFee ? money(order.deliveryFee) : 'Recoger en local'}</span></div>
+    <div class="rline" style="font-weight:800;"><span>Total:</span><span>${money(order.total)}</span></div>
+    <hr>
+    <div class="rline"><span>Entrega:</span><span>${order.fulfillment==='delivery' ? 'Domicilio: '+esc(order.direccion||'') : 'Recoger en el local'}</span></div>
+    ${order.fulfillment==='delivery' && order.referencias ? `<div class="rline"><span>Referencias:</span><span>${esc(order.referencias)}</span></div>` : ''}
+    ${order.fulfillment==='delivery' ? `<div class="rline"><span>Distancia:</span><span>${order.deliveryKm!=null ? order.deliveryKm.toFixed(1)+' km' : ''}${order.rutaMin ? ' (~'+order.rutaMin+' min)' : ''}</span></div>` : ''}
+    ${order.fulfillment==='delivery' ? ligasNavegacion(order) : ''}
+    <div class="rline"><span>Pago:</span><span>${payBadge(order)}</span></div>
+    <div style="margin:6px 0 4px;"><button class="btn btn-secondary btn-sm" data-pago="${esc(order.folio)}">${order.pagoConfirmado ? '↩ Marcar como NO pagado' : '✓ Confirmar pago recibido'}</button></div>
+    ${order.payment==='efectivo' ? `<div class="note-box error" style="margin-top:8px;">Recuerda pedir el recibo con QR antes de entregar.</div>` : ''}
+    ${verificacionTransferenciaHtml(order)}
+    ${order.comprobante ? `<img class="preview-img" src="${esc(order.comprobante)}">` : ''}
+
+    <div class="field-col" style="margin-top:18px; max-width:280px;">
+      <label>Ubicación / anaquel (opcional)</label>
+      <input type="text" id="ubicacionInput" value="${esc(order.ubicacion||'')}" placeholder="Ej. Anaquel A-12">
+    </div>
+  </div>
+
+  <div class="pay-detail">${checklistHtml(order)}</div>
+
+  <div class="pay-detail">
+    ${adminStageTrack(order)}
+    ${actionHtml}
+  </div>
+  ${waButton(order)}
+  ${smsLogHtml(order, '💬 Seguimiento del pedido')}
+  ${historialHtml(order)}`;
+}
+
+function verificacionTransferenciaHtml(order){
+  if(order.payment !== 'transferencia') return '';
+  const r = order.comprobanteRevision || {};
+  const fecha = new Date(order.createdAt).toLocaleDateString('es-MX', { day:'numeric', month:'long', year:'numeric' });
+  return `<div class="verifica-pago ${order.pagoConfirmado ? 'ok' : ''}">
+    <div class="vp-titulo">${order.pagoConfirmado ? '✓ Pago confirmado en el banco' : '🏦 Antes de entregar, confirma que el dinero llegó'}</div>
+    <div class="rline"><span>Monto esperado:</span><span><b>${money(order.total)}</b></span></div>
+    <div class="rline"><span>Clave de rastreo:</span><span>${r.claveRastreo ? `<b>${esc(r.claveRastreo)}</b> <button class="btn-ghost" data-copiar="${esc(r.claveRastreo)}">Copiar</button>` : 'No se pudo leer; búscala en el comprobante'}</span></div>
+    <div class="rline"><span>Fecha del pedido:</span><span>${esc(fecha)}</span></div>
+    <div class="rline"><span>Cuenta que recibe:</span><span>${esc(BANCO.banco)} · CLABE ${esc(BANCO.clabe)}</span></div>
+    ${order.pagoConfirmado ? '' : `<ol class="vp-pasos">
+      <li>Busca un depósito de <b>${money(order.total)}</b> en tu app de ${esc(BANCO.banco)}.</li>
+      <li>O verifícalo en Banxico (CEP) con la fecha, la clave de rastreo, el banco que envió, ${esc(BANCO.banco)} como receptor, tu CLABE y el monto. Si Banxico no la encuentra, el comprobante no es real.</li>
+      <li>Si fue de ${esc(BANCO.banco)} a ${esc(BANCO.banco)} no hay clave de rastreo: revísalo directo en tu app.</li>
+    </ol>
+    <a class="btn btn-secondary btn-sm" target="_blank" rel="noopener" style="text-decoration:none;" href="https://www.banxico.org.mx/cep/">🔎 Verificar en Banxico (CEP)</a>`}
+  </div>`;
+}
+
+function checklistHtml(order){
+  const checklist = order.checklist || {};
+  const terminado = order.stageIndex >= STAGES.length-1;
+  const multi = order.alumnos && order.alumnos.length > 1;
+  let rows = ''; let total = 0, checked = 0;
+  order.items.utiles.forEach((it,i) => {
+    const key = 'u'+i; total++; if(checklist[key]) checked++;
+    const quien = multi ? ' — ' + esc(nombreAlumnoPorId(order, it.studentId)) : '';
+    rows += `<label class="item-row" style="cursor:${terminado?'default':'pointer'};">
+      <input type="checkbox" data-checklist="${key}" data-folio="${esc(order.folio)}" ${checklist[key]?'checked':''} ${terminado?'disabled':''} style="width:20px;height:20px;flex-shrink:0;">
+      <div class="info"><div class="desc" style="${checklist[key]?'text-decoration:line-through;color:var(--ink-soft);':''}">${esc(it.descripcion)} x${it.qty}${quien}</div></div>
+    </label>`;
+  });
+  order.items.uniformes.forEach((u,i) => {
+    const key = 'f'+i; total++; if(checklist[key]) checked++;
+    const reparto = multi && u.splits && u.splits.length ? ' — ' + u.splits.map(s=>esc(nombreAlumnoPorId(order,s.studentId))+': '+s.qty).join(', ') : '';
+    rows += `<label class="item-row" style="cursor:${terminado?'default':'pointer'};">
+      <input type="checkbox" data-checklist="${key}" data-folio="${esc(order.folio)}" ${checklist[key]?'checked':''} ${terminado?'disabled':''} style="width:20px;height:20px;flex-shrink:0;">
+      <div class="info"><div class="desc" style="${checklist[key]?'text-decoration:line-through;color:var(--ink-soft);':''}">${esc(u.name)} (talla ${esc(u.size)}) x${u.qty}${reparto}</div></div>
+    </label>`;
+  });
+  return `<div class="section-block">
+    <div class="section-title"><span>Checklist de armado del paquete (${checked}/${total})</span></div>
+    ${rows}
+  </div>`;
+}
+
+function historialHtml(order){
+  if(!order.historial || !order.historial.length) return '';
+  return `<div class="pay-detail">
+    <h3 style="margin-top:0;">🕒 Historial</h3>
+    ${order.historial.map(h => `<div class="rline"><span>${esc(h.texto)} — <b>${esc(h.por)}</b></span><span style="color:var(--ink-soft); white-space:nowrap;">${new Date(h.at).toLocaleString('es-MX',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}</span></div>`).join('')}
+  </div>`;
+}
+
+function signaturePanel(order){
+  return `
+  <div>
+    <div class="field-col" style="max-width:300px;">
+      <label>Nombre de quien recibe el pedido</label>
+      <input type="text" id="recibioNombreInput" value="${esc(order.recibioNombre||'')}" placeholder="Nombre de quien recoge/recibe">
+    </div>
+    <p style="font-size:0.85rem; font-weight:700; margin-bottom:6px;">Firma de quien recibe:</p>
+    <canvas id="sigCanvas" width="400" height="150" style="width:100%; max-width:400px; border:1.5px dashed var(--border); border-radius:4px; touch-action:none; background:#fff; display:block;"></canvas>
+    <div style="display:flex; gap:10px; margin-top:10px;">
+      <button class="btn btn-secondary btn-sm" id="clearSigBtn" type="button">Limpiar firma</button>
+      <button class="btn btn-primary btn-sm" id="confirmDeliveryBtn" type="button" disabled>Confirmar ${order.fulfillment==='delivery'?'entrega':'recolección'}</button>
+    </div>
+  </div>`;
+}
+
 function waButton(order){
   const digits = (order.cliente.telefono||'').replace(/\D/g,'');
   if(digits.length !== 10) return '';
@@ -2130,17 +2505,25 @@ function waButton(order){
     <span style="font-size:0.78rem; color:var(--ink-soft);">Se abre WhatsApp con el último mensaje listo; solo presiona enviar.</span></div>`;
 }
 
-function orderTotals(o){
-  if(o.totales && o.totales.uniformesDetalle) return o.totales;
-  const t = { papeleria:0, libros:0, uniformesDetalle:{} };
-  ((o.items && o.items.utiles) || []).forEach(it => { const v = it.qty*it.precio_unitario; if(it.seccion==='LIBROS') t.libros += v; else t.papeleria += v; });
-  ((o.items && o.items.uniformes) || []).forEach(u => { t.uniformesDetalle[u.name] = (t.uniformesDetalle[u.name]||0) + u.qty*u.price; });
-  return t;
+function scannerView(){
+  return `
+  <div class="pay-detail">
+    <h3 style="margin-top:0;">Escanear folio del pedido</h3>
+    ${state.scannerError ? `<div class="note-box error" style="margin-bottom:12px;">${esc(state.scannerError)}</div>` : ''}
+    <video id="scanVideo" style="width:100%; max-width:360px; border-radius:4px; background:#000; display:block;" playsinline muted autoplay></video>
+    <canvas id="scanCanvas" style="display:none;"></canvas>
+    <p style="font-size:0.8rem; color:var(--ink-soft); margin-top:8px;">Apunta la cámara al código que le mostró el papá/mamá.</p>
+    <button class="btn btn-secondary btn-sm" id="closeScannerBtn" type="button" style="margin:14px 0;">Cancelar</button>
+    <div class="field-col" style="max-width:280px;">
+      <label>O escribe el folio manualmente</label>
+      <div style="display:flex; gap:8px;">
+        <input type="text" id="manualFolioInput" placeholder="AD-1234">
+        <button class="btn btn-primary btn-sm" id="manualFolioBtn" type="button">Buscar</button>
+      </div>
+    </div>
+  </div>`;
 }
-function uniformesTotalOrden(o){
-  const d = orderTotals(o).uniformesDetalle || {};
-  return Object.values(d).reduce((a,b)=>a+b, 0);
-}
+
 function cortesRows(){
   const f = state.cortesFilter;
   const desde = state.cortesDesde ? new Date(state.cortesDesde + 'T00:00:00') : null;
@@ -2155,6 +2538,7 @@ function cortesRows(){
     return true;
   });
 }
+
 function cortesView(){
   const rows = cortesRows();
   const sum = { papeleria:0, libros:0, uniformes:0, envio:0, total:0 };
@@ -2221,6 +2605,7 @@ function cortesView(){
   </table>
   </div>`;
 }
+
 function exportCortesExcel(){
   if(typeof XLSX === 'undefined'){ alert('No se pudo cargar el generador de Excel. Revisa tu conexión.'); return; }
   const filas = cortesRows();
@@ -2243,45 +2628,203 @@ function exportCortesExcel(){
   XLSX.writeFile(wb, 'Corte_Innovat_' + new Date().toISOString().slice(0,10) + '.xlsx');
 }
 
-function adminDashboard(){
-  const listos = avisosListos();
-  const tabItems = [['pedidos','Pedidos'],['cortes','Cortes / Innovat'],['avisos', 'Avisos' + (listos.length ? ` <span class="cart-count" style="display:inline-flex; vertical-align:middle;">${listos.length}</span>` : '')]];
-  if(state.auth.role==='Administrador') tabItems.push(['inventario','Inventario'], ['uniformes','Uniformes'], ['listas','Listas'], ['ventas','Ventas']);
-  // en cuanto una prenda agotada vuelve a tener existencias y hay papás esperando, sale este letrero en todo el panel
-  const banner = listos.length && state.adminTab !== 'avisos'
-    ? `<div class="note-box error" style="margin-top:12px; display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;">
-        <span>🔔 Ya hay existencias para ${listos.length} ${listos.length===1?'papá que está esperando':'papás que están esperando'} el aviso.</span>
-        <button class="btn btn-primary btn-sm" data-admin-tab="avisos">Ver avisos</button>
-      </div>` : '';
-  const nuevos = state.pedidosNuevos || [];
-  const bannerPedido = nuevos.length ? `<div class="note-box" style="margin-top:12px; display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;">
-      <span>🛎️ ${nuevos.length===1 ? 'Llegó un pedido nuevo' : `Llegaron ${nuevos.length} pedidos nuevos`}: ${nuevos.map(f => `<a href="#" data-open-order="${esc(f)}" style="color:inherit;">${esc(f)}</a>`).join(', ')}</span>
-      <button class="btn btn-secondary btn-sm" id="pedidosNuevosOkBtn">Entendido</button>
-    </div>` : '';
-  return `
-  <section class="view">
-    <div class="tabs" style="padding-left:0;">
-      ${tabItems.map(([k,l])=>`<button class="tab ${state.adminTab===k?'active':''}" data-admin-tab="${k}">${l}</button>`).join('')}
-    </div>
-    ${bannerPedido}
-    ${banner}
-    <div style="margin-top:16px;">
-      ${state.adminTab==='inventario' && state.auth.role==='Administrador' ? inventoryView()
-        : state.adminTab==='ventas' && state.auth.role==='Administrador' ? ventasView()
-        : state.adminTab==='uniformes' && state.auth.role==='Administrador' ? uniformesAdminView()
-        : state.adminTab==='listas' && state.auth.role==='Administrador' ? listasAdminView()
-        : state.adminTab==='avisos' ? avisosView()
-        : state.adminTab==='cortes' ? cortesView() : ordersView()}
-    </div>
-  </section>`;
+function inventoryView(){
+  const filter = (state.adminInvFilter||'').toLowerCase();
+  let html = `<div class="field-col" style="max-width:320px;"><label>Buscar artículo</label><input type="text" id="invFilter" placeholder="Ej. cuaderno, tenis..." value="${esc(state.adminInvFilter||'')}"></div>`;
+  Object.keys(GRADES).forEach(g => {
+    const rows = GRADES[g].items.map((it,i)=>({it,i})).filter(({it}) => !filter || it.descripcion.toLowerCase().includes(filter));
+    if(!rows.length) return;
+    const label = gradoLargo(g);
+    html += `<div class="section-block"><div class="section-title"><span>${esc(label)}</span></div>`;
+    rows.forEach(({it,i}) => {
+      const key = invKeyUtil(g, i);
+      const stock = state.inventory[key] ?? 0;
+      html += `<div class="item-row">
+        <div class="info"><div class="desc">${esc(it.descripcion)}</div><div class="qty">P. unitario ${money(it.precio_unitario)}</div></div>
+        <div class="amt" style="${stock<5?'color:var(--red);':''}">
+          <input type="text" inputmode="numeric" id="inv_${idSafe(key)}" data-inv-key="${esc(key)}" value="${stock}" style="width:64px;"> uds.
+        </div>
+      </div>`;
+    });
+    html += `</div>`;
+  });
+  const uniRows = [];
+  uniformesVisibles().forEach(u => u.tallas.forEach(sz => { if(!filter || u.name.toLowerCase().includes(filter)) uniRows.push({u,sz}); }));
+  if(uniRows.length){
+    html += `<div class="section-block"><div class="section-title"><span>Uniformes</span></div>`;
+    uniRows.forEach(({u,sz}) => {
+      const key = u.id+'_'+sz;
+      const stock = state.inventory[key] ?? 0;
+      html += `<div class="item-row">
+        <div class="info"><div class="desc">${esc(u.name)} · talla ${esc(sz)}</div><div class="qty">P. unitario ${money(u.price)}</div></div>
+        <div class="amt" style="${stock<5?'color:var(--red);':''}">
+          <input type="text" inputmode="numeric" id="inv_${idSafe(key)}" data-inv-key="${esc(key)}" value="${stock}" style="width:64px;"> uds.
+        </div>
+      </div>`;
+    });
+    html += `</div>`;
+  }
+  return html;
 }
 
-/* ---------- panel de ventas ---------- */
+function avisosView(){
+  const pendientes = avisosPendientes();
+  if(!pendientes.length){
+    return `<div class="empty-state"><div class="big">🔔</div><h3>No hay papás esperando</h3><p>Cuando un papá pida que le avisen de una talla agotada, aparecerá aquí.</p></div>`;
+  }
+  // se agrupan por prenda + talla
+  const grupos = {};
+  pendientes.forEach(a => { const k = a.uniformeId+'_'+a.talla; (grupos[k] = grupos[k] || []).push(a); });
+  const bloques = Object.entries(grupos).map(([k, lista]) => ({ k, lista, stock: stockDe(k) }));
+  const html = (titulo, items, listo) => !items.length ? '' : `<h3 style="margin:18px 0 8px;">${titulo}</h3>` + items.map(({k, lista, stock}) => `
+    <div class="section-block">
+      <div class="section-title"><span>${esc(lista[0].nombre)} · talla ${esc(lista[0].talla)}</span>
+        <span style="font-weight:700; ${stock>0?'color:var(--green)':'color:var(--red)'}">${stock>0 ? stock+' en existencia' : 'agotada'} · ${lista.length} esperando</span></div>
+      ${lista.map(a => avisoRowHtml(a, listo)).join('')}
+    </div>`).join('');
+  return `<p style="color:var(--ink-soft); margin-top:0;">Papás que pidieron que les avisemos cuando haya un uniforme agotado. Al subir las existencias en Inventario, se mueven a "Ya hay, hay que avisar" y te llega un correo.</p>`
+    + html('✅ Ya hay, hay que avisar', bloques.filter(b => b.stock > 0), true)
+    + html('⏳ Siguen agotados', bloques.filter(b => b.stock <= 0), false);
+}
+
+function avisoRowHtml(a, listo){
+  const digits = (a.telefono||'').replace(/\D/g,'');
+  const wa = digits.length===10 ? `https://wa.me/52${digits}?text=${encodeURIComponent(mensajeAvisoPapa(a))}` : '';
+  return `<div class="item-row">
+    <div class="info">
+      <div class="desc">📞 ${esc(a.telefono)} · ✉️ ${esc(a.correo)}</div>
+      <div class="qty">Lo pidió el ${esc(new Date(a.createdAt).toLocaleDateString('es-MX', {day:'numeric', month:'short'}))}${a.correoEnviadoAt ? ' · <span style="color:var(--green)">correo enviado</span>' : ''}</div>
+    </div>
+    <div style="display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end;">
+      ${listo && wa ? `<a class="btn btn-secondary btn-sm" target="_blank" rel="noopener" href="${wa}" style="text-decoration:none;">📲 WhatsApp</a>` : ''}
+      ${listo ? `<button class="btn btn-secondary btn-sm" data-aviso-correo="${esc(a.id)}">✉️ Enviar correo</button>` : ''}
+      <button class="btn ${listo?'btn-primary':'btn-secondary'} btn-sm" data-aviso-hecho="${esc(a.id)}">${listo ? '✓ Ya le avisé' : 'Quitar'}</button>
+    </div>
+  </div>`;
+}
+
+function mensajeAvisoPapa(a){
+  return `Liceo Alexander Dul: ¡ya tenemos ${a.nombre} en talla ${a.talla}! Puedes pedirlo en la tienda en línea. Las piezas se apartan al hacer el pedido.`;
+}
+
+// los borradores se guardan en state.uniDraft al teclear SIN re-renderizar, para que un render
+// por un pedido nuevo (onSnapshot) no borre lo que se está escribiendo.
+function uniDraftDe(u){
+  return Object.assign({ name:u.name, price: u.price ?? '', tallas:(u.tallas||[]).join(', '), activo:u.activo !== false }, state.uniDraft[u.id]||{});
+}
+
+function uniformesAdminView(){
+  const filas = UNIFORMS.map(u => {
+    const d = uniDraftDe(u);
+    const id = esc(u.id);
+    return `<div class="section-block" style="display:grid; grid-template-columns:110px 1fr; gap:14px; align-items:start;">
+      <div>
+        ${u.foto ? `<img class="uni-foto" src="${esc(u.foto)}" alt="">` : `<div class="uni-foto uni-sin-foto">${u.icon||'👕'}</div>`}
+        ${u.fotos.length ? `<div class="uni-thumbs" style="flex-wrap:wrap;">${u.fotos.map((f,i) => `<div style="position:relative; width:46px;">
+            <img src="${esc(f)}" alt="" style="width:46px; height:46px; object-fit:contain; background:#fff; border-radius:3px;">
+            <button class="btn-ghost" data-uni-foto-quitar="${id}" data-idx="${i}" title="Quitar esta foto" style="position:absolute; top:-8px; right:-8px; padding:0 3px;">✖</button></div>`).join('')}</div>` : ''}
+        <label class="btn btn-secondary btn-sm" style="display:block; text-align:center; cursor:pointer;">📷 Agregar foto
+          <input type="file" accept="image/*" data-uni-foto="${id}" style="display:none;"></label>
+        <div style="font-size:0.72rem; color:var(--ink-soft); margin-top:4px;">La primera es la principal.</div>
+      </div>
+      <div>
+        <div class="field-row" style="flex-wrap:wrap; gap:10px;">
+          <div class="field-col" style="flex:2; min-width:180px;"><label>Nombre</label><input type="text" data-uni-edit="${id}" data-campo="name" value="${esc(d.name)}"></div>
+          <div class="field-col" style="flex:1; min-width:100px;"><label>Precio ($)</label><input type="text" inputmode="decimal" data-uni-edit="${id}" data-campo="price" value="${esc(String(d.price))}" placeholder="Por confirmar"></div>
+        </div>
+        <div class="field-col"><label>Tallas (separadas por coma)</label><input type="text" data-uni-edit="${id}" data-campo="tallas" value="${esc(d.tallas)}" placeholder="Ej. 6, 8, 10, 12, CH, M, G"></div>
+        <label style="display:flex; gap:6px; align-items:center; font-size:0.88rem; margin:6px 0;"><input type="checkbox" data-uni-edit="${id}" data-campo="activo" ${d.activo?'checked':''}> Se muestra en la tienda</label>
+        <button class="btn btn-primary btn-sm" data-uni-guardar="${id}" ${state.uniGuardando===u.id?'disabled':''}>${state.uniGuardando===u.id?'Guardando…':'Guardar'}</button>
+      </div>
+    </div>`;
+  }).join('');
+  return `<p style="color:var(--ink-soft); margin-top:0;">Aquí cambias nombre, precio, tallas y foto de cada prenda. Mientras una prenda no tenga precio, en la tienda dice "Precio por confirmar" y no se puede comprar. Las existencias de cada talla se ponen en <b>Inventario</b>.</p>
+    ${filas}
+    <button class="btn btn-secondary" id="uniNuevaBtn">＋ Agregar prenda</button>`;
+}
+
+function abrirListaEdit(grade){
+  const g = GRADES[grade];
+  state.listaEdit = { grade, guardando:false, mensaje:'',
+    items: g ? g.items.map((it,i) => ({ seccion: it.seccion||'MATERIAL DIARIO', descripcion: it.descripcion, cantidad: it.cantidad, precio_unitario: it.precio_unitario, stock: stockDe(g.docId+'_'+i) })) : [] };
+}
+
+function listasAdminView(){
+  const grados = Object.keys(GRADES);
+  if(!state.listaEdit && grados.length) abrirListaEdit(grados[0]);
+  const L = state.listaEdit;
+  const selector = `<div class="field-row" style="flex-wrap:wrap; gap:10px; align-items:flex-end; margin-bottom:12px;">
+    <div class="field-col" style="min-width:200px;"><label>Grado</label>
+      <select id="listaGrado">${grados.map(g => `<option value="${esc(g)}" ${L && L.grade===g?'selected':''}>${esc(g)}</option>`).join('')}
+</select></div>
+  </div>`;
+  if(!L) return selector + '<p>No hay listas todavía.</p>';
+  const filas = L.items.map((it,i) => `<tr>
+      <td><select data-li-edit="${i}" data-campo="seccion">${SECCIONES_LISTA.map(sec => `<option ${it.seccion===sec?'selected':''}>${sec}</option>`).join('')}</select></td>
+      <td><input type="text" data-li-edit="${i}" data-campo="descripcion" value="${esc(it.descripcion)}" style="width:100%; min-width:200px;"></td>
+      <td><input type="text" inputmode="decimal" data-li-edit="${i}" data-campo="cantidad" value="${esc(String(it.cantidad))}" style="width:60px;"></td>
+      <td><input type="text" inputmode="decimal" data-li-edit="${i}" data-campo="precio_unitario" value="${esc(String(it.precio_unitario))}" style="width:80px;"></td>
+      <td><input type="text" inputmode="numeric" data-li-edit="${i}" data-campo="stock" value="${esc(String(it.stock))}" style="width:60px;"></td>
+      <td><button class="btn-ghost" data-li-quitar="${i}" title="Quitar">✖</button></td>
+    </tr>`).join('');
+  return selector + `
+    <p style="color:var(--ink-soft); margin-top:0;">Edita la lista de <b>${esc(L.grade)}</b> y dale <b>Guardar lista</b>. Para el siguiente ciclo puedes <b>descargar la lista en Excel</b>, cambiarla ahí y volver a <b>cargarla</b>. El Excel lleva las columnas: Sección, Descripción, Cantidad, Precio unitario y Existencias. Los artículos con 0 existencias aparecen como "No disponible" en la tienda.</p>
+    <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px;">
+      <button class="btn btn-secondary btn-sm" id="listaExcelBajarBtn">⬇️ Descargar Excel</button>
+      <label class="btn btn-secondary btn-sm" style="cursor:pointer;">⬆️ Cargar desde Excel<input type="file" id="listaExcelSubir" accept=".xlsx,.xls,.csv" style="display:none;"></label>
+    </div>
+    ${L.mensaje ? `<div class="note-box ${L.mensaje.startsWith('⚠')?'error':''}" style="margin-bottom:10px;">${esc(L.mensaje)}</div>` : ''}
+    <div style="overflow-x:auto;"><table class="cart-table">
+      <thead><tr><th>Sección</th><th>Descripción</th><th>Cant.</th><th>Precio</th><th>Exist.</th><th></th></tr></thead>
+      <tbody>${filas}</tbody>
+    </table></div>
+    <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:12px;">
+      <button class="btn btn-secondary btn-sm" id="listaAgregarBtn">＋ Agregar artículo</button>
+      <button class="btn btn-primary" id="listaGuardarBtn" ${L.guardando?'disabled':''}>${L.guardando?'Guardando…':'Guardar lista'}</button>
+      <button class="btn-ghost" id="listaDescartarBtn">Descartar cambios</button>
+    </div>`;
+}
+
+async function guardarLista(){
+  const L = state.listaEdit;
+  const items = L.items
+    .map(it => ({ seccion: SECCIONES_LISTA.includes(it.seccion) ? it.seccion : seccionDe(it.seccion), descripcion: String(it.descripcion||'').trim(),
+      cantidad: Number(String(it.cantidad).replace(',','.'))||0, precio_unitario: Number(String(it.precio_unitario).replace(/[$,\s]/g,''))||0,
+      stock: Math.max(0, parseInt(it.stock)||0) }))
+    .filter(it => it.descripcion);
+  if(!items.length){ L.mensaje = '⚠ La lista no tiene artículos.'; render(); return; }
+  if(items.some(it => !(it.precio_unitario > 0))){ L.mensaje = '⚠ Hay artículos sin precio. Revisa la columna Precio.'; render(); return; }
+  const docId = GRADES[L.grade] ? GRADES[L.grade].docId : slug(L.grade);
+  const viejos = GRADES[L.grade] ? GRADES[L.grade].items.length : 0;
+  const listaItems = items.map(({stock, ...it}) => Object.assign(it, { total: it.cantidad * it.precio_unitario }));
+  const total_libros = listaItems.filter(it => it.seccion==='LIBROS').reduce((a,it) => a + it.total, 0);
+  const total_paquete = listaItems.reduce((a,it) => a + it.total, 0);
+  L.guardando = true; render();
+  try{
+    // el inventario de útiles va por posición (docId_índice), así que se reescribe completo para esta lista
+    const batch = writeBatch(db);
+    batch.set(doc(db, 'listas', docId), { nombre: L.grade, items: listaItems, total_libros, total_paquete });
+    items.forEach((it, i) => batch.set(doc(db, 'inventario', docId+'_'+i), { tipo:'util', grado:L.grade, idx:i, descripcion:it.descripcion, precio_unitario:it.precio_unitario, stock:it.stock }));
+    for(let j = items.length; j < viejos; j++) batch.delete(doc(db, 'inventario', docId+'_'+j));
+    await batch.commit();
+    GRADES[L.grade] = { docId, items: listaItems, total_libros, total_paquete };
+    items.forEach((it, i) => { state.inventory[docId+'_'+i] = it.stock; });
+    for(let j = items.length; j < viejos; j++) delete state.inventory[docId+'_'+j];
+    abrirListaEdit(L.grade);
+    state.listaEdit.mensaje = `✓ Lista de ${L.grade} guardada (${items.length} artículos, paquete completo ${money(total_paquete)}).`;
+  }catch(err){
+    console.error(err);
+    L.guardando = false; L.mensaje = '⚠ No se pudo guardar la lista. Intenta de nuevo.';
+  }
+  render();
+}
+
 function ventasPedidos(){
   const ahora = new Date();
   const desde = { todo:null, mes:new Date(ahora.getFullYear(), ahora.getMonth(), 1), d30:new Date(ahora - 30*864e5), d7:new Date(ahora - 7*864e5) }[state.ventasPeriodo||'todo'];
   return state.orders.filter(o => (state.ventasAlcance==='todos' || o.pagoConfirmado) && (!desde || new Date(o.createdAt) >= desde));
 }
+
 // tasa de compra por artículo de lista: de las listas pedidas donde aparece el artículo, en cuántas lo compraron.
 // Así un artículo que viene en las 6 listas (p. ej. papel américa) no "gana" solo por aparecer más veces.
 function tasaDeCompra(pedidos){
@@ -2306,6 +2849,7 @@ function tasaDeCompra(pedidos){
   });
   return Object.values(porArt).map(a => Object.assign(a, { tasa: a.listas ? a.compradas / a.listas : 0 }));
 }
+
 function barrasH(filas, opts){
   // filas: [{label, valor, texto, tip}]; barras horizontales de un solo color, ancladas a la izquierda
   const max = opts.max || Math.max(1, ...filas.map(f => f.valor));
@@ -2316,6 +2860,7 @@ function barrasH(filas, opts){
       <div class="hbar-val">${esc(f.texto)}</div>
     </div>`).join('')}</div>`;
 }
+
 function columnasTiempo(pedidos){
   if(!pedidos.length) return '<p class="viz-empty">Sin pedidos en este período.</p>';
   const porDia = {};
@@ -2333,6 +2878,7 @@ function columnasTiempo(pedidos){
   </div>
   <div class="cols-axis"><span>${esc(fmt(serie[0].k))}</span><span>máx. ${money(max)} en un día</span><span>${esc(fmt(serie[serie.length-1].k))}</span></div>`;
 }
+
 function ventasView(){
   const pedidos = ventasPedidos();
   const ingresos = pedidos.reduce((s,o) => s + (o.total||0), 0);
@@ -2399,414 +2945,34 @@ function ventasView(){
   <div id="vizTip" class="viz-tip" hidden></div>`;
 }
 
-function ordersView(){
-  if(state.adminOrderFolio){
-    const order = state.orders.find(o=>o.folio===state.adminOrderFolio);
-    if(order) return orderDetailView(order);
-    state.adminOrderFolio = null;
-  }
-  if(state.scannerOpen) return scannerView();
-  const scanBtn = `<div style="margin-bottom:14px; display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
-    <button class="btn btn-secondary btn-sm" id="openScannerBtn">📷 Escanear folio (QR)</button>
-    <input type="text" id="ordersSearch" placeholder="Buscar por folio o nombre del alumno…" value="${esc(state.ordersSearch||'')}" style="flex:1; min-width:200px; max-width:320px;">
-  </div>`;
-  if(!state.orders.length){
-    return scanBtn + `<div class="empty-state"><div class="big">📭</div><h3>Aún no hay pedidos</h3><p>Los pedidos que los papás hagan en la tienda aparecerán aquí en cuanto los confirmen.</p></div>`;
-  }
-  const q = (state.ordersSearch||'').trim().toLowerCase();
-  const filtered = !q ? state.orders : state.orders.filter(o =>
-    o.folio.toLowerCase().includes(q) || alumnosLabel(o).toLowerCase().includes(q));
-  if(!filtered.length){
-    return scanBtn + `<div class="empty-state"><div class="big">🔎</div><p>No hay pedidos que coincidan con "${esc(state.ordersSearch)}".</p></div>`;
-  }
-  const rows = filtered.slice().reverse().map(o => `
-    <tr data-open-order="${esc(o.folio)}" style="cursor:pointer;">
-      <td>${esc(o.folio)}</td>
-      <td>${esc(alumnosLabel(o))}<br><span style="color:var(--ink-soft); font-size:0.78rem;">${gradosLabel(o) ? esc(gradosLabel(o))+' de primaria' : ''}</span></td>
-      <td>${o.fulfillment==='delivery' ? 'Domicilio' : 'Recoger en local'}</td>
-      <td>${payBadge(o)}</td>
-      <td><span class="badge" style="background:${stageColor(o.stageIndex)}">${stageLabel(o,o.stageIndex)}</span></td>
-      <td class="num">${money(o.total)}</td>
-    </tr>`).join('');
-  return scanBtn + `
-  <table class="cart-table">
-    <thead><tr><th>Folio</th><th>Cliente</th><th>Entrega</th><th>Pago</th><th>Estado</th><th class="num">Total</th></tr></thead>
-    <tbody>${rows}</tbody>
-  </table>`;
-}
-
-function scannerView(){
-  return `
-  <div class="pay-detail">
-    <h3 style="margin-top:0;">Escanear folio del pedido</h3>
-    ${state.scannerError ? `<div class="note-box error" style="margin-bottom:12px;">${esc(state.scannerError)}</div>` : ''}
-    <video id="scanVideo" style="width:100%; max-width:360px; border-radius:4px; background:#000; display:block;" playsinline muted autoplay></video>
-    <canvas id="scanCanvas" style="display:none;"></canvas>
-    <p style="font-size:0.8rem; color:var(--ink-soft); margin-top:8px;">Apunta la cámara al código que le mostró el papá/mamá.</p>
-    <button class="btn btn-secondary btn-sm" id="closeScannerBtn" type="button" style="margin:14px 0;">Cancelar</button>
-    <div class="field-col" style="max-width:280px;">
-      <label>O escribe el folio manualmente</label>
-      <div style="display:flex; gap:8px;">
-        <input type="text" id="manualFolioInput" placeholder="AD-1234">
-        <button class="btn btn-primary btn-sm" id="manualFolioBtn" type="button">Buscar</button>
-      </div>
-    </div>
-  </div>`;
-}
-
-function nombreAlumnoPorId(order, id){
-  const al = (order.alumnos||[]).find(a=>a.id===id);
-  return al ? nombreCompleto(al) : '';
-}
-function checklistHtml(order){
-  const checklist = order.checklist || {};
-  const terminado = order.stageIndex >= STAGES.length-1;
-  const multi = order.alumnos && order.alumnos.length > 1;
-  let rows = ''; let total = 0, checked = 0;
-  order.items.utiles.forEach((it,i) => {
-    const key = 'u'+i; total++; if(checklist[key]) checked++;
-    const quien = multi ? ' — ' + esc(nombreAlumnoPorId(order, it.studentId)) : '';
-    rows += `<label class="item-row" style="cursor:${terminado?'default':'pointer'};">
-      <input type="checkbox" data-checklist="${key}" data-folio="${esc(order.folio)}" ${checklist[key]?'checked':''} ${terminado?'disabled':''} style="width:20px;height:20px;flex-shrink:0;">
-      <div class="info"><div class="desc" style="${checklist[key]?'text-decoration:line-through;color:var(--ink-soft);':''}">${esc(it.descripcion)} x${it.qty}${quien}</div></div>
-    </label>`;
-  });
-  order.items.uniformes.forEach((u,i) => {
-    const key = 'f'+i; total++; if(checklist[key]) checked++;
-    const reparto = multi && u.splits && u.splits.length ? ' — ' + u.splits.map(s=>esc(nombreAlumnoPorId(order,s.studentId))+': '+s.qty).join(', ') : '';
-    rows += `<label class="item-row" style="cursor:${terminado?'default':'pointer'};">
-      <input type="checkbox" data-checklist="${key}" data-folio="${esc(order.folio)}" ${checklist[key]?'checked':''} ${terminado?'disabled':''} style="width:20px;height:20px;flex-shrink:0;">
-      <div class="info"><div class="desc" style="${checklist[key]?'text-decoration:line-through;color:var(--ink-soft);':''}">${esc(u.name)} (talla ${esc(u.size)}) x${u.qty}${reparto}</div></div>
-    </label>`;
-  });
-  return `<div class="section-block">
-    <div class="section-title"><span>Checklist de armado del paquete (${checked}/${total})</span></div>
-    ${rows}
-  </div>`;
-}
-
-function historialHtml(order){
-  if(!order.historial || !order.historial.length) return '';
-  return `<div class="pay-detail">
-    <h3 style="margin-top:0;">🕒 Historial</h3>
-    ${order.historial.map(h => `<div class="rline"><span>${esc(h.texto)} — <b>${esc(h.por)}</b></span><span style="color:var(--ink-soft); white-space:nowrap;">${new Date(h.at).toLocaleString('es-MX',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}</span></div>`).join('')}
-  </div>`;
-}
-
-function pedidoItemsHtml(order){
-  const multi = order.alumnos && order.alumnos.length > 1;
-  if(!multi){
-    let html = '';
-    order.items.utiles.forEach(it => { html += `<div class="rline"><span>${esc(it.descripcion)} x${it.qty}</span><span>${money(it.qty*it.precio_unitario)}</span></div>`; });
-    order.items.uniformes.forEach(u => { html += `<div class="rline"><span>${esc(u.name)} (talla ${esc(u.size)}) x${u.qty}</span><span>${money(u.price*u.qty)}</span></div>`; });
-    return html;
-  }
-  let html = '';
-  order.alumnos.forEach(al => {
-    let sub = '';
-    order.items.utiles.filter(it=>it.studentId===al.id).forEach(it => { sub += `<div class="rline"><span>${esc(it.descripcion)} x${it.qty}</span><span>${money(it.qty*it.precio_unitario)}</span></div>`; });
-    order.items.uniformes.forEach(u => {
-      const split = (u.splits||[]).find(s=>s.studentId===al.id);
-      if(split && split.qty>0) sub += `<div class="rline"><span>${esc(u.name)} (talla ${esc(u.size)}) x${split.qty}</span><span>${money(u.price*split.qty)}</span></div>`;
-    });
-    if(sub) html += `<div style="font-weight:800; margin:10px 0 4px; color:var(--navy);">👤 ${esc(nombreCompleto(al))}</div>${sub}`;
-  });
-  return html;
-}
-
-function orderDetailView(order){
-  const itemsHtml = pedidoItemsHtml(order);
-
-  const isFinalNext = order.stageIndex === STAGES.length-2;
-  let actionHtml = '';
-  if(order.stageIndex < STAGES.length-1 && pagoPendienteBloquea(order, order.stageIndex+1)){
-    actionHtml = `<div class="note-box error">🔒 No se puede marcar como "${esc(stageLabel(order, order.stageIndex+1))}" hasta confirmar que la transferencia llegó a la cuenta. Revisa arriba y da clic en <b>"✓ Confirmar pago recibido"</b>.</div>`;
-  } else if(order.stageIndex < STAGES.length-1){
-    actionHtml = isFinalNext ? signaturePanel(order) : `<button class="btn btn-primary" id="advanceStageBtn">Marcar como: ${stageLabel(order, order.stageIndex+1)} →</button>`;
-  } else {
-    actionHtml = `<div class="note-box">Pedido completado el ${order.completedAt ? new Date(order.completedAt).toLocaleString('es-MX') : ''}${order.recibioNombre ? '. Recibió: '+esc(order.recibioNombre) : ''}.</div>
-      ${order.signature ? `<div style="margin-top:10px;"><div style="font-size:0.78rem; color:var(--ink-soft); margin-bottom:6px;">Firma de recepción:</div><img class="preview-img" src="${order.signature}" style="max-height:100px; background:#fff;"></div>` : ''}`;
-  }
-
-  return `
-  <button class="backlink" data-close-order="1">← Volver a pedidos</button>
-  <div class="pay-detail">
-    <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:16px;">
-      <div>
-        <h3 style="margin:0 0 4px;">Folio ${esc(order.folio)}</h3>
-        <div style="font-size:0.85rem; color:var(--ink-soft);">${esc(alumnosLabel(order))}${gradosLabel(order) ? ' · '+esc(gradosLabel(order))+' de primaria' : ''} · Tel. ${esc(order.cliente.telefono)}${order.cliente.correo ? ' · '+esc(order.cliente.correo) : ''}</div>
-      </div>
-      ${makeQrHtml(order.folio, 96)}
-    </div>
-    <hr>
-    ${itemsHtml}
-    <hr>
-    <div class="rline"><span>Subtotal:</span><span>${money(order.subtotal)}</span></div>
-    <div class="rline"><span>Envío:</span><span>${order.deliveryFee ? money(order.deliveryFee) : 'Recoger en local'}</span></div>
-    <div class="rline" style="font-weight:800;"><span>Total:</span><span>${money(order.total)}</span></div>
-    <hr>
-    <div class="rline"><span>Entrega:</span><span>${order.fulfillment==='delivery' ? 'Domicilio: '+esc(order.direccion||'') : 'Recoger en el local'}</span></div>
-    ${order.fulfillment==='delivery' && order.referencias ? `<div class="rline"><span>Referencias:</span><span>${esc(order.referencias)}</span></div>` : ''}
-    ${order.fulfillment==='delivery' ? `<div class="rline"><span>Distancia:</span><span>${order.deliveryKm!=null ? order.deliveryKm.toFixed(1)+' km' : ''}${order.rutaMin ? ' (~'+order.rutaMin+' min)' : ''}</span></div>` : ''}
-    ${order.fulfillment==='delivery' ? ligasNavegacion(order) : ''}
-    <div class="rline"><span>Pago:</span><span>${payBadge(order)}</span></div>
-    <div style="margin:6px 0 4px;"><button class="btn btn-secondary btn-sm" data-pago="${esc(order.folio)}">${order.pagoConfirmado ? '↩ Marcar como NO pagado' : '✓ Confirmar pago recibido'}</button></div>
-    ${order.payment==='efectivo' ? `<div class="note-box error" style="margin-top:8px;">Recuerda pedir el recibo con QR antes de entregar.</div>` : ''}
-    ${verificacionTransferenciaHtml(order)}
-    ${order.comprobante ? `<img class="preview-img" src="${esc(order.comprobante)}">` : ''}
-
-    <div class="field-col" style="margin-top:18px; max-width:280px;">
-      <label>Ubicación / anaquel (opcional)</label>
-      <input type="text" id="ubicacionInput" value="${esc(order.ubicacion||'')}" placeholder="Ej. Anaquel A-12">
-    </div>
-  </div>
-
-  <div class="pay-detail">${checklistHtml(order)}</div>
-
-  <div class="pay-detail">
-    ${adminStageTrack(order)}
-    ${actionHtml}
-  </div>
-  ${waButton(order)}
-  ${smsLogHtml(order, '💬 Seguimiento del pedido')}
-  ${historialHtml(order)}`;
-}
-
-// un pedido por transferencia solo puede pasar de "preparando" (listo / en camino / entregado)
-// cuando el personal confirmó en el banco que el dinero llegó: un comprobante falso no termina en entrega
-function pagoPendienteBloquea(order, siguienteEtapa){
-  return order.payment === 'transferencia' && !order.pagoConfirmado && siguienteEtapa >= 2;
-}
-function verificacionTransferenciaHtml(order){
-  if(order.payment !== 'transferencia') return '';
-  const r = order.comprobanteRevision || {};
-  const fecha = new Date(order.createdAt).toLocaleDateString('es-MX', { day:'numeric', month:'long', year:'numeric' });
-  return `<div class="verifica-pago ${order.pagoConfirmado ? 'ok' : ''}">
-    <div class="vp-titulo">${order.pagoConfirmado ? '✓ Pago confirmado en el banco' : '🏦 Antes de entregar, confirma que el dinero llegó'}</div>
-    <div class="rline"><span>Monto esperado:</span><span><b>${money(order.total)}</b></span></div>
-    <div class="rline"><span>Clave de rastreo:</span><span>${r.claveRastreo ? `<b>${esc(r.claveRastreo)}</b> <button class="btn-ghost" data-copiar="${esc(r.claveRastreo)}">Copiar</button>` : 'No se pudo leer; búscala en el comprobante'}</span></div>
-    <div class="rline"><span>Fecha del pedido:</span><span>${esc(fecha)}</span></div>
-    <div class="rline"><span>Cuenta que recibe:</span><span>${esc(BANCO.banco)} · CLABE ${esc(BANCO.clabe)}</span></div>
-    ${order.pagoConfirmado ? '' : `<ol class="vp-pasos">
-      <li>Busca un depósito de <b>${money(order.total)}</b> en tu app de ${esc(BANCO.banco)}.</li>
-      <li>O verifícalo en Banxico (CEP) con la fecha, la clave de rastreo, el banco que envió, ${esc(BANCO.banco)} como receptor, tu CLABE y el monto. Si Banxico no la encuentra, el comprobante no es real.</li>
-      <li>Si fue de ${esc(BANCO.banco)} a ${esc(BANCO.banco)} no hay clave de rastreo: revísalo directo en tu app.</li>
-    </ol>
-    <a class="btn btn-secondary btn-sm" target="_blank" rel="noopener" style="text-decoration:none;" href="https://www.banxico.org.mx/cep/">🔎 Verificar en Banxico (CEP)</a>`}
-  </div>`;
-}
-
-function signaturePanel(order){
-  return `
-  <div>
-    <div class="field-col" style="max-width:300px;">
-      <label>Nombre de quien recibe el pedido</label>
-      <input type="text" id="recibioNombreInput" value="${esc(order.recibioNombre||'')}" placeholder="Nombre de quien recoge/recibe">
-    </div>
-    <p style="font-size:0.85rem; font-weight:700; margin-bottom:6px;">Firma de quien recibe:</p>
-    <canvas id="sigCanvas" width="400" height="150" style="width:100%; max-width:400px; border:1.5px dashed var(--border); border-radius:4px; touch-action:none; background:#fff; display:block;"></canvas>
-    <div style="display:flex; gap:10px; margin-top:10px;">
-      <button class="btn btn-secondary btn-sm" id="clearSigBtn" type="button">Limpiar firma</button>
-      <button class="btn btn-primary btn-sm" id="confirmDeliveryBtn" type="button" disabled>Confirmar ${order.fulfillment==='delivery'?'entrega':'recolección'}</button>
-    </div>
-  </div>`;
-}
-
-function inventoryView(){
-  const filter = (state.adminInvFilter||'').toLowerCase();
-  let html = `<div class="field-col" style="max-width:320px;"><label>Buscar artículo</label><input type="text" id="invFilter" placeholder="Ej. cuaderno, tenis..." value="${esc(state.adminInvFilter||'')}"></div>`;
-  Object.keys(GRADES).forEach(g => {
-    const rows = GRADES[g].items.map((it,i)=>({it,i})).filter(({it}) => !filter || it.descripcion.toLowerCase().includes(filter));
-    if(!rows.length) return;
-    const label = g.replace(' PRIMARIA','').trim()+' de primaria';
-    html += `<div class="section-block"><div class="section-title"><span>${esc(label)}</span></div>`;
-    rows.forEach(({it,i}) => {
-      const key = GRADES[g].docId+'_'+i;
-      const stock = state.inventory[key] ?? 0;
-      html += `<div class="item-row">
-        <div class="info"><div class="desc">${esc(it.descripcion)}</div><div class="qty">P. unitario ${money(it.precio_unitario)}</div></div>
-        <div class="amt" style="${stock<5?'color:var(--red);':''}">
-          <input type="text" inputmode="numeric" id="inv_${idSafe(key)}" data-inv-key="${esc(key)}" value="${stock}" style="width:64px;"> uds.
-        </div>
-      </div>`;
-    });
-    html += `</div>`;
-  });
-  const uniRows = [];
-  uniformesVisibles().forEach(u => u.tallas.forEach(sz => { if(!filter || u.name.toLowerCase().includes(filter)) uniRows.push({u,sz}); }));
-  if(uniRows.length){
-    html += `<div class="section-block"><div class="section-title"><span>Uniformes</span></div>`;
-    uniRows.forEach(({u,sz}) => {
-      const key = u.id+'_'+sz;
-      const stock = state.inventory[key] ?? 0;
-      html += `<div class="item-row">
-        <div class="info"><div class="desc">${esc(u.name)} · talla ${esc(sz)}</div><div class="qty">P. unitario ${money(u.price)}</div></div>
-        <div class="amt" style="${stock<5?'color:var(--red);':''}">
-          <input type="text" inputmode="numeric" id="inv_${idSafe(key)}" data-inv-key="${esc(key)}" value="${stock}" style="width:64px;"> uds.
-        </div>
-      </div>`;
-    });
-    html += `</div>`;
-  }
-  return html;
-}
-
-/* ---------- editor de listas de útiles (solo Administrador) ---------- */
-const SECCIONES_LISTA = ['MATERIAL DIARIO','PARA FORRAR','LIBROS'];
-function normTexto(t){ return String(t||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,' ').trim(); }
-function seccionDe(t){ const n = normTexto(t); return n.includes('libro') ? 'LIBROS' : n.includes('forr') ? 'PARA FORRAR' : 'MATERIAL DIARIO'; }
-function abrirListaEdit(grade){
-  const g = GRADES[grade];
-  state.listaEdit = { grade, guardando:false, mensaje:'',
-    items: g ? g.items.map((it,i) => ({ seccion: it.seccion||'MATERIAL DIARIO', descripcion: it.descripcion, cantidad: it.cantidad, precio_unitario: it.precio_unitario, stock: stockDe(g.docId+'_'+i) })) : [] };
-}
-function listasAdminView(){
-  const grados = Object.keys(GRADES);
-  if(!state.listaEdit && grados.length) abrirListaEdit(grados[0]);
-  const L = state.listaEdit;
-  const selector = `<div class="field-row" style="flex-wrap:wrap; gap:10px; align-items:flex-end; margin-bottom:12px;">
-    <div class="field-col" style="min-width:200px;"><label>Grado</label>
-      <select id="listaGrado">${grados.map(g => `<option value="${esc(g)}" ${L && L.grade===g?'selected':''}>${esc(g)}</option>`).join('')}
-</select></div>
-  </div>`;
-  if(!L) return selector + '<p>No hay listas todavía.</p>';
-  const filas = L.items.map((it,i) => `<tr>
-      <td><select data-li-edit="${i}" data-campo="seccion">${SECCIONES_LISTA.map(sec => `<option ${it.seccion===sec?'selected':''}>${sec}</option>`).join('')}</select></td>
-      <td><input type="text" data-li-edit="${i}" data-campo="descripcion" value="${esc(it.descripcion)}" style="width:100%; min-width:200px;"></td>
-      <td><input type="text" inputmode="decimal" data-li-edit="${i}" data-campo="cantidad" value="${esc(String(it.cantidad))}" style="width:60px;"></td>
-      <td><input type="text" inputmode="decimal" data-li-edit="${i}" data-campo="precio_unitario" value="${esc(String(it.precio_unitario))}" style="width:80px;"></td>
-      <td><input type="text" inputmode="numeric" data-li-edit="${i}" data-campo="stock" value="${esc(String(it.stock))}" style="width:60px;"></td>
-      <td><button class="btn-ghost" data-li-quitar="${i}" title="Quitar">✖</button></td>
-    </tr>`).join('');
-  return selector + `
-    <p style="color:var(--ink-soft); margin-top:0;">Edita la lista de <b>${esc(L.grade)}</b> y dale <b>Guardar lista</b>. Para el siguiente ciclo puedes <b>descargar la lista en Excel</b>, cambiarla ahí y volver a <b>cargarla</b>. El Excel lleva las columnas: Sección, Descripción, Cantidad, Precio unitario y Existencias. Los artículos con 0 existencias aparecen como "No disponible" en la tienda.</p>
-    <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px;">
-      <button class="btn btn-secondary btn-sm" id="listaExcelBajarBtn">⬇️ Descargar Excel</button>
-      <label class="btn btn-secondary btn-sm" style="cursor:pointer;">⬆️ Cargar desde Excel<input type="file" id="listaExcelSubir" accept=".xlsx,.xls,.csv" style="display:none;"></label>
-    </div>
-    ${L.mensaje ? `<div class="note-box ${L.mensaje.startsWith('⚠')?'error':''}" style="margin-bottom:10px;">${esc(L.mensaje)}</div>` : ''}
-    <div style="overflow-x:auto;"><table class="cart-table">
-      <thead><tr><th>Sección</th><th>Descripción</th><th>Cant.</th><th>Precio</th><th>Exist.</th><th></th></tr></thead>
-      <tbody>${filas}</tbody>
-    </table></div>
-    <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:12px;">
-      <button class="btn btn-secondary btn-sm" id="listaAgregarBtn">＋ Agregar artículo</button>
-      <button class="btn btn-primary" id="listaGuardarBtn" ${L.guardando?'disabled':''}>${L.guardando?'Guardando…':'Guardar lista'}</button>
-      <button class="btn-ghost" id="listaDescartarBtn">Descartar cambios</button>
-    </div>`;
-}
-async function guardarLista(){
-  const L = state.listaEdit;
-  const items = L.items
-    .map(it => ({ seccion: SECCIONES_LISTA.includes(it.seccion) ? it.seccion : seccionDe(it.seccion), descripcion: String(it.descripcion||'').trim(),
-      cantidad: Number(String(it.cantidad).replace(',','.'))||0, precio_unitario: Number(String(it.precio_unitario).replace(/[$,\s]/g,''))||0,
-      stock: Math.max(0, parseInt(it.stock)||0) }))
-    .filter(it => it.descripcion);
-  if(!items.length){ L.mensaje = '⚠ La lista no tiene artículos.'; render(); return; }
-  if(items.some(it => !(it.precio_unitario > 0))){ L.mensaje = '⚠ Hay artículos sin precio. Revisa la columna Precio.'; render(); return; }
-  const docId = GRADES[L.grade] ? GRADES[L.grade].docId : slug(L.grade);
-  const viejos = GRADES[L.grade] ? GRADES[L.grade].items.length : 0;
-  const listaItems = items.map(({stock, ...it}) => Object.assign(it, { total: it.cantidad * it.precio_unitario }));
-  const total_libros = listaItems.filter(it => it.seccion==='LIBROS').reduce((a,it) => a + it.total, 0);
-  const total_paquete = listaItems.reduce((a,it) => a + it.total, 0);
-  L.guardando = true; render();
-  try{
-    // el inventario de útiles va por posición (docId_índice), así que se reescribe completo para esta lista
-    const batch = writeBatch(db);
-    batch.set(doc(db, 'listas', docId), { nombre: L.grade, items: listaItems, total_libros, total_paquete });
-    items.forEach((it, i) => batch.set(doc(db, 'inventario', docId+'_'+i), { tipo:'util', grado:L.grade, idx:i, descripcion:it.descripcion, precio_unitario:it.precio_unitario, stock:it.stock }));
-    for(let j = items.length; j < viejos; j++) batch.delete(doc(db, 'inventario', docId+'_'+j));
-    await batch.commit();
-    GRADES[L.grade] = { docId, items: listaItems, total_libros, total_paquete };
-    items.forEach((it, i) => { state.inventory[docId+'_'+i] = it.stock; });
-    for(let j = items.length; j < viejos; j++) delete state.inventory[docId+'_'+j];
-    abrirListaEdit(L.grade);
-    state.listaEdit.mensaje = `✓ Lista de ${L.grade} guardada (${items.length} artículos, paquete completo ${money(total_paquete)}).`;
-  }catch(err){
-    console.error(err);
-    L.guardando = false; L.mensaje = '⚠ No se pudo guardar la lista. Intenta de nuevo.';
-  }
-  render();
-}
-
-/* ---------- catálogo de uniformes (solo Administrador) ---------- */
-// los borradores se guardan en state.uniDraft al teclear SIN re-renderizar, para que un render
-// por un pedido nuevo (onSnapshot) no borre lo que se está escribiendo.
-function uniDraftDe(u){
-  return Object.assign({ name:u.name, price: u.price ?? '', tallas:(u.tallas||[]).join(', '), activo:u.activo !== false }, state.uniDraft[u.id]||{});
-}
-function uniformesAdminView(){
-  const filas = UNIFORMS.map(u => {
-    const d = uniDraftDe(u);
-    const id = esc(u.id);
-    return `<div class="section-block" style="display:grid; grid-template-columns:110px 1fr; gap:14px; align-items:start;">
-      <div>
-        ${u.foto ? `<img class="uni-foto" src="${esc(u.foto)}" alt="">` : `<div class="uni-foto uni-sin-foto">${u.icon||'👕'}</div>`}
-        ${u.fotos.length ? `<div class="uni-thumbs" style="flex-wrap:wrap;">${u.fotos.map((f,i) => `<div style="position:relative; width:46px;">
-            <img src="${esc(f)}" alt="" style="width:46px; height:46px; object-fit:contain; background:#fff; border-radius:3px;">
-            <button class="btn-ghost" data-uni-foto-quitar="${id}" data-idx="${i}" title="Quitar esta foto" style="position:absolute; top:-8px; right:-8px; padding:0 3px;">✖</button></div>`).join('')}</div>` : ''}
-        <label class="btn btn-secondary btn-sm" style="display:block; text-align:center; cursor:pointer;">📷 Agregar foto
-          <input type="file" accept="image/*" data-uni-foto="${id}" style="display:none;"></label>
-        <div style="font-size:0.72rem; color:var(--ink-soft); margin-top:4px;">La primera es la principal.</div>
-      </div>
-      <div>
-        <div class="field-row" style="flex-wrap:wrap; gap:10px;">
-          <div class="field-col" style="flex:2; min-width:180px;"><label>Nombre</label><input type="text" data-uni-edit="${id}" data-campo="name" value="${esc(d.name)}"></div>
-          <div class="field-col" style="flex:1; min-width:100px;"><label>Precio ($)</label><input type="text" inputmode="decimal" data-uni-edit="${id}" data-campo="price" value="${esc(String(d.price))}" placeholder="Por confirmar"></div>
-        </div>
-        <div class="field-col"><label>Tallas (separadas por coma)</label><input type="text" data-uni-edit="${id}" data-campo="tallas" value="${esc(d.tallas)}" placeholder="Ej. 6, 8, 10, 12, CH, M, G"></div>
-        <label style="display:flex; gap:6px; align-items:center; font-size:0.88rem; margin:6px 0;"><input type="checkbox" data-uni-edit="${id}" data-campo="activo" ${d.activo?'checked':''}> Se muestra en la tienda</label>
-        <button class="btn btn-primary btn-sm" data-uni-guardar="${id}" ${state.uniGuardando===u.id?'disabled':''}>${state.uniGuardando===u.id?'Guardando…':'Guardar'}</button>
-      </div>
-    </div>`;
-  }).join('');
-  return `<p style="color:var(--ink-soft); margin-top:0;">Aquí cambias nombre, precio, tallas y foto de cada prenda. Mientras una prenda no tenga precio, en la tienda dice "Precio por confirmar" y no se puede comprar. Las existencias de cada talla se ponen en <b>Inventario</b>.</p>
-    ${filas}
-    <button class="btn btn-secondary" id="uniNuevaBtn">＋ Agregar prenda</button>`;
-}
-
-/* ---------- avisos de existencias (uniformes agotados) ---------- */
-function mensajeAvisoPapa(a){
-  return `Liceo Alexander Dul: ¡ya tenemos ${a.nombre} en talla ${a.talla}! Puedes pedirlo en la tienda en línea. Las piezas se apartan al hacer el pedido.`;
-}
-function avisoRowHtml(a, listo){
-  const digits = (a.telefono||'').replace(/\D/g,'');
-  const wa = digits.length===10 ? `https://wa.me/52${digits}?text=${encodeURIComponent(mensajeAvisoPapa(a))}` : '';
-  return `<div class="item-row">
-    <div class="info">
-      <div class="desc">📞 ${esc(a.telefono)} · ✉️ ${esc(a.correo)}</div>
-      <div class="qty">Lo pidió el ${esc(new Date(a.createdAt).toLocaleDateString('es-MX', {day:'numeric', month:'short'}))}${a.correoEnviadoAt ? ' · <span style="color:var(--green)">correo enviado</span>' : ''}</div>
-    </div>
-    <div style="display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end;">
-      ${listo && wa ? `<a class="btn btn-secondary btn-sm" target="_blank" rel="noopener" href="${wa}" style="text-decoration:none;">📲 WhatsApp</a>` : ''}
-      ${listo ? `<button class="btn btn-secondary btn-sm" data-aviso-correo="${esc(a.id)}">✉️ Enviar correo</button>` : ''}
-      <button class="btn ${listo?'btn-primary':'btn-secondary'} btn-sm" data-aviso-hecho="${esc(a.id)}">${listo ? '✓ Ya le avisé' : 'Quitar'}</button>
-    </div>
-  </div>`;
-}
-function avisosView(){
-  const pendientes = avisosPendientes();
-  if(!pendientes.length){
-    return `<div class="empty-state"><div class="big">🔔</div><h3>No hay papás esperando</h3><p>Cuando un papá pida que le avisen de una talla agotada, aparecerá aquí.</p></div>`;
-  }
-  // se agrupan por prenda + talla
-  const grupos = {};
-  pendientes.forEach(a => { const k = a.uniformeId+'_'+a.talla; (grupos[k] = grupos[k] || []).push(a); });
-  const bloques = Object.entries(grupos).map(([k, lista]) => ({ k, lista, stock: stockDe(k) }));
-  const html = (titulo, items, listo) => !items.length ? '' : `<h3 style="margin:18px 0 8px;">${titulo}</h3>` + items.map(({k, lista, stock}) => `
-    <div class="section-block">
-      <div class="section-title"><span>${esc(lista[0].nombre)} · talla ${esc(lista[0].talla)}</span>
-        <span style="font-weight:700; ${stock>0?'color:var(--green)':'color:var(--red)'}">${stock>0 ? stock+' en existencia' : 'agotada'} · ${lista.length} esperando</span></div>
-      ${lista.map(a => avisoRowHtml(a, listo)).join('')}
-    </div>`).join('');
-  return `<p style="color:var(--ink-soft); margin-top:0;">Papás que pidieron que les avisemos cuando haya un uniforme agotado. Al subir las existencias en Inventario, se mueven a "Ya hay, hay que avisar" y te llega un correo.</p>`
-    + html('✅ Ya hay, hay que avisar', bloques.filter(b => b.stock > 0), true)
-    + html('⏳ Siguen agotados', bloques.filter(b => b.stock <= 0), false);
-}
-
 /* ================= EVENTOS ================= */
 
+// después de cada render() se vuelven a conectar los botones y campos de la página
 function wireEvents(){
+  eventosAlumnos();
+  eventosNavegacion();
+  eventosListaUtiles();
+  eventosUniformes();
+  eventosDatosYEntrega();
+  eventosDescargaLista();
+  eventosRastreo();
+  eventosPagosYCortes();
+  eventosPago();
+  eventosRecibo();
+  eventosAcceso();
+  eventosPanelPedidos();
+  eventosVentas();
+  eventosListasAdmin();
+  eventosUniformesAdmin();
+  eventosPanelExtras();
+  eventosAvisosAdmin();
+  eventosInventario();
+  eventosEntregaFirma();
+  eventosEscaner();
+}
+
+// alumnos, hermanos y reparto de uniformes
+function eventosAlumnos(){
   // diálogo de asignación de alumno (hermanos)
   if(state.pendingAssign){
     document.querySelectorAll('[data-assign-pick]').forEach(el => el.addEventListener('click', () => {
@@ -2855,7 +3021,10 @@ function wireEvents(){
     const [uniIdx, studentId] = el.getAttribute('data-split-dec').split('|');
     ajustarReparto(parseInt(uniIdx), studentId, -1);
   }));
+}
 
+// pestañas, grados y canastas
+function eventosNavegacion(){
   // navegación general
   document.querySelectorAll('[data-nav]').forEach(el => {
     el.addEventListener('click', () => {
@@ -2888,7 +3057,10 @@ function wireEvents(){
 
   const backBtn = document.querySelector('[data-back-grades]');
   if(backBtn) backBtn.addEventListener('click', () => { state.grade = null; state.gradePendingChoice = null; render(); });
+}
 
+// lista de útiles: paquetes y cantidades
+function eventosListaUtiles(){
   // presets de lista
   document.querySelectorAll('[data-preset]').forEach(el => el.addEventListener('click', () => {
     const g = el.getAttribute('data-grade');
@@ -2938,7 +3110,10 @@ function wireEvents(){
     idxs.forEach(i => qtys[i] = allOn ? 0 : items[i].cantidad);
     render();
   }));
+}
 
+// uniformes: tallas, carrito, galería y 'avísame'
+function eventosUniformes(){
   // uniformes
   document.querySelectorAll('[data-uni-inc]').forEach(el => el.addEventListener('click', () => {
     const input = document.querySelector(`[data-uni-qty="${el.getAttribute('data-uni-inc')}"]`);
@@ -2993,7 +3168,7 @@ function wireEvents(){
     if(el) el.addEventListener('input', () => {
       state.avisoForm[field] = el.value; state.avisoForm.error = '';
       const f = state.avisoForm;
-      habilitar('#avisoGuardarBtn', f.telefono.replace(/\D/g,'').length === 10 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.correo.trim()) && !f.saving);
+      habilitar('#avisoGuardarBtn', telValido(f.telefono) && correoValido(f.correo) && !f.saving);
     });
   });
   const avisoCancelarBtn = document.getElementById('avisoCancelarBtn');
@@ -3020,7 +3195,10 @@ function wireEvents(){
     state.uniformCart.splice(parseInt(el.getAttribute('data-remove-uni')), 1);
     render();
   }));
+}
 
+// datos del papá y entrega a domicilio
+function eventosDatosYEntrega(){
   // datos de contacto
   [['cTelefono','telefono'],['cCorreo','correo']].forEach(([id,field]) => {
     const el = document.getElementById(id);
@@ -3051,13 +3229,18 @@ function wireEvents(){
   if(referenciasInput) referenciasInput.addEventListener('input', () => { state.referencias = referenciasInput.value; });
   const geoBtn = document.getElementById('geoBtn');
   if(geoBtn) geoBtn.addEventListener('click', () => { calcularDistancia(); });
+}
 
-
+// descargar / imprimir lista de útiles
+function eventosDescargaLista(){
   // descargar lista de útiles en Excel
   document.querySelectorAll('[data-download-lista]').forEach(el => el.addEventListener('click', () => {
     downloadListaPDF(el.getAttribute('data-download-lista'));
   }));
+}
 
+// rastrear pedido
+function eventosRastreo(){
   // rastrear pedido (cliente)
   const tFolio = document.getElementById('tFolio'), tTel = document.getElementById('tTel');
   if(tFolio) tFolio.addEventListener('input', () => { state.track.folio = tFolio.value; });
@@ -3111,7 +3294,10 @@ function wireEvents(){
     }catch(err){ console.error(err); t.error = 'No se pudo consultar el pedido en este momento. Intenta de nuevo.'; }
     t.loading = false; render();
   });
+}
 
+// panel: confirmar pago y cortes / Innovat
+function eventosPagosYCortes(){
   // cortes / Innovat (personal)
   const cortesFilter = document.getElementById('cortesFilter');
   if(cortesFilter) cortesFilter.addEventListener('change', () => { state.cortesFilter = cortesFilter.value; render(); });
@@ -3127,7 +3313,7 @@ function wireEvents(){
     const o = state.orders.find(x => x.folio === el.getAttribute('data-pago'));
     if(!o) return;
     const nuevo = !o.pagoConfirmado;
-    const quien = (state.auth && state.auth.name) || 'Personal';
+    const quien = quienPersonal();
     const upd = {
       pagoConfirmado: nuevo, pagoConfirmadoAt: nuevo ? new Date().toISOString() : null,
       historial: arrayUnion({ texto: nuevo ? 'Pago confirmado' : 'Pago desmarcado como confirmado', por: quien, at: new Date().toISOString() }),
@@ -3138,7 +3324,7 @@ function wireEvents(){
     catch(err){ console.error(err); alert('No se pudo actualizar el pago.'); el.disabled = false; }
   }));
   document.querySelectorAll('[data-innovat]').forEach(el => el.addEventListener('change', async () => {
-    const quien = (state.auth && state.auth.name) || 'Personal';
+    const quien = quienPersonal();
     try{
       await updateDoc(doc(db, 'pedidos', el.getAttribute('data-innovat')), {
         capturadoInnovat: el.checked,
@@ -3147,7 +3333,10 @@ function wireEvents(){
     }
     catch(err){ console.error(err); alert('No se pudo guardar.'); }
   }));
+}
 
+// pago y comprobante
+function eventosPago(){
   // pago
   document.querySelectorAll('[data-payment]').forEach(el => el.addEventListener('click', () => {
     state.payment = el.getAttribute('data-payment'); render();
@@ -3197,7 +3386,10 @@ function wireEvents(){
       confirmBtn.textContent = 'Confirmar pedido →';
     }
   });
+}
 
+// recibo y nuevo pedido
+function eventosRecibo(){
   // recibo: guardar como PDF / imprimir / compartir
   document.querySelectorAll('[data-recibo]').forEach(el => el.addEventListener('click', async () => {
     const accion = el.getAttribute('data-recibo');
@@ -3211,18 +3403,11 @@ function wireEvents(){
     setTimeout(() => window.print(), accion === 'pdf' ? 250 : 0);
   }));
   const newOrderBtn = document.getElementById('newOrderBtn');
-  if(newOrderBtn) newOrderBtn.addEventListener('click', () => {
-    state.grade = null; state.gradeQtys = {}; state.gradeAssign = {}; state.uniformCart = []; state.fulfillment = null;
-    state.students = []; state.pendingAssign = null;
-    state.payment = null;
-    state.comprobante = null; state.comprobanteFile = null; state.comprobanteRevision = null; state.currentFolio = null;
-    state.cliente = { telefono:'', correo:'' };
-    state.direccion = ''; state.kmAuto = null; state.geoStatus = 'idle'; state.geoMessage = '';
-    state.destino = null; state.referencias = ''; state.rutaMin = null; state.ubicacionConfirmada = false; state.direccionAuto = false;
-    mapaUI = null; gMapa = null; gRuta = null; gPin = null;   // el siguiente pedido arranca con mapa nuevo
-    setTab('inicio');
-  });
+  if(newOrderBtn) newOrderBtn.addEventListener('click', () => { reiniciarPedido(); setTab('inicio'); });
+}
 
+// entrar / salir del panel
+function eventosAcceso(){
   // acceso de personal
   document.querySelectorAll('[data-staff-link]').forEach(el => el.addEventListener('click', () => {
     state.mode = 'admin'; state.adminTab = 'pedidos';
@@ -3264,7 +3449,10 @@ function wireEvents(){
     await signOut(auth);
     state.auth = null; state.loginError = null; render();
   });
+}
 
+// panel: pestañas, detalle y avance de pedidos
+function eventosPanelPedidos(){
   // panel admin
   document.querySelectorAll('[data-admin-tab]').forEach(el => el.addEventListener('click', () => {
     state.adminTab = el.getAttribute('data-admin-tab'); state.adminOrderFolio = null; render();
@@ -3292,7 +3480,7 @@ function wireEvents(){
       ? `Tu pedido ${order.folio} va en camino.`
       : `Tu pedido ${order.folio} ya está listo. Puedes pasar a recogerlo: ${STORE_HOURS_TEXT}`;
     const newLog = msg ? [...(order.smsLog||[]), {message:msg, at:new Date().toISOString()}] : (order.smsLog||[]);
-    const quien = (state.auth && state.auth.name) || 'Personal';
+    const quien = quienPersonal();
     try{
       await updateDoc(doc(db, 'pedidos', order.folio), {
         stageIndex: newStage, smsLog: newLog,
@@ -3326,7 +3514,10 @@ function wireEvents(){
     try{ await updateDoc(doc(db, 'pedidos', folio), { [`checklist.${key}`]: el.checked }); }
     catch(err){ console.error(err); alert('No se pudo guardar el checklist.'); el.checked = !el.checked; }
   }));
+}
 
+// panel: ventas
+function eventosVentas(){
   // panel de ventas: filtros, tooltip y exportar
   [['ventasPeriodo','ventasPeriodo'],['ventasAlcance','ventasAlcance'],['ventasSeccion','ventasSeccion']].forEach(([id,campo]) => {
     const el = document.getElementById(id);
@@ -3353,7 +3544,10 @@ function wireEvents(){
     XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(Object.values(uni)), 'Uniformes');
     XLSX.writeFile(wb, 'Ventas Liceo Alexander Dul.xlsx');
   });
+}
 
+// panel: editor de listas
+function eventosListasAdmin(){
   // editor de listas (admin)
   const listaGrado = document.getElementById('listaGrado');
   if(listaGrado) listaGrado.addEventListener('change', () => {
@@ -3406,7 +3600,10 @@ function wireEvents(){
     }
     render();
   });
+}
 
+// panel: catálogo de uniformes
+function eventosUniformesAdmin(){
   // catálogo de uniformes (admin)
   document.querySelectorAll('[data-uni-edit]').forEach(el => {
     const evento = el.type === 'checkbox' ? 'change' : 'input';
@@ -3472,17 +3669,23 @@ function wireEvents(){
     state.uniDraft[id] = { activo: true };
     render();
   });
+}
 
+// panel: copiar clave y letrero de pedidos nuevos
+function eventosPanelExtras(){
   document.querySelectorAll('[data-copiar]').forEach(el => el.addEventListener('click', async () => {
     try{ await navigator.clipboard.writeText(el.getAttribute('data-copiar')); el.textContent = '✓ Copiada'; }catch(e){}
   }));
   const pedidosNuevosOkBtn = document.getElementById('pedidosNuevosOkBtn');
   if(pedidosNuevosOkBtn) pedidosNuevosOkBtn.addEventListener('click', () => { state.pedidosNuevos = []; render(); });
+}
 
+// panel: avisos de existencias
+function eventosAvisosAdmin(){
   // avisos de existencias (panel)
   document.querySelectorAll('[data-aviso-hecho]').forEach(el => el.addEventListener('click', async () => {
     el.disabled = true;
-    const quien = (state.auth && state.auth.name) || 'Personal';
+    const quien = quienPersonal();
     try{ await updateDoc(doc(db, 'avisos', el.getAttribute('data-aviso-hecho')), { estado: 'avisado', avisadoAt: new Date().toISOString(), avisadoPor: quien }); }
     catch(err){ console.error(err); alert('No se pudo actualizar el aviso.'); el.disabled = false; }
   }));
@@ -3495,7 +3698,10 @@ function wireEvents(){
     try{ await updateDoc(doc(db, 'avisos', a.id), { correoEnviadoAt: new Date().toISOString() }); }
     catch(err){ console.error(err); }
   }));
+}
 
+// panel: inventario
+function eventosInventario(){
   document.querySelectorAll('[data-inv-key]').forEach(el => el.addEventListener('change', async () => {
     const key = el.getAttribute('data-inv-key');
     const val = Math.max(0, parseInt(el.value)||0);
@@ -3512,7 +3718,10 @@ function wireEvents(){
       }
     }
   }));
+}
 
+// panel: entrega con firma
+function eventosEntregaFirma(){
   // confirmar entrega con firma (la habilitación del botón la maneja initSignaturePad)
   const confirmDeliveryBtn = document.getElementById('confirmDeliveryBtn');
   if(confirmDeliveryBtn) confirmDeliveryBtn.addEventListener('click', async () => {
@@ -3529,7 +3738,7 @@ function wireEvents(){
       await uploadBytes(sref, blob);
       const signatureUrl = await getDownloadURL(sref);
       const recibioNombre = nameInput ? nameInput.value.trim() : '';
-      const quien = (state.auth && state.auth.name) || 'Personal';
+      const quien = quienPersonal();
       const msg = `Tu pedido ${order.folio} fue ${order.fulfillment==='delivery'?'entregado':'recogido'} correctamente. ¡Gracias por tu compra!`;
       await updateDoc(doc(db, 'pedidos', order.folio), {
         signature: signatureUrl,
@@ -3547,7 +3756,10 @@ function wireEvents(){
       confirmDeliveryBtn.textContent = `Confirmar ${order.fulfillment==='delivery'?'entrega':'recolección'}`;
     }
   });
+}
 
+// panel: escáner QR
+function eventosEscaner(){
   // escáner de QR
   const openScannerBtn = document.getElementById('openScannerBtn');
   if(openScannerBtn) openScannerBtn.addEventListener('click', () => { state.scannerOpen = true; state.scannerError = null; render(); });
@@ -3596,6 +3808,7 @@ function initSignaturePad(){
 /* ================= ESCÁNER QR ================= */
 
 let scannerStream = null;
+
 let scannerRAF = null;
 
 function stopScanner(){
@@ -3651,6 +3864,8 @@ function startScanner(){
   });
 }
 
+/* ================= ARRANQUE ================= */
+
 async function boot(){
   const appEl = document.getElementById('app');
   appEl.innerHTML = `<div style="display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:'Nunito',sans-serif;color:#5b6785;">Cargando la tienda…</div>`;
@@ -3663,6 +3878,7 @@ async function boot(){
   }
   render();
 }
+
 document.addEventListener('keydown', (e) => {
   if(!state.lightbox) return;
   if(e.key === 'Escape'){ state.lightbox = null; render(); }
@@ -3671,6 +3887,7 @@ document.addEventListener('keydown', (e) => {
     state.lightbox.idx = (state.lightbox.idx + (e.key === 'ArrowRight' ? 1 : -1) + n) % n; render();
   }
 });
+
 document.addEventListener('DOMContentLoaded', boot);
 </script>
 </body>
