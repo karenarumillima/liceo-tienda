@@ -211,6 +211,7 @@
   .viz-tip { position:fixed; z-index:50; pointer-events:none; background: var(--ink); color: var(--card-bg); font-size:0.8rem; padding:6px 9px; border-radius:4px; max-width:320px; box-shadow:0 2px 8px rgba(0,0,0,0.2); }
   @media (max-width: 560px){ .hbar-row { grid-template-columns: 1fr auto; } .hbar-track { grid-column: 1 / -1; grid-row: 2; } }
   .uni-foto { width: 100%; aspect-ratio: 1 / 1; object-fit: contain; background: #fff; border-radius: 4px; margin-bottom: 8px; }
+  .uni-sin-foto { display: flex; align-items: center; justify-content: center; font-size: 3rem; }
   .note-box { background: var(--green-tint); color: var(--green); border-radius: 4px; padding: 12px 14px; font-size: 0.88rem; font-weight: 700; }
   .note-box.error { background: var(--red-tint); color: var(--red); }
   .note-box.neutral { background: var(--navy-tint); color: var(--navy); }
@@ -369,17 +370,20 @@ let GRADES = {};
 // el Administrador los edita desde el panel → Uniformes y se guardan en la colección "uniformes",
 // que se sobrepone a esta lista por id. price null = "precio por definir" (no se puede comprar aún).
 const UNIFORMES_BASE = [
-  { id:'polo-verde',         name:'Playera polo verde',                   foto:'img/uniformes/polo-verde.jpg' },
-  { id:'polo-roja',          name:'Playera polo roja',                    foto:'img/uniformes/polo-roja.jpg' },
-  { id:'camisa-manga-corta', name:'Camisa blanca manga corta',            foto:'img/uniformes/camisa-manga-corta.jpg' },
-  { id:'camisa-manga-larga', name:'Camisa blanca manga larga',            foto:'img/uniformes/camisa-manga-larga.jpg' },
-  { id:'blusa-blanca',       name:'Blusa blanca cuello redondo',          foto:'img/uniformes/blusa-blanca.jpg' },
-  { id:'chaleco-gris',       name:'Chaleco gris',                         foto:'img/uniformes/chaleco-gris.jpg' },
-  { id:'sueter-gris',        name:'Suéter gris con botones',              foto:'img/uniformes/sueter-gris.jpg' },
-  { id:'chamarra-marino',    name:'Chamarra deportiva azul marino',       foto:'img/uniformes/chamarra-marino.jpg' },
-  { id:'pants-marino',       name:'Pants deportivo azul marino',          foto:'img/uniformes/pants-marino.jpg' },
-  { id:'chamarra-gris',      name:'Chamarra deportiva gris',              foto:'img/uniformes/chamarra-gris.jpg' },
-  { id:'pants-gris',         name:'Pants deportivo gris',                 foto:'img/uniformes/pants-gris.jpg' },
+  { id:'polo-verde',          name:'Playera polo verde',                              price:500,  foto:'img/uniformes/polo-verde.jpg' },
+  { id:'polo-roja',           name:'Playera polo roja',                               price:500,  foto:'img/uniformes/polo-roja.jpg' },
+  { id:'camisa-manga-larga',  name:'Camisa blanca',                                   price:500,  foto:'img/uniformes/camisa-manga-larga.jpg' },
+  { id:'camisa-manga-corta',  name:'Chazarilla manga corta',                          price:500,  foto:'img/uniformes/camisa-manga-corta.jpg' },
+  { id:'blusa-blanca',        name:'Blusa cuello ratón',                              price:400,  foto:'img/uniformes/blusa-blanca.jpg' },
+  { id:'jumper',              name:'Jumper',                                          price:560,  icon:'👗' },
+  { id:'falda-cuadros-verde', name:'Falda de cuadros verde',                          price:500,  icon:'👗' },
+  { id:'chaleco-gris',        name:'Chaleco gris',                                    price:400,  foto:'img/uniformes/chaleco-gris.jpg' },
+  { id:'sueter-gris',         name:'Suéter gris',                                     price:620,  foto:'img/uniformes/sueter-gris.jpg' },
+  // el pants se vende completo: chamarra + pantalón juntos, no por separado
+  { id:'pants-marino',        name:'Pants completo azul marino (chamarra + pantalón)', price:1110, foto:'img/uniformes/pants-marino.jpg' },
+  { id:'pants-gris',          name:'Pants completo gris (chamarra + pantalón)',        price:1110, foto:'img/uniformes/pants-gris.jpg' },
+  { id:'corbata',             name:'Corbata',                                         price:210,  icon:'👔', tallas:['Única'] },
+  { id:'escudo',              name:'Escudo suelto',                                   price:60,   icon:'🛡️', tallas:['Única'] },
 ];
 const SIZES = ['6','8','10','12','14','16','32','34','36','38','40'];   // tallas por omisión de una prenda nueva
 let UNIFORMS = [];             // catálogo completo (incluye prendas ocultas, para pedidos viejos y carritos)
@@ -1134,7 +1138,7 @@ function uniformsView(){
         const sinPrecio = !(u.price > 0);
         return `
         <div class="uniform-card">
-          ${u.foto ? `<img class="uni-foto" src="${esc(u.foto)}" alt="${esc(u.name)}" loading="lazy">` : `<div class="swatch">👕</div>`}
+          ${u.foto ? `<img class="uni-foto" src="${esc(u.foto)}" alt="${esc(u.name)}" loading="lazy">` : `<div class="uni-foto uni-sin-foto">${u.icon||'👕'}</div>`}
           <h4>${esc(u.name)}</h4>
           <div class="price">${sinPrecio ? '<span style="color:var(--ink-soft); font-size:0.9rem;">Precio por confirmar</span>' : money(u.price)}</div>
           ${sinPrecio ? '' : `<div class="field-row">
@@ -2254,7 +2258,7 @@ function uniformesAdminView(){
     const id = esc(u.id);
     return `<div class="section-block" style="display:grid; grid-template-columns:110px 1fr; gap:14px; align-items:start;">
       <div>
-        ${u.foto ? `<img class="uni-foto" src="${esc(u.foto)}" alt="">` : `<div class="swatch" style="aspect-ratio:1/1;">👕</div>`}
+        ${u.foto ? `<img class="uni-foto" src="${esc(u.foto)}" alt="">` : `<div class="uni-foto uni-sin-foto">${u.icon||'👕'}</div>`}
         <label class="btn btn-secondary btn-sm" style="display:block; text-align:center; cursor:pointer;">📷 Cambiar foto
           <input type="file" accept="image/*" data-uni-foto="${id}" style="display:none;"></label>
       </div>
