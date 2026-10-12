@@ -558,7 +558,8 @@ let state = {
   destino: null,               // { lat, lng } del pin que el papá dejó en su puerta (modo Google Maps)
   referencias: '',             // referencias para el repartidor
   rutaMin: null,               // minutos aproximados en coche
-  ubicacionConfirmada: false,  // el papá confirmó "sí, aquí es mi casa"
+  ubicacionConfirmada: false,
+  direccionAuto: false,        // la dirección la llenó el mapa (se puede volver a llenar si mueve el pin)  // el papá confirmó "sí, aquí es mi casa"
   uniSel: {},
   uniFotoIdx: {},              // { [uniformeId]: índice de la foto que se ve en la tarjeta }
   lightbox: null,              // { uniId, idx } — foto de uniforme en grande                  // { [uniformeId]: talla elegida } — para que la talla no se reinicie en cada render
@@ -755,8 +756,8 @@ function crearMapaUI(){
         const place = ev.placePrediction ? ev.placePrediction.toPlace() : ev.place;
         if(!place) return;
         await place.fetchFields({ fields: ['formattedAddress', 'location'] });
-        if(place.formattedAddress) state.direccion = place.formattedAddress;
-        if(place.location) ponerPin({ lat: place.location.lat(), lng: place.location.lng() }, true);
+        if(place.formattedAddress){ state.direccion = place.formattedAddress; state.direccionAuto = true; }
+        if(place.location) ponerPin({ lat: place.location.lat(), lng: place.location.lng() }, true, !!place.formattedAddress);
         else render();
       };
       pac.addEventListener('gmp-select', alElegir);
@@ -774,13 +775,38 @@ function crearMapaUI(){
     }
   })();
 }
-// coloca (o mueve) el pin de la casa; cualquier cambio obliga a volver a confirmar la ubicación
-function ponerPin(pnt, centrar){
+// coloca (o mueve) el pin de la casa; cualquier cambio obliga a volver a confirmar la ubicación.
+// Si el papá no ha escrito su dirección a mano, se llena sola con la dirección del punto.
+function ponerPin(pnt, centrar, direccionYaPuesta){
   state.destino = pnt;
   state.ubicacionConfirmada = false;
   gPin.setPosition(pnt); gPin.setVisible(true);
   if(centrar){ gMapa.setCenter(pnt); gMapa.setZoom(18); }
   clearTimeout(rutaTimer); rutaTimer = setTimeout(calcularRuta, 300);
+  if(!direccionYaPuesta && (!state.direccion.trim() || state.direccionAuto)){
+    direccionDePunto(pnt).then(d => {
+      if(!d || state.destino !== pnt) return;                    // ya movió el pin otra vez
+      if(state.direccion.trim() && !state.direccionAuto) return;   // mientras tanto la escribió a mano
+      state.direccion = d; state.direccionAuto = true;
+      render();
+    });
+  }
+}
+// dirección (calle y número, colonia, alcaldía, CP) de un punto del mapa: Google Geocoding si está
+// habilitado en el proyecto; si no, OpenStreetMap (gratis, menos preciso con números de casa)
+async function direccionDePunto(p){
+  try{
+    const { Geocoder } = await google.maps.importLibrary('geocoding');
+    const { results } = await new Geocoder().geocode({ location: p, language: 'es', region: 'mx' });
+    const r = (results || []).find(x => x.types.includes('street_address') || x.types.includes('premise')) || (results || [])[0];
+    if(r && r.formatted_address) return r.formatted_address.replace(/, (México|Mexico|Méx\.)$/, '');
+  }catch(err){ console.warn('Geocoding de Google no disponible; se usa OpenStreetMap.', err); }
+  try{
+    const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&accept-language=es&zoom=18&lat=${p.lat}&lon=${p.lng}`);
+    const j = await res.json(); const a = j.address || {};
+    const calle = [a.road, a.house_number].filter(Boolean).join(' ');
+    return [calle, a.neighbourhood || a.suburb, a.city_district || a.borough || a.town || a.city, a.postcode].filter(Boolean).join(', ');
+  }catch(err){ console.warn('No se pudo obtener la dirección del punto.', err); return ''; }
 }
 function montarMapa(){
   const slot = document.getElementById('mapaSlot');
@@ -1755,7 +1781,7 @@ function deliveryView(){
             </div>`}
         <div class="field-col" style="margin-top:12px;">
           <label>Calle, número, colonia y código postal *</label>
-          <textarea id="direccionInput" rows="2" placeholder="Se llena al elegir tu dirección en el buscador; corrígela si hace falta." style="font-family:inherit; padding:9px 10px; resize:vertical;">${esc(state.direccion||'')}</textarea>
+          <textarea id="direccionInput" rows="2" placeholder="Se llena sola al poner el pin; corrígela o agrega el número si hace falta." style="font-family:inherit; padding:9px 10px; resize:vertical;">${esc(state.direccion||'')}</textarea>
         </div>
         <div class="field-col">
           <label>Referencias para el repartidor</label>
@@ -2914,6 +2940,7 @@ function wireEvents(){
   const direccionInput = document.getElementById('direccionInput');
   if(direccionInput) direccionInput.addEventListener('input', () => {
     state.direccion = direccionInput.value;
+    state.direccionAuto = false;
     // con mapa, el costo depende del pin, no del texto; sin mapa, el texto es lo que se ubica
     if(!usarGoogleMaps()){
       // sin mapa, el costo depende del texto: si cambia, hay que volver a calcular (se avisa al dejar de escribir)
@@ -3090,7 +3117,7 @@ function wireEvents(){
     state.comprobante = null; state.comprobanteFile = null; state.comprobanteRevision = null; state.currentFolio = null;
     state.cliente = { telefono:'', correo:'' };
     state.direccion = ''; state.kmAuto = null; state.geoStatus = 'idle'; state.geoMessage = '';
-    state.destino = null; state.referencias = ''; state.rutaMin = null; state.ubicacionConfirmada = false;
+    state.destino = null; state.referencias = ''; state.rutaMin = null; state.ubicacionConfirmada = false; state.direccionAuto = false;
     mapaUI = null; gMapa = null; gRuta = null; gPin = null;   // el siguiente pedido arranca con mapa nuevo
     setTab('inicio');
   });
