@@ -427,7 +427,7 @@ const ZONAS_ENVIO = [
 ];
 // Llave de Google Maps (Maps JavaScript API + Places API (New) + Routes API), restringida al dominio de la tienda.
 // Mientras diga 'PENDIENTE' se usa el cálculo básico (OpenStreetMap, línea recta x1.3) sin mapa.
-const GOOGLE_MAPS_KEY = 'PENDIENTE';
+const GOOGLE_MAPS_KEY = 'AIzaSyBEs4ek4T6pHpXh69RIRuDNngUCiFtFwAI';
 const STORE_HOURS_TEXT = 'Lunes a Viernes, 8:00 a 15:00 hrs.';
 const STAGES = [
   { key:'recibido', label:'Pedido recibido' },
@@ -730,7 +730,9 @@ function crearMapaUI(){
       pac.addEventListener('gmp-select', alElegir);
       pac.addEventListener('gmp-placeselect', alElegir);   // nombre anterior del evento
       gMapa.addListener('idle', () => {
-        const c = gMapa.getCenter(); const pnt = { lat: c.lat(), lng: c.lng() };
+        const c = gMapa.getCenter();
+        if(gmFallo || !c) return;   // si Google rechazó la llave, el mapa queda inservible
+        const pnt = { lat: c.lat(), lng: c.lng() };
         if(ultimoPunto && haversineKm(ultimoPunto, pnt) < 0.02) return;   // menos de 20 m: no recalcula
         ultimoPunto = pnt;
         state.destino = pnt;
