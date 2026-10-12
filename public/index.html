@@ -655,20 +655,29 @@ async function buildOrder(){
   const telDigits = state.cliente.telefono.replace(/\D/g,'');
   const busquedaKeys = alumnos.map(al => slug(nombreCompleto(al)) + '_' + telDigits);
 
+  // se juntan las cantidades por artículo de inventario: dos hermanos con la misma lista (o la misma
+  // prenda/talla) comparten documento y hay que descontar la suma, no solo la última.
+  const qtyPorInvKey = {};
+  allItems.forEach(it => { qtyPorInvKey[it.invKey] = (qtyPorInvKey[it.invKey]||0) + it.qty; });
+  const invKeys = Object.keys(qtyPorInvKey);
+
   await runTransaction(db, async (tx) => {
-    const invRefs = allItems.map(it => doc(db, 'inventario', it.invKey));
+    const invRefs = invKeys.map(k => doc(db, 'inventario', k));
     const snaps = await Promise.all(invRefs.map(r => tx.get(r)));
     const orderRef = doc(db, 'pedidos', folio);
     tx.set(orderRef, order);
     busquedaKeys.forEach(key => tx.set(doc(db, 'busquedas', key), { folio }));
     invRefs.forEach((r, i) => {
-      const current = snaps[i].exists() ? (snaps[i].data().stock || 0) : 0;
-      tx.update(r, { stock: Math.max(0, current - allItems[i].qty) });
+      // si el artículo no existe en inventario (p. ej. una talla nueva que nunca se dio de alta),
+      // no se puede descontar, pero el pedido sí se guarda; el cliente no tiene permiso de crear inventario.
+      if(!snaps[i].exists()) return;
+      const current = snaps[i].data().stock || 0;
+      tx.update(r, { stock: Math.max(0, current - qtyPorInvKey[invKeys[i]]) });
     });
   });
 
-  allItems.forEach(it => {
-    state.inventory[it.invKey] = Math.max(0, (state.inventory[it.invKey]||0) - it.qty);
+  invKeys.forEach(k => {
+    if(k in state.inventory) state.inventory[k] = Math.max(0, state.inventory[k] - qtyPorInvKey[k]);
   });
   state.orders.push(order);
   return order;
