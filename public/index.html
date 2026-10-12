@@ -1802,6 +1802,9 @@ function canContinueFromDelivery(){
   return false;
 }
 
+// datos para que los papás transfieran (BBVA, Libretón)
+const BANCO = { banco: 'BBVA', beneficiario: 'Irma Hidu Uranga Hernandez', clabe: '0121 8002 6617 4023 78' };
+
 /* ---------- revisión automática del comprobante de transferencia ---------- */
 // Se lee el texto de la imagen en el navegador (Tesseract.js, gratis, sin servidor) y se exige que
 // aparezca el monto exacto del pedido y al menos 2 palabras típicas de un comprobante bancario.
@@ -1819,6 +1822,7 @@ function cargarTesseract(){
 }
 const PALABRAS_COMPROBANTE = ['transferencia','spei','rastreo','referencia','operacion','importe','monto','clabe','cuenta','beneficiario',
   'destino','ordenante','comprobante','enviado','enviaste','exitosa','aprobada','autorizacion','folio','concepto',
+  '2378','0237',   // terminación de la CLABE / cuenta destino del Liceo
   'bbva','banorte','santander','banamex','citibanamex','hsbc','scotiabank','azteca','inbursa','banregio','bancoppel','afirme','nu mexico','mercado pago','spin','hey banco'];
 // todos los importes que aparezcan en el texto, como números ($1,110.00 → 1110)
 function montosEnTexto(t){
@@ -1883,9 +1887,9 @@ function paymentView(){
     ${state.payment==='transferencia' ? `
       <div class="pay-detail">
         <div class="bank-box">
-          <div><b>Banco:</b> BBVA</div>
-          <div><b>Beneficiario:</b> Liceo Alexander Dul, A.C.</div>
-          <div><b>Cuenta CLABE:</b> 0123 4567 8901 2345 67</div>
+          <div><b>Banco:</b> ${esc(BANCO.banco)}</div>
+          <div><b>Beneficiario:</b> ${esc(BANCO.beneficiario)}</div>
+          <div><b>Cuenta CLABE:</b> ${esc(BANCO.clabe)}</div>
           <div><b>Referencia:</b> Nombre del alumno y grado</div>
           <div><b>Monto a transferir:</b> ${money(total)}</div>
         </div>
