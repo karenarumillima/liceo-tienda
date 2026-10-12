@@ -227,7 +227,12 @@
   .mapa-gps { margin-bottom:8px; }
   .mapa-box { position:relative; height:340px; border-radius: var(--radius); overflow:hidden; border:1.5px solid var(--border); }
   .mapa { width:100%; height:100%; }
-  .mapa-pin { position:absolute; left:50%; top:50%; transform:translate(-50%, -100%); font-size:2.4rem; line-height:1; pointer-events:none; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.35)); }
+  .mapa { cursor: crosshair; }
+  .confirma-ubicacion { margin-top:12px; border:2px solid var(--marigold); border-radius: var(--radius); padding:14px; background: var(--card-bg); }
+  .confirma-ubicacion .cu-titulo { font-weight:800; font-size:1.05rem; margin-bottom:4px; }
+  .confirma-ubicacion .cu-dato { font-size:0.88rem; margin-bottom:3px; }
+  .confirma-ubicacion .cu-botones { display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-top:8px; }
+  .confirma-ubicacion.ok { border-color: var(--green); background: var(--green-tint); color: var(--green); display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; font-size:0.9rem; }
   .mapa-ayuda { font-size:0.8rem; color: var(--ink-soft); margin-top:6px; }
   .uni-sin-foto { display: flex; align-items: center; justify-content: center; font-size: 3rem; }
   .note-box { background: var(--green-tint); color: var(--green); border-radius: 4px; padding: 12px 14px; font-size: 0.88rem; font-weight: 700; }
@@ -241,6 +246,27 @@
   .split-warning { color: var(--red); font-size: 0.8rem; font-weight: 700; margin-top: 4px; }
   .alumno-chip { display: inline-flex; align-items: center; gap: 6px; background: var(--navy-tint); color: var(--navy); border-radius: 20px; padding: 5px 12px; font-size: 0.82rem; font-weight: 700; }
 
+  .guardar-recibo { display:grid; grid-template-columns:auto 1fr; gap:6px 14px; align-items:center; background: var(--marigold); color: #22355F; border-radius: 8px; padding: 18px 20px; margin-bottom: 16px; box-shadow: 0 4px 14px rgba(234,184,76,0.35); }
+  .guardar-recibo .gr-icono { font-size: 2.4rem; grid-row: span 2; align-self:start; }
+  .guardar-recibo .gr-titulo { font-size: 1.2rem; font-weight: 800; margin-bottom: 2px; }
+  .guardar-recibo .gr-botones { grid-column: 2; display:flex; gap:8px; flex-wrap:wrap; margin-top:8px; }
+  .guardar-recibo .btn-primary { background:#22355F; color:#fff; border-color:#22355F; font-size:1rem; padding:11px 18px; }
+  .guardar-recibo .btn-secondary { background:#fff; color:#22355F; border-color:#fff; }
+  .guardar-recibo .gr-tip { grid-column: 1 / -1; background: rgba(255,255,255,0.65); border-radius: 4px; padding: 8px 10px; font-size: 0.85rem; }
+  @media (max-width: 560px){ .guardar-recibo { grid-template-columns: 1fr; } .guardar-recibo .gr-icono { display:none; } .guardar-recibo .gr-botones { grid-column: 1; } .guardar-recibo .gr-botones .btn { flex: 1 1 100%; } }
+  /* al imprimir / guardar como PDF solo sale el recibo, en blanco */
+  @media print {
+    html, body { background: #fff !important; }
+    #app > *:not(main), main > section > *:not(.receipt) { display: none !important; }
+    main, main > section { padding: 0 !important; margin: 0 !important; }
+    .receipt, .receipt * { color: #1d2433 !important; }
+    .receipt { background: #fff !important; border: 1px solid #ccc !important; box-shadow: none !important; }
+    .receipt .badge { background: #eab84c !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .no-print { display: none !important; }
+    .receipt .note-box { background: #fdecea !important; border: 1px solid #e0a39c !important; }
+    .receipt .note-box, .receipt .note-box * { color: #8a2c22 !important; }
+    .receipt img { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
   .receipt { background: var(--card-bg); border: 1.5px solid var(--border); border-radius: 8px; padding: 26px; position: relative; }
   .receipt h2 { margin: 0 0 2px; }
   .receipt .ord { color: var(--ink-soft); font-size: 0.85rem; margin-bottom: 16px; }
@@ -515,6 +541,7 @@ let state = {
   payment: null,               // 'transferencia' | 'efectivo'
   comprobante: null,
   comprobanteFile: null,
+  comprobanteRevision: null,   // { estado: 'revisando'|'ok'|'rechazado'|'fallo', montoOk, palabras }
   currentFolio: null,
   orders: [],                  // "base de datos" de pedidos (en memoria, para la demo)
   inventory: {},                // "base de datos" de existencias (en memoria, para la demo)
@@ -531,6 +558,7 @@ let state = {
   destino: null,               // { lat, lng } del pin que el papá dejó en su puerta (modo Google Maps)
   referencias: '',             // referencias para el repartidor
   rutaMin: null,               // minutos aproximados en coche
+  ubicacionConfirmada: false,  // el papá confirmó "sí, aquí es mi casa"
   uniSel: {},
   uniFotoIdx: {},              // { [uniformeId]: índice de la foto que se ve en la tarjeta }
   lightbox: null,              // { uniId, idx } — foto de uniforme en grande                  // { [uniformeId]: talla elegida } — para que la talla no se reinicie en cada render
@@ -682,7 +710,7 @@ function ligasNavegacion(o){
 // El mapa vive en un nodo que se crea UNA vez (mapaUI) y que después de cada render() se vuelve a
 // colocar en #mapaSlot: así el re-render de toda la página no destruye el mapa ni el buscador.
 let gmPromesa = null, gmFallo = false;
-let mapaUI = null, gMapa = null, gRuta = null, rutaTimer = null, ultimoPunto = null;
+let mapaUI = null, gMapa = null, gRuta = null, gPin = null, rutaTimer = null;
 function usarGoogleMaps(){ return GOOGLE_MAPS_KEY !== 'PENDIENTE' && !gmFallo; }
 window.gm_authFailure = () => { gmFallo = true; console.error('Google Maps rechazó la llave (revisa restricciones y APIs habilitadas).'); render(); };
 function cargarGoogleMaps(){
@@ -703,8 +731,8 @@ function crearMapaUI(){
     <label class="mapa-label">Busca tu dirección</label>
     <div class="mapa-buscador"></div>
     <button type="button" class="btn btn-secondary btn-sm mapa-gps">📍 Usar mi ubicación actual</button>
-    <div class="mapa-box"><div class="mapa"></div><div class="mapa-pin" aria-hidden="true">📍</div></div>
-    <div class="mapa-ayuda">Mueve el mapa hasta que el pin quede justo en tu puerta. El costo se calcula con la ruta en coche desde el local.</div>`;
+    <div class="mapa-box"><div class="mapa"></div></div>
+    <div class="mapa-ayuda"><b>Toca en el mapa el lugar exacto de tu casa.</b> Si el pin no quedó bien, arrástralo. El costo se calcula con la ruta en coche desde el local.</div>`;
   (async () => {
     try{
       await cargarGoogleMaps();
@@ -712,10 +740,14 @@ function crearMapaUI(){
       await google.maps.importLibrary('geometry');
       const { PlaceAutocompleteElement } = await google.maps.importLibrary('places');
       const inicio = state.destino || STORE_COORDS;
-      ultimoPunto = inicio;
       gMapa = new Map(mapaUI.querySelector('.mapa'), { center: inicio, zoom: state.destino ? 17 : 14,
         disableDefaultUI: true, zoomControl: true, gestureHandling: 'greedy', clickableIcons: false });
       gRuta = new Polyline({ map: gMapa, strokeColor: '#22355F', strokeOpacity: 0.85, strokeWeight: 4 });
+      // pin de la casa: se pone tocando el mapa y se puede arrastrar (google.maps.Marker clásico,
+      // porque el AdvancedMarkerElement exige crear un Map ID en la consola)
+      gPin = new google.maps.Marker({ map: gMapa, draggable: true, position: state.destino || null, visible: !!state.destino, title: 'Tu casa' });
+      gPin.addListener('dragend', () => { const p = gPin.getPosition(); ponerPin({ lat: p.lat(), lng: p.lng() }, false); });
+      gMapa.addListener('click', (e) => { if(!gmFallo && e.latLng) ponerPin({ lat: e.latLng.lat(), lng: e.latLng.lng() }, false); });
       const pac = new PlaceAutocompleteElement({ includedRegionCodes: ['mx'], locationBias: { center: STORE_COORDS, radius: 30000 } });
       pac.style.width = '100%';
       mapaUI.querySelector('.mapa-buscador').appendChild(pac);
@@ -724,24 +756,15 @@ function crearMapaUI(){
         if(!place) return;
         await place.fetchFields({ fields: ['formattedAddress', 'location'] });
         if(place.formattedAddress) state.direccion = place.formattedAddress;
-        if(place.location){ gMapa.setCenter(place.location); gMapa.setZoom(18); }
-        render();   // el evento 'idle' del mapa calcula la ruta
+        if(place.location) ponerPin({ lat: place.location.lat(), lng: place.location.lng() }, true);
+        else render();
       };
       pac.addEventListener('gmp-select', alElegir);
       pac.addEventListener('gmp-placeselect', alElegir);   // nombre anterior del evento
-      gMapa.addListener('idle', () => {
-        const c = gMapa.getCenter();
-        if(gmFallo || !c) return;   // si Google rechazó la llave, el mapa queda inservible
-        const pnt = { lat: c.lat(), lng: c.lng() };
-        if(ultimoPunto && haversineKm(ultimoPunto, pnt) < 0.02) return;   // menos de 20 m: no recalcula
-        ultimoPunto = pnt;
-        state.destino = pnt;
-        clearTimeout(rutaTimer); rutaTimer = setTimeout(calcularRuta, 500);
-      });
       mapaUI.querySelector('.mapa-gps').addEventListener('click', () => {
         if(!navigator.geolocation){ alert('Tu navegador no permite usar la ubicación.'); return; }
         navigator.geolocation.getCurrentPosition(
-          (pos) => { gMapa.setCenter({ lat: pos.coords.latitude, lng: pos.coords.longitude }); gMapa.setZoom(18); },
+          (pos) => ponerPin({ lat: pos.coords.latitude, lng: pos.coords.longitude }, true),
           () => alert('No pudimos obtener tu ubicación. Revisa que hayas dado permiso, o busca tu dirección.'),
           { enableHighAccuracy: true, timeout: 10000 });
       });
@@ -750,6 +773,14 @@ function crearMapaUI(){
       gmFallo = true; render();   // sin Google Maps: vuelve al cálculo básico
     }
   })();
+}
+// coloca (o mueve) el pin de la casa; cualquier cambio obliga a volver a confirmar la ubicación
+function ponerPin(pnt, centrar){
+  state.destino = pnt;
+  state.ubicacionConfirmada = false;
+  gPin.setPosition(pnt); gPin.setVisible(true);
+  if(centrar){ gMapa.setCenter(pnt); gMapa.setZoom(18); }
+  clearTimeout(rutaTimer); rutaTimer = setTimeout(calcularRuta, 300);
 }
 function montarMapa(){
   const slot = document.getElementById('mapaSlot');
@@ -815,7 +846,7 @@ function makeQrHtml(text, sizePx){
   sizePx = sizePx || 120;
   const url = `https://api.qrserver.com/v1/create-qr-code/?size=${sizePx}x${sizePx}&data=${encodeURIComponent(text)}`;
   return `<div style="text-align:center;">
-    <img src="${url}" width="${sizePx}" height="${sizePx}" alt="Código del pedido" loading="lazy"
+    <img src="${url}" width="${sizePx}" height="${sizePx}" alt="Código del pedido"
       style="background:#fff; border-radius:4px; padding:6px; box-sizing:content-box; display:block; margin:0 auto;"
       onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
     <div style="display:none; font-size:0.85rem; color:var(--ink-soft); font-weight:800; padding:20px; border:1.5px dashed var(--border); border-radius:4px;">${esc(text)}</div>
@@ -926,6 +957,7 @@ async function buildOrder(){
     deliveryKm: deliveryKm(),
     payment: state.payment,
     comprobante: comprobanteUrl,
+    comprobanteRevision: comprobanteUrl && state.comprobanteRevision ? { montoOk: !!state.comprobanteRevision.montoOk, palabras: state.comprobanteRevision.palabras || [] } : null,
     totales,
     pagoConfirmado: false,
     pagoConfirmadoAt: null,
@@ -983,6 +1015,12 @@ function setTab(tab){
 }
 
 /* ================= RENDER ================= */
+
+// Al teclear NO se re-renderiza la página (eso movía el cursor, parpadeaba y cerraba el teclado en
+// celular): se guarda en state y solo se actualiza lo que depende de ese campo con estas ayudas.
+function habilitar(sel, ok){ const b = document.querySelector(sel); if(b) b.disabled = !ok; }
+let renderDiferidoTimer = null;
+function renderDiferido(ms){ clearTimeout(renderDiferidoTimer); renderDiferidoTimer = setTimeout(render, ms || 350); }
 
 function render(){
   const active = document.activeElement;
@@ -1697,6 +1735,24 @@ function deliveryView(){
     ${state.fulfillment==='delivery' && usarGoogleMaps() ? `
       <div class="map-wrap">
         <div id="mapaSlot"></div>
+        ${!state.destino ? `<div class="fee-box"><div class="km">Toca en el mapa dónde está tu casa para calcular el envío</div></div>`
+          : state.geoStatus==='loading' ? `<div class="fee-box"><div class="km">Calculando la ruta…</div></div>`
+          : km === null ? ''
+          : state.ubicacionConfirmada ? `
+            <div class="confirma-ubicacion ok">
+              <div><b>✓ Ubicación confirmada</b> · ${km.toFixed(1)} km por calles${state.rutaMin ? ' (~'+state.rutaMin+' min)' : ''} · Envío <b>${money(fee)}</b></div>
+              <button class="btn-ghost" id="ubicacionCambiarBtn">Cambiar</button>
+            </div>`
+          : `
+            <div class="confirma-ubicacion">
+              <div class="cu-titulo">📍 ¿Es aquí tu casa?</div>
+              <div class="cu-dato">${state.direccion ? esc(state.direccion) : 'Escribe abajo tu calle, número y colonia.'}</div>
+              <div class="cu-dato">${km.toFixed(1)} km por calles desde el local${state.rutaMin ? ' (~'+state.rutaMin+' min)' : ''} · Envío: <b>${money(fee)}</b></div>
+              <div class="cu-botones">
+                <button class="btn btn-primary btn-sm" id="ubicacionOkBtn">✓ Sí, aquí es</button>
+                <span style="font-size:0.8rem; color:var(--ink-soft);">Si no, toca el lugar correcto en el mapa o arrastra el pin.</span>
+              </div>
+            </div>`}
         <div class="field-col" style="margin-top:12px;">
           <label>Calle, número, colonia y código postal *</label>
           <textarea id="direccionInput" rows="2" placeholder="Se llena al elegir tu dirección en el buscador; corrígela si hace falta." style="font-family:inherit; padding:9px 10px; resize:vertical;">${esc(state.direccion||'')}</textarea>
@@ -1706,10 +1762,6 @@ function deliveryView(){
           <textarea id="referenciasInput" rows="2" placeholder="Número interior, entre qué calles, color de portón…" style="font-family:inherit; padding:9px 10px; resize:vertical;">${esc(state.referencias||'')}</textarea>
         </div>
         ${state.geoMessage ? `<div class="note-box ${state.geoStatus==='error'?'error':'neutral'}" style="margin-top:10px;">${esc(state.geoMessage)}</div>` : ''}
-        <div class="fee-box">
-          <div class="km">${state.geoStatus==='loading' ? 'Calculando la ruta…' : km !== null ? `Distancia por calles: ${km.toFixed(1)} km${state.rutaMin ? ' (~'+state.rutaMin+' min)' : ''}` : 'Mueve el pin a tu puerta para calcular el envío'}</div>
-          <div class="fee">${fee !== null && state.geoStatus!=='loading' ? 'Envío: ' + money(fee) : ''}</div>
-        </div>
         <div style="font-size:0.78rem; color:var(--ink-soft); margin-top:6px;">Tarifas: ${esc(tarifasEnvioTexto())}</div>
         <div class="note-box neutral" style="margin-top:14px;">
           Fecha estimada de entrega: ${fmtDate(computeEstimatedReady())}. Te avisaremos por correo conforme avance tu pedido; el repartidor llegará al punto que marcaste en el mapa.
@@ -1746,8 +1798,67 @@ function deliveryView(){
 function canContinueFromDelivery(){
   if(state.fulfillment === 'pickup') return true;
   if(state.fulfillment === 'delivery') return deliveryFee() !== null && state.direccion.trim().length > 8
-    && state.geoStatus !== 'loading' && (!usarGoogleMaps() || !!state.destino);
+    && state.geoStatus !== 'loading' && (!usarGoogleMaps() || (!!state.destino && state.ubicacionConfirmada));
   return false;
+}
+
+/* ---------- revisión automática del comprobante de transferencia ---------- */
+// Se lee el texto de la imagen en el navegador (Tesseract.js, gratis, sin servidor) y se exige que
+// aparezca el monto exacto del pedido y al menos 2 palabras típicas de un comprobante bancario.
+let tesseractPromesa = null;
+function cargarTesseract(){
+  if(window.Tesseract) return Promise.resolve();
+  if(tesseractPromesa) return tesseractPromesa;
+  tesseractPromesa = new Promise((resolve, reject) => {
+    const sc = document.createElement('script');
+    sc.src = 'https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js';
+    sc.onload = resolve; sc.onerror = () => { tesseractPromesa = null; reject(new Error('No cargó el lector de texto')); };
+    document.head.appendChild(sc);
+  });
+  return tesseractPromesa;
+}
+const PALABRAS_COMPROBANTE = ['transferencia','spei','rastreo','referencia','operacion','importe','monto','clabe','cuenta','beneficiario',
+  'destino','ordenante','comprobante','enviado','enviaste','exitosa','aprobada','autorizacion','folio','concepto',
+  'bbva','banorte','santander','banamex','citibanamex','hsbc','scotiabank','azteca','inbursa','banregio','bancoppel','afirme','nu mexico','mercado pago','spin','hey banco'];
+// todos los importes que aparezcan en el texto, como números ($1,110.00 → 1110)
+function montosEnTexto(t){
+  const out = [];
+  (t.match(/\$?\s?\d{1,3}(?:[,\s]\d{3})+(?:\.\d{1,2})?|\$?\s?\d+(?:\.\d{1,2})?/g) || []).forEach(m => {
+    const n = parseFloat(m.replace(/[$\s,]/g, ''));
+    if(isFinite(n)) out.push(n);
+  });
+  return out;
+}
+async function revisarComprobante(file, total){
+  await cargarTesseract();
+  const worker = await Tesseract.createWorker('spa');
+  try{
+    const { data } = await worker.recognize(file);
+    const texto = data.text || '';
+    const plano = normTexto(texto);
+    const palabras = PALABRAS_COMPROBANTE.filter(w => plano.includes(w));
+    const montoOk = montosEnTexto(texto).some(n => Math.abs(n - total) < 0.5);
+    return { montoOk, palabras, ok: montoOk && palabras.length >= 2 };
+  } finally {
+    await worker.terminate();
+  }
+}
+function revisionComprobanteHtml(total){
+  const r = state.comprobanteRevision;
+  if(!r) return '';
+  if(r.estado === 'revisando') return `<div class="note-box neutral" style="margin-top:10px;">🔎 Revisando tu comprobante… puede tardar unos segundos.</div>`;
+  if(r.estado === 'ok') return `<div class="note-box" style="margin-top:10px;">✓ Comprobante revisado: encontramos el monto de ${money(total)} y los datos de la transferencia.</div>`;
+  const motivos = [];
+  if(r.estado === 'fallo') motivos.push('No pudimos leer la imagen en este momento. Revisa tu conexión y vuelve a subirla.');
+  else {
+    if(!r.montoOk) motivos.push(`No encontramos el monto exacto de ${money(total)}. Transfiere exactamente esa cantidad.`);
+    if(r.palabras.length < 2) motivos.push('La imagen no parece un comprobante de transferencia bancaria.');
+  }
+  return `<div class="note-box error" style="margin-top:10px;">
+    ⚠️ No pudimos validar tu comprobante:
+    <ul style="margin:6px 0 6px 18px; padding:0;">${motivos.map(m => `<li>${esc(m)}</li>`).join('')}</ul>
+    <div style="font-weight:400;">Sube la <b>captura de pantalla original</b> de tu app del banco (no una foto de la pantalla), donde se vea completo el monto, la clave de rastreo y la cuenta destino. Si tu comprobante es correcto y no lo reconoce, puedes elegir pagar en efectivo.</div>
+  </div>`;
 }
 
 function paymentView(){
@@ -1779,9 +1890,10 @@ function paymentView(){
           <div><b>Monto a transferir:</b> ${money(total)}</div>
         </div>
         <label class="upload-zone" for="comprobanteInput">
-          ${state.comprobante ? `<img class="preview-img" src="${state.comprobante}">` : `📎 Toca para subir la foto o captura de tu comprobante`}
+          ${state.comprobante ? `<img class="preview-img" src="${state.comprobante}"><div style="font-size:0.8rem; margin-top:6px;">Toca para cambiar la imagen</div>` : `📎 Toca para subir la captura de tu comprobante`}
           <input type="file" id="comprobanteInput" accept="image/*">
         </label>
+        ${revisionComprobanteHtml(total)}
       </div>
     ` : ''}
     ${state.payment==='efectivo' ? `
@@ -1805,7 +1917,7 @@ function paymentView(){
 }
 
 function canConfirmOrder(){
-  if(state.payment === 'transferencia') return !!state.comprobante;
+  if(state.payment === 'transferencia') return !!state.comprobante && !!state.comprobanteRevision && state.comprobanteRevision.estado === 'ok';
   if(state.payment === 'efectivo') return true;
   return false;
 }
@@ -1817,9 +1929,23 @@ function confirmationView(){
   }
   const itemLines = pedidoItemsHtml(order);
 
+  const accion = order.fulfillment==='delivery' ? 'recibir' : 'recoger';
   return `
   <section class="view">
     ${stepIndicator('confirmacion')}
+    <div class="guardar-recibo no-print">
+      <div class="gr-icono">📄</div>
+      <div class="gr-texto">
+        <div class="gr-titulo">Guarda tu recibo ahora</div>
+        <div>Lo vas a necesitar para ${accion} tu pedido. Tu folio es <b>${esc(order.folio)}</b>.</div>
+      </div>
+      <div class="gr-botones">
+        <button class="btn btn-primary" data-recibo="pdf">⬇️ Guardar como PDF</button>
+        <button class="btn btn-secondary" data-recibo="imprimir">🖨️ Imprimir</button>
+        ${navigator.share ? `<button class="btn btn-secondary" data-recibo="compartir">📲 Mandármelo por WhatsApp</button>` : ''}
+      </div>
+      <div class="gr-tip" id="reciboTip" hidden>En la ventana que se abre, en <b>Destino</b> elige <b>"Guardar como PDF"</b> y dale <b>Guardar</b>. En celular, también puedes tomarle captura de pantalla al recibo.</div>
+    </div>
     <div class="receipt">
       <span class="badge gold">Pedido confirmado</span>
       <h2>¡Gracias por tu pedido para ${esc(alumnosLabel(order))}!</h2>
@@ -1851,9 +1977,9 @@ function confirmationView(){
 
     ${smsLogHtml(order, '💬 Seguimiento de tu pedido')}
 
-    <div class="summary-bar">
-      <button class="btn btn-secondary" onclick="window.print()">🖨️ Imprimir / guardar recibo</button>
-      <button class="btn btn-primary" id="newOrderBtn">Hacer otro pedido</button>
+    <div class="summary-bar no-print">
+      <button class="btn btn-primary" data-recibo="pdf">⬇️ Guardar recibo (PDF)</button>
+      <button class="btn btn-secondary" id="newOrderBtn">Hacer otro pedido</button>
     </div>
   </section>`;
 }
@@ -2326,7 +2452,8 @@ function orderDetailView(order){
     <div class="rline"><span>Pago:</span><span>${payBadge(order)}</span></div>
     <div style="margin:6px 0 4px;"><button class="btn btn-secondary btn-sm" data-pago="${esc(order.folio)}">${order.pagoConfirmado ? '↩ Marcar como NO pagado' : '✓ Confirmar pago recibido'}</button></div>
     ${order.payment==='efectivo' ? `<div class="note-box error" style="margin-top:8px;">Recuerda pedir el recibo con QR antes de entregar.</div>` : ''}
-    ${order.comprobante ? `<img class="preview-img" src="${order.comprobante}">` : ''}
+    ${order.comprobante && order.comprobanteRevision ? `<div class="note-box" style="margin-top:8px;">✓ Revisado automáticamente: el monto coincide y parece comprobante bancario${order.comprobanteRevision.palabras && order.comprobanteRevision.palabras.length ? ' ('+esc(order.comprobanteRevision.palabras.slice(0,5).join(', '))+')' : ''}. Aun así confirma en tu banco que el dinero llegó.</div>` : ''}
+    ${order.comprobante ? `<img class="preview-img" src="${esc(order.comprobante)}">` : ''}
 
     <div class="field-col" style="margin-top:18px; max-width:280px;">
       <label>Ubicación / anaquel (opcional)</label>
@@ -2572,7 +2699,11 @@ function wireEvents(){
     ['panNombres','panApPaterno','panApMaterno'].forEach((id,idx) => {
       const field = ['nombres','apellidoPaterno','apellidoMaterno'][idx];
       const el = document.getElementById(id);
-      if(el) el.addEventListener('input', () => { state.pendingAssign.nuevo[field] = el.value; render(); });
+      if(el) el.addEventListener('input', () => {
+        state.pendingAssign.nuevo[field] = el.value;
+        const n = state.pendingAssign.nuevo;
+        habilitar('#panGuardarBtn', (n.nombres||'').trim().length>1 && (n.apellidoPaterno||'').trim().length>1 && (n.apellidoMaterno||'').trim().length>1);
+      });
     });
     const panGrado = document.getElementById('panGrado');
     if(panGrado) panGrado.addEventListener('change', () => { state.pendingAssign.nuevo.grado = panGrado.value; render(); });
@@ -2650,11 +2781,20 @@ function wireEvents(){
   }));
 
   // cantidades por artículo
-  document.querySelectorAll('[data-qty-input]').forEach(el => el.addEventListener('input', () => {
-    const g = el.getAttribute('data-grade'), i = el.getAttribute('data-qty-input');
-    ensureGradeQtys(g)[i] = utilDisponible(gradeNameOf(g), i) ? Math.max(0, parseInt(el.value)||0) : 0;
-    render();
-  }));
+  document.querySelectorAll('[data-qty-input]').forEach(el => {
+    el.addEventListener('input', () => {
+      const g = el.getAttribute('data-grade'), i = el.getAttribute('data-qty-input');
+      const q = utilDisponible(gradeNameOf(g), i) ? Math.max(0, parseInt(el.value)||0) : 0;
+      ensureGradeQtys(g)[i] = q;
+      const fila = el.closest('.item-row');
+      if(fila){
+        fila.classList.toggle('unselected', q === 0);
+        const amt = fila.querySelector('.amt'); if(amt) amt.textContent = money(q * GRADES[gradeNameOf(g)].items[i].precio_unitario);
+      }
+      const sub = document.querySelector('.summary-bar .amt'); if(sub) sub.textContent = money(gradeSubtotal(g));
+    });
+    el.addEventListener('change', () => render());   // al salir del campo se actualiza carrito y totales
+  });
   document.querySelectorAll('[data-qty-inc]').forEach(el => el.addEventListener('click', () => {
     const g = el.getAttribute('data-grade'), i = el.getAttribute('data-qty-inc');
     if(!utilDisponible(gradeNameOf(g), i)) return;
@@ -2726,7 +2866,11 @@ function wireEvents(){
   }));
   [['avisoTel','telefono'],['avisoCorreo','correo']].forEach(([id,field]) => {
     const el = document.getElementById(id);
-    if(el) el.addEventListener('input', () => { state.avisoForm[field] = el.value; state.avisoForm.error = ''; render(); });
+    if(el) el.addEventListener('input', () => {
+      state.avisoForm[field] = el.value; state.avisoForm.error = '';
+      const f = state.avisoForm;
+      habilitar('#avisoGuardarBtn', f.telefono.replace(/\D/g,'').length === 10 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.correo.trim()) && !f.saving);
+    });
   });
   const avisoCancelarBtn = document.getElementById('avisoCancelarBtn');
   if(avisoCancelarBtn) avisoCancelarBtn.addEventListener('click', () => { state.avisoForm = null; render(); });
@@ -2756,7 +2900,7 @@ function wireEvents(){
   // datos de contacto
   [['cTelefono','telefono'],['cCorreo','correo']].forEach(([id,field]) => {
     const el = document.getElementById(id);
-    if(el) el.addEventListener('input', () => { state.cliente[field] = el.value; render(); });
+    if(el) el.addEventListener('input', () => { state.cliente[field] = el.value; habilitar('[data-nav="entrega"]', clienteValido()); });
   });
 
   // entrega
@@ -2767,9 +2911,17 @@ function wireEvents(){
   if(direccionInput) direccionInput.addEventListener('input', () => {
     state.direccion = direccionInput.value;
     // con mapa, el costo depende del pin, no del texto; sin mapa, el texto es lo que se ubica
-    if(!usarGoogleMaps()){ state.kmAuto = null; state.geoStatus = 'idle'; state.geoMessage = ''; }
-    render();
+    if(!usarGoogleMaps()){
+      // sin mapa, el costo depende del texto: si cambia, hay que volver a calcular (se avisa al dejar de escribir)
+      if(state.kmAuto !== null || state.geoMessage){ state.kmAuto = null; state.geoStatus = 'idle'; state.geoMessage = ''; renderDiferido(600); }
+      habilitar('#geoBtn', state.direccion.trim().length >= 8 && state.geoStatus !== 'loading');
+    }
+    habilitar('[data-nav="pago"]', canContinueFromDelivery());
   });
+  const ubicacionOkBtn = document.getElementById('ubicacionOkBtn');
+  if(ubicacionOkBtn) ubicacionOkBtn.addEventListener('click', () => { state.ubicacionConfirmada = true; render(); });
+  const ubicacionCambiarBtn = document.getElementById('ubicacionCambiarBtn');
+  if(ubicacionCambiarBtn) ubicacionCambiarBtn.addEventListener('click', () => { state.ubicacionConfirmada = false; render(); });
   const referenciasInput = document.getElementById('referenciasInput');
   if(referenciasInput) referenciasInput.addEventListener('input', () => { state.referencias = referenciasInput.value; });
   const geoBtn = document.getElementById('geoBtn');
@@ -2880,9 +3032,22 @@ function wireEvents(){
     const file = comprobanteInput.files[0];
     if(!file) return;
     state.comprobanteFile = file;
+    const total = grandTotal();
     const reader = new FileReader();
     reader.onload = () => { state.comprobante = reader.result; render(); };
     reader.readAsDataURL(file);
+    state.comprobanteRevision = { estado: 'revisando' };
+    render();
+    revisarComprobante(file, total).then(r => {
+      if(state.comprobanteFile !== file) return;   // ya subió otra imagen
+      state.comprobanteRevision = { estado: r.ok ? 'ok' : 'rechazado', montoOk: r.montoOk, palabras: r.palabras };
+      render();
+    }).catch(err => {
+      console.error(err);
+      if(state.comprobanteFile !== file) return;
+      state.comprobanteRevision = { estado: 'fallo', montoOk: false, palabras: [] };
+      render();
+    });
   });
   const confirmBtn = document.getElementById('confirmOrderBtn');
   if(confirmBtn) confirmBtn.addEventListener('click', async () => {
@@ -2901,16 +3066,28 @@ function wireEvents(){
     }
   });
 
+  // recibo: guardar como PDF / imprimir / compartir
+  document.querySelectorAll('[data-recibo]').forEach(el => el.addEventListener('click', async () => {
+    const accion = el.getAttribute('data-recibo');
+    const order = state.orders.find(o => o.folio === state.currentFolio);
+    if(accion === 'compartir' && order && navigator.share){
+      const texto = `Recibo de mi pedido en la Tienda del Liceo Alexander Dul\nFolio: ${order.folio}\nTotal: ${money(order.total)}\nAlumno(s): ${alumnosLabel(order)}\nConsulta el estado en ${location.origin} → Rastrear pedido.`;
+      try{ await navigator.share({ title: 'Recibo ' + order.folio, text: texto }); }catch(e){}
+      return;
+    }
+    if(accion === 'pdf'){ const tip = document.getElementById('reciboTip'); if(tip) tip.hidden = false; }
+    setTimeout(() => window.print(), accion === 'pdf' ? 250 : 0);
+  }));
   const newOrderBtn = document.getElementById('newOrderBtn');
   if(newOrderBtn) newOrderBtn.addEventListener('click', () => {
     state.grade = null; state.gradeQtys = {}; state.gradeAssign = {}; state.uniformCart = []; state.fulfillment = null;
     state.students = []; state.pendingAssign = null;
     state.payment = null;
-    state.comprobante = null; state.comprobanteFile = null; state.currentFolio = null;
+    state.comprobante = null; state.comprobanteFile = null; state.comprobanteRevision = null; state.currentFolio = null;
     state.cliente = { telefono:'', correo:'' };
     state.direccion = ''; state.kmAuto = null; state.geoStatus = 'idle'; state.geoMessage = '';
-    state.destino = null; state.referencias = ''; state.rutaMin = null;
-    mapaUI = null; gMapa = null; gRuta = null; ultimoPunto = null;   // el siguiente pedido arranca con mapa nuevo
+    state.destino = null; state.referencias = ''; state.rutaMin = null; state.ubicacionConfirmada = false;
+    mapaUI = null; gMapa = null; gRuta = null; gPin = null;   // el siguiente pedido arranca con mapa nuevo
     setTab('inicio');
   });
 
@@ -3006,10 +3183,10 @@ function wireEvents(){
   });
 
   const invFilter = document.getElementById('invFilter');
-  if(invFilter) invFilter.addEventListener('input', () => { state.adminInvFilter = invFilter.value; render(); });
+  if(invFilter) invFilter.addEventListener('input', () => { state.adminInvFilter = invFilter.value; renderDiferido(); });
 
   const ordersSearch = document.getElementById('ordersSearch');
-  if(ordersSearch) ordersSearch.addEventListener('input', () => { state.ordersSearch = ordersSearch.value; render(); });
+  if(ordersSearch) ordersSearch.addEventListener('input', () => { state.ordersSearch = ordersSearch.value; renderDiferido(); });
 
   document.querySelectorAll('[data-checklist]').forEach(el => el.addEventListener('change', async () => {
     const folio = el.getAttribute('data-folio'), key = el.getAttribute('data-checklist');
