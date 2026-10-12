@@ -39,6 +39,19 @@ service cloud.firestore {
     // Puntero de b\u00fasqueda "olvid\u00e9 mi folio": la clave del documento ya es
     // el nombre completo + tel\u00e9fono combinados, as\u00ed que solo se puede leer
     // si ya sabes exactamente esos dos datos (nunca se puede listar todo).
+    // "Avísame cuando haya" (uniformes agotados): cualquier papá puede registrarse,
+    // pero solo el personal puede ver la lista (tiene teléfonos y correos).
+    match /avisos/{id} {
+      allow create: if request.resource.data.keys().hasOnly(['uniformeId','nombre','talla','telefono','correo','estado','createdAt'])
+                    && request.resource.data.estado == 'pendiente'
+                    && request.resource.data.telefono is string && request.resource.data.telefono.size() <= 15
+                    && request.resource.data.correo is string && request.resource.data.correo.size() <= 120
+                    && request.resource.data.nombre is string && request.resource.data.nombre.size() <= 80
+                    && request.resource.data.talla is string && request.resource.data.talla.size() <= 10;
+      allow read, update: if isStaff();
+      allow delete: if isAdmin();
+    }
+
     match /busquedas/{key} {
       allow get: if true;
       allow create, update: if true;

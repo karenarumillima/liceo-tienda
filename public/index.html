@@ -288,6 +288,22 @@ function subscribeOrders(){
 }
 function unsubscribeOrders(){
   if(ordersUnsub){ ordersUnsub(); ordersUnsub = null; }
+  unsubscribeAvisos();
+}
+
+// avisos de "ya hay existencias": solo el personal los lee (ver firestore.rules)
+let avisosUnsub = null;
+function subscribeAvisos(){
+  if(avisosUnsub) return;
+  const q = query(collection(db, 'avisos'), orderBy('createdAt', 'desc'));
+  avisosUnsub = onSnapshot(q, (snap) => {
+    state.avisos = snap.docs.map(d => Object.assign({ id: d.id }, d.data()));
+    render();
+  }, (err) => console.error('Error escuchando avisos:', err));
+}
+function unsubscribeAvisos(){
+  if(avisosUnsub){ avisosUnsub(); avisosUnsub = null; }
+  state.avisos = [];
 }
 
 /* ================= DATOS ================= */
@@ -348,10 +364,22 @@ async function enviarCorreoEstado(order, mensaje){
   if(order.cliente && order.cliente.correo) destinatarios.push({ to_email: order.cliente.correo, to_name: alumnosLabel(order) });
   if(STAFF_NOTIFY_EMAIL !== 'PENDIENTE') destinatarios.push({ to_email: STAFF_NOTIFY_EMAIL, to_name: STAFF_NOTIFY_NAME });
   for(const d of destinatarios){
-    try{
-      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, { to_email: d.to_email, to_name: d.to_name, folio: order.folio, mensaje, name: d.to_name, message: mensaje }); // name/message: la plantilla base de EmailJS usa esos nombres
-    }catch(err){ console.error('No se pudo enviar el correo a ' + d.to_email + ':', err); }
+    await enviarCorreo(d.to_email, d.to_name, order.folio, mensaje, `Tu pedido ${order.folio} - Liceo Alexander Dul`);
   }
+}
+// {{asunto}} es el asunto de la plantilla; name/message: la plantilla base de EmailJS usa esos nombres
+async function enviarCorreo(to_email, to_name, folio, mensaje, asunto){
+  if(!emailjsDisponible()) return false;
+  try{
+    await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, { to_email, to_name, folio, mensaje, asunto, name: to_name, message: mensaje });
+    return true;
+  }catch(err){ console.error('No se pudo enviar el correo a ' + to_email + ':', err); return false; }
+}
+// cuando una prenda/talla agotada vuelve a tener existencias y hay papás esperando, avisa al personal por correo
+function avisarStaffExistencias(uniName, talla, cuantos){
+  if(STAFF_NOTIFY_EMAIL === 'PENDIENTE') return;
+  const mensaje = `Ya hay existencias de ${uniName} talla ${talla} y ${cuantos} ${cuantos===1?'papá está esperando':'papás están esperando'} el aviso. Entra al panel de personal → Avisos para avisarles.`;
+  enviarCorreo(STAFF_NOTIFY_EMAIL, STAFF_NOTIFY_NAME, '', mensaje, `Hay papás esperando: ${uniName} talla ${talla}`);
 }
 
 /* ================= ESTADO ================= */
@@ -391,6 +419,9 @@ let state = {
   cortesDesde: '',
   cortesHasta: '',
   track: { mode:'folio', folio:'', tel:'', nombres:'', apPaterno:'', apMaterno:'', loading:false, error:'', order:null },
+  uniSel: {},                  // { [uniformeId]: talla elegida } — para que la talla no se reinicie en cada render
+  avisoForm: null,             // { uniId, size, telefono, correo, saving, error, enviado } — "avísame cuando haya"
+  avisos: [],                  // (admin) papás esperando una prenda/talla agotada, en tiempo real
 };
 
 /* ================= UTILIDADES ================= */
@@ -398,6 +429,13 @@ let state = {
 function money(n){ return '$' + Number(n||0).toLocaleString('es-MX', {minimumFractionDigits:0, maximumFractionDigits:2}); }
 function esc(s){ return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 function idSafe(s){ return String(s).replace(/[^a-zA-Z0-9_-]/g, '_'); }
+// existencias: un artículo que no está dado de alta en inventario cuenta como 0 (igual que en el panel)
+function stockDe(invKey){ return state.inventory[invKey] ?? 0; }
+function utilDisponible(grade, i){ return stockDe(GRADES[grade].docId+'_'+i) > 0; }
+function uniTallaSel(uniId){ return state.uniSel[uniId] || SIZES[0]; }
+function avisosPendientes(){ return state.avisos.filter(a => a.estado === 'pendiente'); }
+// avisos pendientes cuya prenda/talla ya tiene existencias: hay que avisarle a esos papás
+function avisosListos(){ return avisosPendientes().filter(a => stockDe(a.uniformeId+'_'+a.talla) > 0); }
 function fmtDate(d){ return new Date(d).toLocaleDateString('es-MX', {weekday:'long', day:'numeric', month:'long'}); }
 
 function addBusinessDays(date, days){
@@ -930,14 +968,29 @@ function gradeListView(basketId){
         <button data-toggle-section="${sec}" data-grade="${esc(basketId)}">activar/desactivar todo</button>
       </div>
       ${rows.map(({it,i}) => {
+        const stock = stockDe(GRADES[grade].docId+'_'+i);
+        if(stock <= 0){
+          // útiles y libros agotados: solo se marcan como no disponibles (no hay "avísame")
+          return `
+        <div class="item-row unselected">
+          <div class="info">
+            <div class="desc">${esc(it.descripcion)}</div>
+            <div class="qty">Sugerido: ${it.cantidad} · P. unitario ${money(it.precio_unitario)} · <span style="color:var(--red); font-weight:700;">No disponible por ahora</span></div>
+          </div>
+          <div class="stepper">
+            <button type="button" disabled>−</button>
+            <input type="text" value="0" disabled>
+            <button type="button" disabled>+</button>
+          </div>
+          <div class="amt">—</div>
+        </div>`;
+        }
         const qty = qtys[i]||0;
-        const stockKey = GRADES[grade].docId+'_'+i;
-        const stock = state.inventory[stockKey];
         return `
         <div class="item-row ${qty>0?'':'unselected'}">
           <div class="info">
             <div class="desc">${esc(it.descripcion)}</div>
-            <div class="qty">Sugerido: ${it.cantidad} · P. unitario ${money(it.precio_unitario)} ${stock!==undefined && stock<5 ? '· <span style="color:var(--red)">pocas existencias</span>' : ''}</div>
+            <div class="qty">Sugerido: ${it.cantidad} · P. unitario ${money(it.precio_unitario)} ${stock<5 ? '· <span style="color:var(--red)">pocas existencias</span>' : ''}</div>
           </div>
           <div class="stepper">
             <button type="button" data-qty-dec="${i}" data-grade="${esc(basketId)}">−</button>
@@ -999,26 +1052,53 @@ function uniformsView(){
     <h2 style="margin-top:0">Uniformes</h2>
     <p style="color:var(--ink-soft); margin-top:-6px">No requieren lista previa: elige talla y cantidad, se entregan en el momento en el local.</p>
     <div class="uniform-grid">
-      ${UNIFORMS.map(u => `
+      ${UNIFORMS.map(u => {
+        const talla = uniTallaSel(u.id);
+        const agotada = stockDe(u.id+'_'+talla) <= 0;
+        return `
         <div class="uniform-card">
           <div class="swatch" style="background:${u.color}22;">${u.icon}</div>
           <h4>${esc(u.name)}</h4>
           <div class="price">${money(u.price)}</div>
           <div class="field-row">
             <select data-uni-size="${u.id}">
-              ${SIZES.map(s => `<option value="${s}">Talla ${s}</option>`).join('')}
+              ${SIZES.map(s => `<option value="${s}" ${s===talla?'selected':''}>Talla ${s}${stockDe(u.id+'_'+s)<=0?' (agotada)':''}</option>`).join('')}
             </select>
-            <div class="stepper">
+            ${agotada ? '' : `<div class="stepper">
               <button data-uni-dec="${u.id}" type="button">−</button>
-              <input type="number" min="1" value="1" id="uniqty_${u.id}" data-uni-qty="${u.id}">
+              <input type="text" inputmode="numeric" pattern="[0-9]*" value="1" id="uniqty_${u.id}" data-uni-qty="${u.id}">
               <button data-uni-inc="${u.id}" type="button">+</button>
-            </div>
+            </div>`}
           </div>
-          <button class="btn btn-secondary btn-block btn-sm" data-uni-add="${u.id}">Agregar al carrito</button>
-        </div>
-      `).join('')}
+          ${agotada ? avisoUniformeHtml(u, talla) : `<button class="btn btn-secondary btn-block btn-sm" data-uni-add="${u.id}">Agregar al carrito</button>`}
+        </div>`;
+      }).join('')}
     </div>
   </section>`;
+}
+
+// tarjeta de uniforme agotado en la talla elegida: "no hay, pero te avisamos cuando haya"
+function avisoUniformeHtml(u, talla){
+  const f = state.avisoForm;
+  const abierto = f && f.uniId === u.id && f.size === talla;
+  if(abierto && f.enviado){
+    return `<div class="note-box">✓ Listo. Te avisaremos al ${esc(f.telefono)} y a ${esc(f.correo)} en cuanto haya talla ${esc(talla)}.</div>`;
+  }
+  if(!abierto){
+    return `<div style="color:var(--red); font-weight:700; font-size:0.85rem; margin-bottom:6px;">No hay en talla ${esc(talla)} por ahora</div>
+      <button class="btn btn-secondary btn-block btn-sm" data-aviso-abrir="${u.id}">🔔 Avísame cuando haya</button>`;
+  }
+  const telOk = f.telefono.replace(/\D/g,'').length === 10;
+  const correoOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.correo.trim());
+  return `<div style="color:var(--red); font-weight:700; font-size:0.85rem; margin-bottom:6px;">No hay en talla ${esc(talla)} por ahora</div>
+    <div style="font-size:0.82rem; color:var(--ink-soft); margin-bottom:6px;">Déjanos tus datos y te avisamos en cuanto llegue.</div>
+    <div class="field-col"><label>Teléfono (10 dígitos)</label><input type="text" inputmode="tel" autocomplete="tel" id="avisoTel" value="${esc(f.telefono)}" placeholder="Ej. 5512345678"></div>
+    <div class="field-col"><label>Correo electrónico</label><input type="text" inputmode="email" autocomplete="email" id="avisoCorreo" value="${esc(f.correo)}" placeholder="Ej. mama@correo.com"></div>
+    ${f.error ? `<div class="split-warning">${esc(f.error)}</div>` : ''}
+    <div style="display:flex; gap:8px; margin-top:8px;">
+      <button class="btn btn-primary btn-sm" id="avisoGuardarBtn" style="flex:1;" ${telOk && correoOk && !f.saving ? '' : 'disabled'}>${f.saving ? 'Guardando…' : 'Avísenme'}</button>
+      <button class="btn btn-ghost" id="avisoCancelarBtn">Cancelar</button>
+    </div>`;
 }
 
 function splitControlHtml(uniIdx, u){
@@ -1629,16 +1709,25 @@ function exportCortesExcel(){
 }
 
 function adminDashboard(){
-  const tabItems = [['pedidos','Pedidos'],['cortes','Cortes / Innovat']];
+  const listos = avisosListos();
+  const tabItems = [['pedidos','Pedidos'],['cortes','Cortes / Innovat'],['avisos', 'Avisos' + (listos.length ? ` <span class="cart-count" style="display:inline-flex; vertical-align:middle;">${listos.length}</span>` : '')]];
   if(state.auth.role==='Administrador') tabItems.push(['inventario','Inventario'], ['ventas','Ventas']);
+  // en cuanto una prenda agotada vuelve a tener existencias y hay papás esperando, sale este letrero en todo el panel
+  const banner = listos.length && state.adminTab !== 'avisos'
+    ? `<div class="note-box error" style="margin-top:12px; display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;">
+        <span>🔔 Ya hay existencias para ${listos.length} ${listos.length===1?'papá que está esperando':'papás que están esperando'} el aviso.</span>
+        <button class="btn btn-primary btn-sm" data-admin-tab="avisos">Ver avisos</button>
+      </div>` : '';
   return `
   <section class="view">
     <div class="tabs" style="padding-left:0;">
       ${tabItems.map(([k,l])=>`<button class="tab ${state.adminTab===k?'active':''}" data-admin-tab="${k}">${l}</button>`).join('')}
     </div>
+    ${banner}
     <div style="margin-top:16px;">
       ${state.adminTab==='inventario' && state.auth.role==='Administrador' ? inventoryView()
         : state.adminTab==='ventas' && state.auth.role==='Administrador' ? ventasView()
+        : state.adminTab==='avisos' ? avisosView()
         : state.adminTab==='cortes' ? cortesView() : ordersView()}
     </div>
   </section>`;
@@ -1912,6 +2001,45 @@ function inventoryView(){
   return html;
 }
 
+/* ---------- avisos de existencias (uniformes agotados) ---------- */
+function mensajeAvisoPapa(a){
+  return `Liceo Alexander Dul: ¡ya tenemos ${a.nombre} en talla ${a.talla}! Puedes pedirlo en la tienda en línea. Las piezas se apartan al hacer el pedido.`;
+}
+function avisoRowHtml(a, listo){
+  const digits = (a.telefono||'').replace(/\D/g,'');
+  const wa = digits.length===10 ? `https://wa.me/52${digits}?text=${encodeURIComponent(mensajeAvisoPapa(a))}` : '';
+  return `<div class="item-row">
+    <div class="info">
+      <div class="desc">📞 ${esc(a.telefono)} · ✉️ ${esc(a.correo)}</div>
+      <div class="qty">Lo pidió el ${esc(new Date(a.createdAt).toLocaleDateString('es-MX', {day:'numeric', month:'short'}))}${a.correoEnviadoAt ? ' · <span style="color:var(--green)">correo enviado</span>' : ''}</div>
+    </div>
+    <div style="display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end;">
+      ${listo && wa ? `<a class="btn btn-secondary btn-sm" target="_blank" rel="noopener" href="${wa}" style="text-decoration:none;">📲 WhatsApp</a>` : ''}
+      ${listo ? `<button class="btn btn-secondary btn-sm" data-aviso-correo="${esc(a.id)}">✉️ Enviar correo</button>` : ''}
+      <button class="btn ${listo?'btn-primary':'btn-secondary'} btn-sm" data-aviso-hecho="${esc(a.id)}">${listo ? '✓ Ya le avisé' : 'Quitar'}</button>
+    </div>
+  </div>`;
+}
+function avisosView(){
+  const pendientes = avisosPendientes();
+  if(!pendientes.length){
+    return `<div class="empty-state"><div class="big">🔔</div><h3>No hay papás esperando</h3><p>Cuando un papá pida que le avisen de una talla agotada, aparecerá aquí.</p></div>`;
+  }
+  // se agrupan por prenda + talla
+  const grupos = {};
+  pendientes.forEach(a => { const k = a.uniformeId+'_'+a.talla; (grupos[k] = grupos[k] || []).push(a); });
+  const bloques = Object.entries(grupos).map(([k, lista]) => ({ k, lista, stock: stockDe(k) }));
+  const html = (titulo, items, listo) => !items.length ? '' : `<h3 style="margin:18px 0 8px;">${titulo}</h3>` + items.map(({k, lista, stock}) => `
+    <div class="section-block">
+      <div class="section-title"><span>${esc(lista[0].nombre)} · talla ${esc(lista[0].talla)}</span>
+        <span style="font-weight:700; ${stock>0?'color:var(--green)':'color:var(--red)'}">${stock>0 ? stock+' en existencia' : 'agotada'} · ${lista.length} esperando</span></div>
+      ${lista.map(a => avisoRowHtml(a, listo)).join('')}
+    </div>`).join('');
+  return `<p style="color:var(--ink-soft); margin-top:0;">Papás que pidieron que les avisemos cuando haya un uniforme agotado. Al subir las existencias en Inventario, se mueven a "Ya hay, hay que avisar" y te llega un correo.</p>`
+    + html('✅ Ya hay, hay que avisar', bloques.filter(b => b.stock > 0), true)
+    + html('⏳ Siguen agotados', bloques.filter(b => b.stock <= 0), false);
+}
+
 /* ================= EVENTOS ================= */
 
 function wireEvents(){
@@ -1999,6 +2127,7 @@ function wireEvents(){
     const preset = el.getAttribute('data-preset');
     const qtys = ensureGradeQtys(g);
     GRADES[gradeNameOf(g)].items.forEach((it,i) => {
+      if(!utilDisponible(gradeNameOf(g), i)){ qtys[i] = 0; return; }
       if(preset==='completo') qtys[i] = it.cantidad;
       else if(preset==='libros') qtys[i] = it.seccion==='LIBROS' ? it.cantidad : 0;
       else if(preset==='diario') qtys[i] = it.seccion!=='LIBROS' ? it.cantidad : 0;
@@ -2010,11 +2139,12 @@ function wireEvents(){
   // cantidades por artículo
   document.querySelectorAll('[data-qty-input]').forEach(el => el.addEventListener('input', () => {
     const g = el.getAttribute('data-grade'), i = el.getAttribute('data-qty-input');
-    ensureGradeQtys(g)[i] = Math.max(0, parseInt(el.value)||0);
+    ensureGradeQtys(g)[i] = utilDisponible(gradeNameOf(g), i) ? Math.max(0, parseInt(el.value)||0) : 0;
     render();
   }));
   document.querySelectorAll('[data-qty-inc]').forEach(el => el.addEventListener('click', () => {
     const g = el.getAttribute('data-grade'), i = el.getAttribute('data-qty-inc');
+    if(!utilDisponible(gradeNameOf(g), i)) return;
     const qtys = ensureGradeQtys(g); qtys[i] = (qtys[i]||0)+1; render();
   }));
   document.querySelectorAll('[data-qty-dec]').forEach(el => el.addEventListener('click', () => {
@@ -2026,7 +2156,7 @@ function wireEvents(){
     const sec = el.getAttribute('data-toggle-section'), g = el.getAttribute('data-grade');
     const qtys = ensureGradeQtys(g);
     const items = GRADES[gradeNameOf(g)].items;
-    const idxs = items.map((it,i)=>it.seccion===sec?i:null).filter(i=>i!==null);
+    const idxs = items.map((it,i)=>it.seccion===sec && utilDisponible(gradeNameOf(g), i)?i:null).filter(i=>i!==null);
     const allOn = idxs.every(i => qtys[i]>0);
     idxs.forEach(i => qtys[i] = allOn ? 0 : items[i].cantidad);
     render();
@@ -2041,14 +2171,52 @@ function wireEvents(){
     const input = document.querySelector(`[data-uni-qty="${el.getAttribute('data-uni-dec')}"]`);
     input.value = Math.max(1, (parseInt(input.value)||1) - 1);
   }));
+  document.querySelectorAll('[data-uni-size]').forEach(el => el.addEventListener('change', () => {
+    state.uniSel[el.getAttribute('data-uni-size')] = el.value;
+    render();
+  }));
   document.querySelectorAll('[data-uni-add]').forEach(el => el.addEventListener('click', () => {
     const id = el.getAttribute('data-uni-add');
-    const size = document.querySelector(`[data-uni-size="${id}"]`).value;
-    const qty = Math.max(1, parseInt(document.querySelector(`[data-uni-qty="${id}"]`).value)||1);
+    const size = uniTallaSel(id);
     const existing = state.uniformCart.find(u => u.id===id && u.size===size);
+    const disponibles = stockDe(id+'_'+size) - (existing ? existing.qty : 0);
+    if(disponibles <= 0){ alert(`Ya tienes en tu carrito todas las piezas disponibles de talla ${size}.`); return; }
+    let qty = Math.max(1, parseInt(document.querySelector(`[data-uni-qty="${id}"]`).value)||1);
+    if(qty > disponibles){ alert(`Solo hay ${disponibles} disponible${disponibles===1?'':'s'} en talla ${size}; se agregó esa cantidad.`); qty = disponibles; }
     if(existing) existing.qty += qty; else state.uniformCart.push({id, size, qty});
     setTab('carrito');
   }));
+
+  // "avísame cuando haya" (uniformes agotados)
+  document.querySelectorAll('[data-aviso-abrir]').forEach(el => el.addEventListener('click', () => {
+    const uniId = el.getAttribute('data-aviso-abrir');
+    state.avisoForm = { uniId, size: uniTallaSel(uniId), telefono: state.cliente.telefono||'', correo: state.cliente.correo||'', saving:false, error:'', enviado:false };
+    render();
+  }));
+  [['avisoTel','telefono'],['avisoCorreo','correo']].forEach(([id,field]) => {
+    const el = document.getElementById(id);
+    if(el) el.addEventListener('input', () => { state.avisoForm[field] = el.value; state.avisoForm.error = ''; render(); });
+  });
+  const avisoCancelarBtn = document.getElementById('avisoCancelarBtn');
+  if(avisoCancelarBtn) avisoCancelarBtn.addEventListener('click', () => { state.avisoForm = null; render(); });
+  const avisoGuardarBtn = document.getElementById('avisoGuardarBtn');
+  if(avisoGuardarBtn) avisoGuardarBtn.addEventListener('click', async () => {
+    const f = state.avisoForm;
+    const info = UNIFORMS.find(x => x.id === f.uniId);
+    f.saving = true; render();
+    try{
+      await setDoc(doc(collection(db, 'avisos')), {
+        uniformeId: f.uniId, nombre: info.name, talla: f.size,
+        telefono: f.telefono.replace(/\D/g,''), correo: f.correo.trim(),
+        estado: 'pendiente', createdAt: new Date().toISOString(),
+      });
+      f.enviado = true;
+    }catch(err){
+      console.error(err);
+      f.error = 'No se pudo registrar tu aviso. Intenta de nuevo.';
+    }
+    f.saving = false; render();
+  });
   document.querySelectorAll('[data-remove-uni]').forEach(el => el.addEventListener('click', () => {
     state.uniformCart.splice(parseInt(el.getAttribute('data-remove-uni')), 1);
     render();
@@ -2211,7 +2379,9 @@ function wireEvents(){
 
   // acceso de personal
   document.querySelectorAll('[data-staff-link]').forEach(el => el.addEventListener('click', () => {
-    state.mode = 'admin'; state.adminTab = 'pedidos'; render();
+    state.mode = 'admin'; state.adminTab = 'pedidos';
+    if(state.auth){ subscribeOrders(); subscribeAvisos(); }
+    render();
   }));
   document.querySelectorAll('[data-back-tienda]').forEach(el => el.addEventListener('click', () => {
     unsubscribeOrders();
@@ -2232,6 +2402,7 @@ function wireEvents(){
       state.loginError = null;
       state.adminTab = 'pedidos';
       subscribeOrders();
+      subscribeAvisos();
     } catch(err){
       state.loginError = (err && err.message === 'sin-rol')
         ? 'Tu cuenta no tiene un rol asignado. Pide al Administrador que te dé de alta.'
@@ -2305,12 +2476,38 @@ function wireEvents(){
     catch(err){ console.error(err); alert('No se pudo guardar el checklist.'); el.checked = !el.checked; }
   }));
 
+  // avisos de existencias (panel)
+  document.querySelectorAll('[data-aviso-hecho]').forEach(el => el.addEventListener('click', async () => {
+    el.disabled = true;
+    const quien = (state.auth && state.auth.name) || 'Personal';
+    try{ await updateDoc(doc(db, 'avisos', el.getAttribute('data-aviso-hecho')), { estado: 'avisado', avisadoAt: new Date().toISOString(), avisadoPor: quien }); }
+    catch(err){ console.error(err); alert('No se pudo actualizar el aviso.'); el.disabled = false; }
+  }));
+  document.querySelectorAll('[data-aviso-correo]').forEach(el => el.addEventListener('click', async () => {
+    const a = state.avisos.find(x => x.id === el.getAttribute('data-aviso-correo'));
+    if(!a) return;
+    el.disabled = true; el.textContent = 'Enviando…';
+    const ok = await enviarCorreo(a.correo, 'familia', '', mensajeAvisoPapa(a), `Ya hay ${a.nombre} talla ${a.talla} - Liceo Alexander Dul`);
+    if(!ok){ alert('No se pudo enviar el correo. Revisa la configuración de EmailJS o avísale por WhatsApp.'); el.disabled = false; el.textContent = '✉️ Enviar correo'; return; }
+    try{ await updateDoc(doc(db, 'avisos', a.id), { correoEnviadoAt: new Date().toISOString() }); }
+    catch(err){ console.error(err); }
+  }));
+
   document.querySelectorAll('[data-inv-key]').forEach(el => el.addEventListener('change', async () => {
     const key = el.getAttribute('data-inv-key');
     const val = Math.max(0, parseInt(el.value)||0);
+    const antes = stockDe(key);
     state.inventory[key] = val;
     try{ await setDoc(doc(db, 'inventario', key), { stock: val }, { merge: true }); }
-    catch(err){ console.error(err); alert('No se pudo guardar el cambio de existencias.'); }
+    catch(err){ console.error(err); alert('No se pudo guardar el cambio de existencias.'); return; }
+    // de agotado a con existencias: si hay papás esperando esa prenda/talla, se avisa al personal
+    if(antes <= 0 && val > 0){
+      const esperando = avisosPendientes().filter(a => a.uniformeId+'_'+a.talla === key);
+      if(esperando.length){
+        avisarStaffExistencias(esperando[0].nombre, esperando[0].talla, esperando.length);
+        render();
+      }
+    }
   }));
 
   // confirmar entrega con firma (la habilitación del botón la maneja initSignaturePad)
