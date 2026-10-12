@@ -246,6 +246,8 @@
   .split-warning { color: var(--red); font-size: 0.8rem; font-weight: 700; margin-top: 4px; }
   .alumno-chip { display: inline-flex; align-items: center; gap: 6px; background: var(--navy-tint); color: var(--navy); border-radius: 20px; padding: 5px 12px; font-size: 0.82rem; font-weight: 700; }
 
+  .cart-table tr.no-disponible td { color: var(--red); font-size: 0.82rem; text-decoration: line-through; text-decoration-color: rgba(184,67,58,0.4); }
+  .cart-table tr.no-disponible td.num { text-decoration: none; font-weight: 700; }
   .verifica-pago { margin-top:10px; border:2px solid var(--marigold); border-radius: var(--radius); padding:12px 14px; }
   .verifica-pago.ok { border-color: var(--green); }
   .verifica-pago .vp-titulo { font-weight:800; margin-bottom:6px; }
@@ -955,6 +957,11 @@ async function buildOrder(){
     return { id:u.id, name:info.name, size:u.size, qty:u.qty, price:info.price, splits, invKey: u.id+'_'+u.size };
   });
   const allItems = [...utilesItems, ...uniformItems];
+  const noIncluidos = [];
+  Object.keys(state.gradeQtys).forEach(g => {
+    if(!Object.values(state.gradeQtys[g]).some(q => q > 0)) return;
+    noDisponiblesDeLista(g).forEach(it => noIncluidos.push({ grade: gradeNameOf(g), studentId: state.gradeAssign[g] || null, descripcion: it.descripcion }));
+  });
   const totales = { papeleria: 0, libros: 0, uniformesDetalle: {} };
   utilesItems.forEach(it => { const t = it.qty*it.precio_unitario; if(it.seccion==='LIBROS') totales.libros += t; else totales.papeleria += t; });
   uniformItems.forEach(u => { totales.uniformesDetalle[u.name] = (totales.uniformesDetalle[u.name]||0) + u.qty*u.price; });
@@ -990,6 +997,7 @@ async function buildOrder(){
     comprobanteRevision: comprobanteUrl && state.comprobanteRevision ? { montoOk: !!state.comprobanteRevision.montoOk, palabras: state.comprobanteRevision.palabras || [],
       claveRastreo: state.comprobanteRevision.claveRastreo || null } : null,
     totales,
+    noIncluidos,                 // artículos de la lista sin existencia al momento del pedido
     pagoConfirmado: false,
     pagoConfirmadoAt: null,
     capturadoInnovat: false,
@@ -1484,6 +1492,13 @@ function splitControlHtml(uniIdx, u){
     </div>`;
 }
 
+// artículos de una lista que no hay en existencia (no se pudieron elegir): el papá debe saber que no
+// se lleva el paquete completo. Lo que él desmarcó a propósito no cuenta aquí.
+function noDisponiblesDeLista(basketId){
+  const grade = gradeNameOf(basketId);
+  return GRADES[grade].items.map((it,i) => ({ it, i })).filter(({i}) => !utilDisponible(grade, i)).map(({it}) => it);
+}
+
 function cartView(){
   const gradeKeys = gradosActivosEnCarrito();
   const hasUniforms = state.uniformCart.length > 0;
@@ -1514,6 +1529,9 @@ function cartView(){
           <td class="num">${money(qty*it.precio_unitario)}</td>
         </tr>`;
       });
+      noDisponiblesDeLista(g).forEach(it => {
+        rows += `<tr class="no-disponible"><td>${esc(it.descripcion)}</td><td class="num" colspan="3">No disponible · no incluido</td></tr>`;
+      });
       rows += `<tr><td colspan="4" style="text-align:right;"><button class="btn-ghost" data-nav="utiles" data-open-grade="${esc(g)}">editar esta lista</button></td></tr>`;
     });
     state.uniformCart.forEach((u,idx) => {
@@ -1534,10 +1552,16 @@ function cartView(){
   });
 
   const faltaRepartir = !carritoRepartidoCompleto();
+  const totalNoDisponibles = gradeKeys.reduce((n, g) => n + noDisponiblesDeLista(g).length, 0);
 
   return `
   <section class="view">
     <h2 style="margin-top:0">Tu carrito</h2>
+    ${totalNoDisponibles ? `
+      <div class="note-box error" style="margin-bottom:14px;">
+        ⚠️ ${totalNoDisponibles === 1 ? 'Un artículo de tu lista no está disponible' : totalNoDisponibles+' artículos de tus listas no están disponibles'} por ahora, así que tu pedido <b>no es el paquete completo</b>. Los verás marcados abajo como "No disponible"; tendrás que conseguirlos por tu cuenta.
+      </div>
+    ` : ''}
     ${state.students.length ? `
       <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px; align-items:center;">
         ${state.students.map(al => `<span class="alumno-chip">👤 ${esc(nombreCompleto(al))}${subtotalAlumno(al.id)<=0?' (sin artículos aún)':''}</span>`).join('')}
@@ -2022,6 +2046,9 @@ function confirmationView(){
       <h2>¡Gracias por tu pedido para ${esc(alumnosLabel(order))}!</h2>
       <div class="ord">Folio ${order.folio} · ${new Date(order.createdAt).toLocaleDateString('es-MX', {day:'numeric', month:'long', year:'numeric'})}</div>
       ${itemLines}
+      ${order.noIncluidos && order.noIncluidos.length ? `<div class="note-box error" style="margin-top:10px; font-weight:400;">
+        <b>No incluidos (sin existencia al hacer el pedido):</b> ${order.noIncluidos.map(x => esc(x.descripcion)).join(' · ')}
+      </div>` : ''}
       <hr>
       <div class="rline"><span>Subtotal:</span><span>${money(order.subtotal)}</span></div>
       <div class="rline"><span>Envío:</span><span>${order.deliveryFee ? money(order.deliveryFee) : 'Recoger en local'}</span></div>
