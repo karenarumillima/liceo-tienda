@@ -58,6 +58,16 @@ service cloud.firestore {
       allow delete: if isAdmin();
     }
 
+    // Comprobantes de transferencia ya usados (por clave de rastreo y huellas de la imagen):
+    // se crean al hacer el pedido y nunca se pueden reescribir, así un comprobante no sirve para dos pedidos.
+    match /comprobantes/{id} {
+      allow get: if true;
+      allow create: if request.resource.data.keys().hasOnly(['folio','at']) && request.resource.data.folio is string;
+      allow list: if isStaff();
+      allow update: if false;
+      allow delete: if isAdmin();
+    }
+
     match /busquedas/{key} {
       allow get: if true;
       allow create, update: if true;

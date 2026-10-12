@@ -246,6 +246,10 @@
   .split-warning { color: var(--red); font-size: 0.8rem; font-weight: 700; margin-top: 4px; }
   .alumno-chip { display: inline-flex; align-items: center; gap: 6px; background: var(--navy-tint); color: var(--navy); border-radius: 20px; padding: 5px 12px; font-size: 0.82rem; font-weight: 700; }
 
+  .verifica-pago { margin-top:10px; border:2px solid var(--marigold); border-radius: var(--radius); padding:12px 14px; }
+  .verifica-pago.ok { border-color: var(--green); }
+  .verifica-pago .vp-titulo { font-weight:800; margin-bottom:6px; }
+  .verifica-pago .vp-pasos { font-size:0.85rem; margin:8px 0 10px 18px; padding:0; }
   .guardar-recibo { display:grid; grid-template-columns:auto 1fr; gap:6px 14px; align-items:center; background: var(--marigold); color: #22355F; border-radius: 8px; padding: 18px 20px; margin-bottom: 16px; box-shadow: 0 4px 14px rgba(234,184,76,0.35); }
   .guardar-recibo .gr-icono { font-size: 2.4rem; grid-row: span 2; align-self:start; }
   .guardar-recibo .gr-titulo { font-size: 1.2rem; font-weight: 800; margin-bottom: 2px; }
@@ -983,7 +987,8 @@ async function buildOrder(){
     deliveryKm: deliveryKm(),
     payment: state.payment,
     comprobante: comprobanteUrl,
-    comprobanteRevision: comprobanteUrl && state.comprobanteRevision ? { montoOk: !!state.comprobanteRevision.montoOk, palabras: state.comprobanteRevision.palabras || [] } : null,
+    comprobanteRevision: comprobanteUrl && state.comprobanteRevision ? { montoOk: !!state.comprobanteRevision.montoOk, palabras: state.comprobanteRevision.palabras || [],
+      claveRastreo: state.comprobanteRevision.claveRastreo || null } : null,
     totales,
     pagoConfirmado: false,
     pagoConfirmadoAt: null,
@@ -1012,9 +1017,14 @@ async function buildOrder(){
   allItems.forEach(it => { qtyPorInvKey[it.invKey] = (qtyPorInvKey[it.invKey]||0) + it.qty; });
   const invKeys = Object.keys(qtyPorInvKey);
 
+  const huellas = (state.payment === 'transferencia' && state.comprobanteRevision && state.comprobanteRevision.huellas) || [];
   await runTransaction(db, async (tx) => {
     const invRefs = invKeys.map(k => doc(db, 'inventario', k));
     const snaps = await Promise.all(invRefs.map(r => tx.get(r)));
+    const huellaRefs = huellas.map(h => doc(db, 'comprobantes', h));
+    const huellaSnaps = await Promise.all(huellaRefs.map(r => tx.get(r)));
+    if(huellaSnaps.some(x => x.exists())) throw new Error('comprobante-duplicado');
+    huellaRefs.forEach(r => tx.set(r, { folio, at: new Date().toISOString() }));
     const orderRef = doc(db, 'pedidos', folio);
     tx.set(orderRef, order);
     busquedaKeys.forEach(key => tx.set(doc(db, 'busquedas', key), { folio }));
@@ -1859,19 +1869,49 @@ function montosEnTexto(t){
   });
   return out;
 }
+// clave de rastreo SPEI: lo que viene después de "rastreo" (misma línea o la siguiente)
+function claveRastreoDe(texto){
+  const lineas = texto.split(/\n/);
+  for(let i = 0; i < lineas.length; i++){
+    if(!/rastreo/i.test(lineas[i])) continue;
+    const resto = (lineas[i].split(/rastreo/i)[1] || '') + ' ' + (lineas[i+1] || '');
+    const m = resto.toUpperCase().replace(/[^A-Z0-9]+/g, ' ').match(/\b(?=[A-Z0-9]*\d)[A-Z0-9]{8,32}\b/);
+    if(m) return m[0];
+  }
+  const m = texto.toUpperCase().match(/\bMBAN\d{14,26}\b/);
+  return m ? m[0] : null;
+}
+async function sha256Corto(datos){
+  const buf = await crypto.subtle.digest('SHA-256', typeof datos === 'string' ? new TextEncoder().encode(datos) : datos);
+  return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join('').slice(0, 32);
+}
+// "huellas" del comprobante para que no se pueda usar en dos pedidos: la clave de rastreo (si tiene),
+// el texto leído y el archivo mismo. Se guardan en comprobantes/{huella} al crear el pedido.
+async function huellasComprobante(file, texto, clave){
+  const h = ['t_' + await sha256Corto(normTexto(texto)), 'i_' + await sha256Corto(await file.arrayBuffer())];
+  if(clave) h.unshift('r_' + clave);
+  return h;
+}
 async function revisarComprobante(file, total){
   await cargarTesseract();
   const worker = await Tesseract.createWorker('spa');
+  let texto = '';
   try{
     const { data } = await worker.recognize(file);
-    const texto = data.text || '';
-    const plano = normTexto(texto);
-    const palabras = PALABRAS_COMPROBANTE.filter(w => plano.includes(w));
-    const montoOk = montosEnTexto(texto).some(n => Math.abs(n - total) < 0.5);
-    return { montoOk, palabras, ok: montoOk && palabras.length >= 2 };
+    texto = data.text || '';
   } finally {
     await worker.terminate();
   }
+  const plano = normTexto(texto);
+  const palabras = PALABRAS_COMPROBANTE.filter(w => plano.includes(w));
+  const montoOk = montosEnTexto(texto).some(n => Math.abs(n - total) < 0.5);
+  const claveRastreo = claveRastreoDe(texto);
+  const huellas = await huellasComprobante(file, texto, claveRastreo);
+  let duplicado = false;
+  for(const id of huellas){
+    if((await getDoc(doc(db, 'comprobantes', id))).exists()){ duplicado = true; break; }
+  }
+  return { montoOk, palabras, claveRastreo, huellas, duplicado, ok: montoOk && palabras.length >= 2 && !duplicado };
 }
 function revisionComprobanteHtml(total){
   const r = state.comprobanteRevision;
@@ -1880,6 +1920,7 @@ function revisionComprobanteHtml(total){
   if(r.estado === 'ok') return `<div class="note-box" style="margin-top:10px;">✓ Comprobante revisado: encontramos el monto de ${money(total)} y los datos de la transferencia.</div>`;
   const motivos = [];
   if(r.estado === 'fallo') motivos.push('No pudimos leer la imagen en este momento. Revisa tu conexión y vuelve a subirla.');
+  else if(r.duplicado) motivos.push('Este comprobante ya se usó en otro pedido. Cada pedido necesita su propia transferencia.');
   else {
     if(!r.montoOk) motivos.push(`No encontramos el monto exacto de ${money(total)}. Transfiere exactamente esa cantidad.`);
     if(r.palabras.length < 2) motivos.push('La imagen no parece un comprobante de transferencia bancaria.');
@@ -2451,7 +2492,9 @@ function orderDetailView(order){
 
   const isFinalNext = order.stageIndex === STAGES.length-2;
   let actionHtml = '';
-  if(order.stageIndex < STAGES.length-1){
+  if(order.stageIndex < STAGES.length-1 && pagoPendienteBloquea(order, order.stageIndex+1)){
+    actionHtml = `<div class="note-box error">🔒 No se puede marcar como "${esc(stageLabel(order, order.stageIndex+1))}" hasta confirmar que la transferencia llegó a la cuenta. Revisa arriba y da clic en <b>"✓ Confirmar pago recibido"</b>.</div>`;
+  } else if(order.stageIndex < STAGES.length-1){
     actionHtml = isFinalNext ? signaturePanel(order) : `<button class="btn btn-primary" id="advanceStageBtn">Marcar como: ${stageLabel(order, order.stageIndex+1)} →</button>`;
   } else {
     actionHtml = `<div class="note-box">Pedido completado el ${order.completedAt ? new Date(order.completedAt).toLocaleString('es-MX') : ''}${order.recibioNombre ? '. Recibió: '+esc(order.recibioNombre) : ''}.</div>
@@ -2482,7 +2525,7 @@ function orderDetailView(order){
     <div class="rline"><span>Pago:</span><span>${payBadge(order)}</span></div>
     <div style="margin:6px 0 4px;"><button class="btn btn-secondary btn-sm" data-pago="${esc(order.folio)}">${order.pagoConfirmado ? '↩ Marcar como NO pagado' : '✓ Confirmar pago recibido'}</button></div>
     ${order.payment==='efectivo' ? `<div class="note-box error" style="margin-top:8px;">Recuerda pedir el recibo con QR antes de entregar.</div>` : ''}
-    ${order.comprobante && order.comprobanteRevision ? `<div class="note-box" style="margin-top:8px;">✓ Revisado automáticamente: el monto coincide y parece comprobante bancario${order.comprobanteRevision.palabras && order.comprobanteRevision.palabras.length ? ' ('+esc(order.comprobanteRevision.palabras.slice(0,5).join(', '))+')' : ''}. Aun así confirma en tu banco que el dinero llegó.</div>` : ''}
+    ${verificacionTransferenciaHtml(order)}
     ${order.comprobante ? `<img class="preview-img" src="${esc(order.comprobante)}">` : ''}
 
     <div class="field-col" style="margin-top:18px; max-width:280px;">
@@ -2500,6 +2543,30 @@ function orderDetailView(order){
   ${waButton(order)}
   ${smsLogHtml(order, '💬 Seguimiento del pedido')}
   ${historialHtml(order)}`;
+}
+
+// un pedido por transferencia solo puede pasar de "preparando" (listo / en camino / entregado)
+// cuando el personal confirmó en el banco que el dinero llegó: un comprobante falso no termina en entrega
+function pagoPendienteBloquea(order, siguienteEtapa){
+  return order.payment === 'transferencia' && !order.pagoConfirmado && siguienteEtapa >= 2;
+}
+function verificacionTransferenciaHtml(order){
+  if(order.payment !== 'transferencia') return '';
+  const r = order.comprobanteRevision || {};
+  const fecha = new Date(order.createdAt).toLocaleDateString('es-MX', { day:'numeric', month:'long', year:'numeric' });
+  return `<div class="verifica-pago ${order.pagoConfirmado ? 'ok' : ''}">
+    <div class="vp-titulo">${order.pagoConfirmado ? '✓ Pago confirmado en el banco' : '🏦 Antes de entregar, confirma que el dinero llegó'}</div>
+    <div class="rline"><span>Monto esperado:</span><span><b>${money(order.total)}</b></span></div>
+    <div class="rline"><span>Clave de rastreo:</span><span>${r.claveRastreo ? `<b>${esc(r.claveRastreo)}</b> <button class="btn-ghost" data-copiar="${esc(r.claveRastreo)}">Copiar</button>` : 'No se pudo leer; búscala en el comprobante'}</span></div>
+    <div class="rline"><span>Fecha del pedido:</span><span>${esc(fecha)}</span></div>
+    <div class="rline"><span>Cuenta que recibe:</span><span>${esc(BANCO.banco)} · CLABE ${esc(BANCO.clabe)}</span></div>
+    ${order.pagoConfirmado ? '' : `<ol class="vp-pasos">
+      <li>Busca un depósito de <b>${money(order.total)}</b> en tu app de ${esc(BANCO.banco)}.</li>
+      <li>O verifícalo en Banxico (CEP) con la fecha, la clave de rastreo, el banco que envió, ${esc(BANCO.banco)} como receptor, tu CLABE y el monto. Si Banxico no la encuentra, el comprobante no es real.</li>
+      <li>Si fue de ${esc(BANCO.banco)} a ${esc(BANCO.banco)} no hay clave de rastreo: revísalo directo en tu app.</li>
+    </ol>
+    <a class="btn btn-secondary btn-sm" target="_blank" rel="noopener" style="text-decoration:none;" href="https://www.banxico.org.mx/cep/">🔎 Verificar en Banxico (CEP)</a>`}
+  </div>`;
 }
 
 function signaturePanel(order){
@@ -3071,7 +3138,8 @@ function wireEvents(){
     render();
     revisarComprobante(file, total).then(r => {
       if(state.comprobanteFile !== file) return;   // ya subió otra imagen
-      state.comprobanteRevision = { estado: r.ok ? 'ok' : 'rechazado', montoOk: r.montoOk, palabras: r.palabras };
+      state.comprobanteRevision = { estado: r.ok ? 'ok' : 'rechazado', montoOk: r.montoOk, palabras: r.palabras,
+        claveRastreo: r.claveRastreo, huellas: r.huellas, duplicado: r.duplicado };
       render();
     }).catch(err => {
       console.error(err);
@@ -3091,6 +3159,12 @@ function wireEvents(){
       setTab('confirmacion');
     }catch(err){
       console.error(err);
+      if(err && err.message === 'comprobante-duplicado'){
+        state.comprobanteRevision = Object.assign({}, state.comprobanteRevision, { estado: 'rechazado', duplicado: true });
+        render();
+        alert('Este comprobante ya se usó en otro pedido. Sube el comprobante de la transferencia de este pedido.');
+        return;
+      }
       alert('Hubo un problema al guardar tu pedido. Intenta de nuevo. Si el problema sigue, avisa al local.');
       confirmBtn.disabled = false;
       confirmBtn.textContent = 'Confirmar pedido →';
@@ -3182,6 +3256,7 @@ function wireEvents(){
   if(advanceBtn) advanceBtn.addEventListener('click', async () => {
     const order = state.orders.find(o=>o.folio===state.adminOrderFolio);
     if(!order) return;
+    if(pagoPendienteBloquea(order, order.stageIndex + 1)){ alert('Primero confirma que la transferencia llegó a la cuenta.'); return; }
     advanceBtn.disabled = true;
     const newStage = order.stageIndex + 1;
     let msg = null;
@@ -3371,6 +3446,9 @@ function wireEvents(){
     render();
   });
 
+  document.querySelectorAll('[data-copiar]').forEach(el => el.addEventListener('click', async () => {
+    try{ await navigator.clipboard.writeText(el.getAttribute('data-copiar')); el.textContent = '✓ Copiada'; }catch(e){}
+  }));
   const pedidosNuevosOkBtn = document.getElementById('pedidosNuevosOkBtn');
   if(pedidosNuevosOkBtn) pedidosNuevosOkBtn.addEventListener('click', () => { state.pedidosNuevos = []; render(); });
 
@@ -3415,6 +3493,7 @@ function wireEvents(){
     const canvas = document.getElementById('sigCanvas');
     const nameInput = document.getElementById('recibioNombreInput');
     if(!order || !canvas) return;
+    if(pagoPendienteBloquea(order, STAGES.length - 1)){ alert('Primero confirma que la transferencia llegó a la cuenta.'); return; }
     confirmDeliveryBtn.disabled = true;
     confirmDeliveryBtn.textContent = 'Guardando...';
     try{
