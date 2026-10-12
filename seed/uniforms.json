@@ -1,0 +1,13 @@
+{
+  "uniforms": [
+    { "id": "u1", "name": "Playera tipo polo (diario)", "price": 280 },
+    { "id": "u2", "name": "Playera de educación física", "price": 260 },
+    { "id": "u3", "name": "Short deportivo", "price": 240 },
+    { "id": "u4", "name": "Pants deportivo", "price": 380 },
+    { "id": "u5", "name": "Falda escolar", "price": 320 },
+    { "id": "u6", "name": "Pantalón de gala", "price": 360 },
+    { "id": "u7", "name": "Sudadera con logo", "price": 420 },
+    { "id": "u8", "name": "Tenis blancos reglamentarios", "price": 450 }
+  ],
+  "sizes": ["4","6","8","10","12","14","16","CH","M","G"]
+}

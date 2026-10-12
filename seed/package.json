@@ -1,0 +1,8 @@
+{
+  "name": "liceo-seed",
+  "private": true,
+  "type": "commonjs",
+  "dependencies": {
+    "firebase-admin": "^12.6.0"
+  }
+}

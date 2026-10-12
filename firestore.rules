@@ -1,0 +1,49 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() { return request.auth != null; }
+    function isStaff() {
+      return isSignedIn() &&
+        exists(/databases/$(database)/documents/usuarios/$(request.auth.uid));
+    }
+    function isAdmin() {
+      return isSignedIn() &&
+        get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data.rol == 'Administrador';
+    }
+
+    match /pedidos/{folio} {
+      allow create: if true;
+      allow get: if true;
+      allow list: if isStaff();
+      allow update: if isStaff();
+      allow delete: if isAdmin();
+    }
+
+    match /listas/{grado} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /inventario/{itemId} {
+      allow read: if true;
+      allow update: if isStaff() || (request.resource.data.stock <= resource.data.stock);
+      allow create, delete: if isStaff();
+    }
+
+    match /usuarios/{uid} {
+      allow get: if isSignedIn() && request.auth.uid == uid;
+      allow read, write: if isAdmin();
+    }
+
+    // Puntero de b\u00fasqueda "olvid\u00e9 mi folio": la clave del documento ya es
+    // el nombre completo + tel\u00e9fono combinados, as\u00ed que solo se puede leer
+    // si ya sabes exactamente esos dos datos (nunca se puede listar todo).
+    match /busquedas/{key} {
+      allow get: if true;
+      allow create, update: if true;
+      allow list: if false;
+      allow delete: if isAdmin();
+    }
+  }
+}

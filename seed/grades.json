@@ -1,0 +1,1655 @@
+{
+  "1ro PRIMARIA": {
+    "items": [
+      {
+        "cantidad": 4.0,
+        "descripcion": "Cuadernos profesionales cuadro chico 100 hojas",
+        "precio_unitario": 150.0,
+        "total": 600,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Cuaderno profesionales cuadro chico 100 hojas (inglés)",
+        "precio_unitario": 150.0,
+        "total": 150,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Block marquilla 20 hojas",
+        "precio_unitario": 50.0,
+        "total": 50,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Caja de 12 colores",
+        "precio_unitario": 150.0,
+        "total": 150,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Goma de migajón",
+        "precio_unitario": 10.0,
+        "total": 10,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Tijera de punta roma",
+        "precio_unitario": 30.0,
+        "total": 30,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 2.0,
+        "descripcion": "Lápiz de madera No. 2",
+        "precio_unitario": 10.0,
+        "total": 20,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 2.0,
+        "descripcion": "Lápiz color rojo",
+        "precio_unitario": 14.0,
+        "total": 28,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Regla de 20 cm no flexible",
+        "precio_unitario": 15.0,
+        "total": 15,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Sacapuntas con depósito",
+        "precio_unitario": 35.0,
+        "total": 35,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Cinta masking tape",
+        "precio_unitario": 45.0,
+        "total": 45,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Sobre de plástico transparente",
+        "precio_unitario": 20.0,
+        "total": 20,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Gel antibacterial 225ml",
+        "precio_unitario": 70.0,
+        "total": 70,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 2.0,
+        "descripcion": "Barras de resistol tipo pritt 22 grms",
+        "precio_unitario": 40.0,
+        "total": 80,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Jabón líquido para manos de 225ml",
+        "precio_unitario": 60.0,
+        "total": 60,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 2.0,
+        "descripcion": "Kleenex",
+        "precio_unitario": 50.0,
+        "total": 100,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Paquete de 100 hojas de color  tamaño carta",
+        "precio_unitario": 100.0,
+        "total": 100,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Paquete de 500 hojas blancas tamaño carta",
+        "precio_unitario": 200.0,
+        "total": 200,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 2.0,
+        "descripcion": "Paquetes de Sanitas",
+        "precio_unitario": 50.0,
+        "total": 100,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Paquete de 50 conos desechables",
+        "precio_unitario": 65.0,
+        "total": 65,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Diurex grueso",
+        "precio_unitario": 65.0,
+        "total": 65,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 6.0,
+        "descripcion": "Metros de papel américa rojo",
+        "precio_unitario": 30.0,
+        "total": 180,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Metro de foami liso color rojo",
+        "precio_unitario": 30.0,
+        "total": 30,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Metro de foami diaantado color rojo",
+        "precio_unitario": 35.0,
+        "total": 35,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Pliego de papel crepé blanco",
+        "precio_unitario": 15.0,
+        "total": 15,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 4.0,
+        "descripcion": "Plumones para pizarrón blanco (color negro, rojo, azul y verde)",
+        "precio_unitario": 35.0,
+        "total": 140,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Silicon frío",
+        "precio_unitario": 35.0,
+        "total": 35,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Toallitas húmedas",
+        "precio_unitario": 70.0,
+        "total": 70,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Pliego de mica autoadeherible para forrar libros y cuadernos",
+        "precio_unitario": 200.0,
+        "total": 200,
+        "seccion": "PARA FORRAR"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Academy Stars 2nd Ed. Pupil´s Book 1. (ISBN:9781035100033)",
+        "precio_unitario": 1145.0,
+        "total": 1145,
+        "seccion": "LIBROS"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Academy Stars 2nd Ed. Worbook 1.                                (ISBN: 9781035100057)",
+        "precio_unitario": 690.0,
+        "total": 690,
+        "seccion": "LIBROS"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Paquete Montetodo 1    Ed. Montenegro Autor: Maria Elena Aguilar Incluye: Me divierto y aprendo, Mateprácticas/Palabras a la vista, Pasame el acordeón y Financiera, Despiertamentes, Resuelvo y Pratico, Plataforma Digital.                                                                    ISBN: 9786076279571",
+        "precio_unitario": 1150.0,
+        "total": 1150,
+        "seccion": "LIBROS"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Confeti 1° Chubasco de cuentos Ed. Montenegro.               ISBN: 9786078374908",
+        "precio_unitario": 230.0,
+        "total": 230,
+        "seccion": "LIBROS"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Juego y Repaso en 1° Ed. Montenegro.                                   ISBN: 9786076277775",
+        "precio_unitario": 230.0,
+        "total": 230,
+        "seccion": "LIBROS"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Lineas y trazos 1° Ed. Montenegro Maria Elena Aguilar      ISBN: 9789689181286",
+        "precio_unitario": 230.0,
+        "total": 230,
+        "seccion": "LIBROS"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Libreta de Tareas Alexander Dul",
+        "precio_unitario": 210.0,
+        "total": 210,
+        "seccion": "LIBROS"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Diccionario Escolar de lengua Española Larousse",
+        "precio_unitario": 182.0,
+        "total": 182,
+        "seccion": "LIBROS"
+      }
+    ],
+    "total_libros": 4067,
+    "total_paquete": 6765
+  },
+  "2do PRIMARIA": {
+    "items": [
+      {
+        "cantidad": 4.0,
+        "descripcion": "Cuadernos profesionales cuadro chico 100 hojas",
+        "precio_unitario": 150.0,
+        "total": 600,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Cuaderno profesionales cuadro chico 100 hojas (inglés)",
+        "precio_unitario": 150.0,
+        "total": 150,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Goma de migajon",
+        "precio_unitario": 10.0,
+        "total": 10,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Caja de 12 Colores",
+        "precio_unitario": 150.0,
+        "total": 150,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 2.0,
+        "descripcion": "Lápiz  No. 2",
+        "precio_unitario": 10.0,
+        "total": 20,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 2.0,
+        "descripcion": "Lápiz color rojo",
+        "precio_unitario": 14.0,
+        "total": 28,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Regla de 20 cm no flexible",
+        "precio_unitario": 15.0,
+        "total": 15,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Sacapuntas con depósito",
+        "precio_unitario": 35.0,
+        "total": 35,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Tijeras de punta roma",
+        "precio_unitario": 30.0,
+        "total": 30,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 2.0,
+        "descripcion": "Barras de resistol tipo pritt 22 grms",
+        "precio_unitario": 40.0,
+        "total": 80,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Sobre de plástico transparente",
+        "precio_unitario": 20.0,
+        "total": 20,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Gel Antibacterial 225ml",
+        "precio_unitario": 70.0,
+        "total": 70,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Cinta masking tape grande",
+        "precio_unitario": 50.0,
+        "total": 50,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Diurex grueso",
+        "precio_unitario": 65.0,
+        "total": 65,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Jabón líquido para manos 225ml",
+        "precio_unitario": 60.0,
+        "total": 60,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 2.0,
+        "descripcion": "kleneex",
+        "precio_unitario": 50.0,
+        "total": 100,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Metro de foami liso color  morado",
+        "precio_unitario": 30.0,
+        "total": 30,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Metro de foami diamantado color  morado",
+        "precio_unitario": 35.0,
+        "total": 35,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 5.0,
+        "descripcion": "Hojas de fomi tamaño carta difentes colores",
+        "precio_unitario": 5.0,
+        "total": 25,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Paquete de 500 hojas blancas tamaño carta",
+        "precio_unitario": 200.0,
+        "total": 200,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 2.0,
+        "descripcion": "Paquetes de sanitas",
+        "precio_unitario": 50.0,
+        "total": 100,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Paquete de 50 conos desechables",
+        "precio_unitario": 65.0,
+        "total": 65,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 2.0,
+        "descripcion": "Cartulinas blancas",
+        "precio_unitario": 10.0,
+        "total": 20,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Pliego de papel crepé color rojo",
+        "precio_unitario": 15.0,
+        "total": 15,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 6.0,
+        "descripcion": "Metros de papel america rosa o morado",
+        "precio_unitario": 30.0,
+        "total": 180,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 4.0,
+        "descripcion": "Plumones para pizarrón blanco, colores: negro, rojo, verde y azul.",
+        "precio_unitario": 35.0,
+        "total": 140,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Toallitas húmedas",
+        "precio_unitario": 70.0,
+        "total": 70,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Pliego de mica autoadeherible para forrar libros y cuadernos",
+        "precio_unitario": 200.0,
+        "total": 200,
+        "seccion": "PARA FORRAR"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Academy Stars 2nd Ed. Pupil´s Book 2.                                                       (ISBN: 9781035100149)",
+        "precio_unitario": 1145.0,
+        "total": 1145,
+        "seccion": "LIBROS"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Academy Stars 2nd Ed. Worbook 2.                                                                   (ISBN: 9781035100200)",
+        "precio_unitario": 690.0,
+        "total": 690,
+        "seccion": "LIBROS"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Paquete Montetodo 2    Ed. Montenegro Autor: Maria Elena Aguilar Incluye: Me divierto y aprendo, Mateprácticas/Palabras a la vista, Pasame el acordeón y Financiera, Despiertamentes, Resulevo y Pratico, Plataforma digital.                                                                                                      ISBN: 9786076279595",
+        "precio_unitario": 1150.0,
+        "total": 1150,
+        "seccion": "LIBROS"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Confeti 2° Chubasco de cuentos Ed. Montenegro.                               ISBN: 9786078374892.",
+        "precio_unitario": 230.0,
+        "total": 230,
+        "seccion": "LIBROS"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Juego y Repaso en 2° Ed. Montenegro.                                                        ISBN: 9786076277720",
+        "precio_unitario": 230.0,
+        "total": 230,
+        "seccion": "LIBROS"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Lineas y trazos 2° Ed. Montenegro Maria Elena Aguilar                          ISBN: 9789689181293",
+        "precio_unitario": 230.0,
+        "total": 230,
+        "seccion": "LIBROS"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Libreta de Tareas Alexander Dul",
+        "precio_unitario": 210.0,
+        "total": 210,
+        "seccion": "LIBROS"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Diccionario Escolar de lengua Española Larousse",
+        "precio_unitario": 182.0,
+        "total": 182,
+        "seccion": "LIBROS"
+      }
+    ],
+    "total_libros": 4067,
+    "total_paquete": 6630
+  },
+  "3ro PRIMARIA": {
+    "items": [
+      {
+        "cantidad": 2.0,
+        "descripcion": "Cuadernos profesionales cuadro chico 100 hojas.",
+        "precio_unitario": 150.0,
+        "total": 300,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Cuaderno profesional cuadro chico 200 hojas",
+        "precio_unitario": 170.0,
+        "total": 170,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Cuaderno profesionales cuadro chico 100 hojas  (inglés)",
+        "precio_unitario": 150.0,
+        "total": 150,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Cuaderno profesional  NORMA  (música)",
+        "precio_unitario": 120.0,
+        "total": 120,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Melódica",
+        "precio_unitario": 280.0,
+        "total": 280,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Caja de 12 colores",
+        "precio_unitario": 150.0,
+        "total": 150,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Goma de migajon",
+        "precio_unitario": 10.0,
+        "total": 10,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 2.0,
+        "descripcion": "Lápiz color rojo",
+        "precio_unitario": 14.0,
+        "total": 28,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 2.0,
+        "descripcion": "Lápiz No.2",
+        "precio_unitario": 10.0,
+        "total": 20,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Regla de 20 cm no flexible",
+        "precio_unitario": 15.0,
+        "total": 15,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Sacapuntas con depósito",
+        "precio_unitario": 35.0,
+        "total": 35,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Tijeras de punta roma",
+        "precio_unitario": 30.0,
+        "total": 30,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Diurex grueso",
+        "precio_unitario": 65.0,
+        "total": 65,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 2.0,
+        "descripcion": "Barras de resistol pritt de 22 grms",
+        "precio_unitario": 40.0,
+        "total": 80,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Silicon frio",
+        "precio_unitario": 40.0,
+        "total": 40,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Sobre de plástico transparente",
+        "precio_unitario": 20.0,
+        "total": 20,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Gel Antibacterial 225ml",
+        "precio_unitario": 70.0,
+        "total": 70,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 5.0,
+        "descripcion": "Hojas de fomi tamaño carta difentes colores",
+        "precio_unitario": 5.0,
+        "total": 25,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 2.0,
+        "descripcion": "Kleenex",
+        "precio_unitario": 50.0,
+        "total": 100,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Jabón líquido para manos 225ml",
+        "precio_unitario": 60.0,
+        "total": 60,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Metro de foami liso color negro",
+        "precio_unitario": 25.0,
+        "total": 25,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Metro de foami diamantado color negro",
+        "precio_unitario": 35.0,
+        "total": 35,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Pliego de papel crepé amarillo",
+        "precio_unitario": 15.0,
+        "total": 15,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 2.0,
+        "descripcion": "Paquetes de sanitas",
+        "precio_unitario": 50.0,
+        "total": 100,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Paquete de 500 hojas blancas, tamaño carta",
+        "precio_unitario": 200.0,
+        "total": 200,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Paquete de 50 conos desechables",
+        "precio_unitario": 65.0,
+        "total": 65,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 6.0,
+        "descripcion": "Metros de papel américa color negro",
+        "precio_unitario": 30.0,
+        "total": 180,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 4.0,
+        "descripcion": "Plumones para pizarrón, negro, rojo, azul y verde",
+        "precio_unitario": 35.0,
+        "total": 140,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 2.0,
+        "descripcion": "Cartulina blanca",
+        "precio_unitario": 10.0,
+        "total": 20,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Toallitas húmedas",
+        "precio_unitario": 70.0,
+        "total": 70,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Pliego de mica autoadeherible para forrar libros y cuadernos",
+        "precio_unitario": 200.0,
+        "total": 200,
+        "seccion": "PARA FORRAR"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Academy Stars 2nd Ed. Pupil´s Book 3.                                          (ISBN: 9781035100293)",
+        "precio_unitario": 1145.0,
+        "total": 1145,
+        "seccion": "LIBROS"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Academy Stars 2nd Ed. Worbook 3.                                                 (ISBN: 9781035100361)",
+        "precio_unitario": 690.0,
+        "total": 690,
+        "seccion": "LIBROS"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Diccionario español-inglés pocket",
+        "precio_unitario": 200.0,
+        "total": 200,
+        "seccion": "LIBROS"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Paquete Montetodo 3   Ed. Montenegro Autor: Maria Elena Aguilar Incluye: Me divierto y aprendo, Mateprácticas/ Palabras a la vista, Pasame el acordeón y Financiera, Despiertamentes, Resuelvo y Practico, Plataforma Digital.                                                                        ISBN: 9786076279618",
+        "precio_unitario": 1150.0,
+        "total": 1150,
+        "seccion": "LIBROS"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Confeti 3° Chubasco de cuentos Ed. Montenegro.                               ISBN: 9786078374861",
+        "precio_unitario": 230.0,
+        "total": 230,
+        "seccion": "LIBROS"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Juego y Repaso en 3° Ed. Montenegro.                                                        ISBN: 9786076277737",
+        "precio_unitario": 230.0,
+        "total": 230,
+        "seccion": "LIBROS"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Lineas y trazos 3° Ed. Montenegro Maria Elena Aguilar                          ISBN: 9789689181309",
+        "precio_unitario": 230.0,
+        "total": 230,
+        "seccion": "LIBROS"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Libreta de Tareas Alexander Dul",
+        "precio_unitario": 210.0,
+        "total": 210,
+        "seccion": "LIBROS"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Diccionario Escolar de lengua Española Larousse",
+        "precio_unitario": 182.0,
+        "total": 182,
+        "seccion": "LIBROS"
+      }
+    ],
+    "total_libros": 4267,
+    "total_paquete": 7085
+  },
+  "4to PRIMARIA": {
+    "items": [
+      {
+        "cantidad": 2.0,
+        "descripcion": "Cuadernos profesionales cuadro chico 100 hojas.",
+        "precio_unitario": 150.0,
+        "total": 300,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Cuaderno profesional cuadro chico 200 hojas",
+        "precio_unitario": 170.0,
+        "total": 170,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Cuaderno profesionales cuadro chico 100 hojas  (inglés)",
+        "precio_unitario": 150.0,
+        "total": 150,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Cuaderno profesional  NORMA  (música)",
+        "precio_unitario": 120.0,
+        "total": 120,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Melódica",
+        "precio_unitario": 280.0,
+        "total": 280,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Caja de 24 colores",
+        "precio_unitario": 280.0,
+        "total": 280,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Goma de migajon",
+        "precio_unitario": 10.0,
+        "total": 10,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Juego de geometría con compás",
+        "precio_unitario": 135.0,
+        "total": 135,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 2.0,
+        "descripcion": "Lápiz  No.2",
+        "precio_unitario": 10.0,
+        "total": 20,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Sacapuntas con depósito",
+        "precio_unitario": 35.0,
+        "total": 35,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Tijeras punta roma",
+        "precio_unitario": 30.0,
+        "total": 30,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 2.0,
+        "descripcion": "Barras de resistol tipo pritt 22 grms",
+        "precio_unitario": 40.0,
+        "total": 80,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Silicon frio",
+        "precio_unitario": 40.0,
+        "total": 40,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 6.0,
+        "descripcion": "Bolígrafo tinta azul, negro,  rojo",
+        "precio_unitario": 10.0,
+        "total": 60,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Cinta doble cara (1.27 x 2.03)",
+        "precio_unitario": 90.0,
+        "total": 90,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Sobre de plástico transparente",
+        "precio_unitario": 20.0,
+        "total": 20,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 5.0,
+        "descripcion": "Hojas de fomi tamaño carta difentes colores",
+        "precio_unitario": 5.0,
+        "total": 25,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "200 hojas blancas tamaño carta",
+        "precio_unitario": 60.0,
+        "total": 60,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 2.0,
+        "descripcion": "Jabón liquido para manos 225ml",
+        "precio_unitario": 60.0,
+        "total": 120,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Nano cinta",
+        "precio_unitario": 75.0,
+        "total": 75,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Marcatextos",
+        "precio_unitario": 35.0,
+        "total": 35,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Kleenex",
+        "precio_unitario": 50.0,
+        "total": 50,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Paquete de sanitas",
+        "precio_unitario": 50.0,
+        "total": 50,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Paquete de 50 conos desechables",
+        "precio_unitario": 65.0,
+        "total": 65,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Metro de foami liso color verde bandera",
+        "precio_unitario": 25.0,
+        "total": 25,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Metro de foami dimanantado color verde bandera",
+        "precio_unitario": 35.0,
+        "total": 35,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 6.0,
+        "descripcion": "Metros de papel américa de color verde bandera",
+        "precio_unitario": 15.0,
+        "total": 90,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 4.0,
+        "descripcion": "Plumones para pizarrón blanco, colores: negro, rojo, verde y azul.",
+        "precio_unitario": 35.0,
+        "total": 140,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Pliego de papel crepé color verde bandera",
+        "precio_unitario": 15.0,
+        "total": 15,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 2.0,
+        "descripcion": "Cartulinas negras",
+        "precio_unitario": 17.0,
+        "total": 34,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Pliego de mica autoadeherible para forrar libros y cuadernos",
+        "precio_unitario": 200.0,
+        "total": 200,
+        "seccion": "PARA FORRAR"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Academy Stars 2nd Ed. Pupil´s Book 4.                                                       (ISBN: 9781035100446)",
+        "precio_unitario": 1145.0,
+        "total": 1145,
+        "seccion": "LIBROS"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Academy Stars 2nd Ed. Worbook 4.                                                                (ISBN: 9781035100507)",
+        "precio_unitario": 690.0,
+        "total": 690,
+        "seccion": "LIBROS"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Diccionario español-inglés pocket",
+        "precio_unitario": 200.0,
+        "total": 200,
+        "seccion": "LIBROS"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Paquete Montetodo 4   Ed. Montenegro Autor: Maria Elena Aguilar Incluye: Me divierto y aprendo, Mateprácticas/ Palabras a la vista, Pasame el acordeón y Financiera,  Despiertamentes, Resuelvo y Practico, Plataforma Digital.                                                                      ISBN: 9786076279632",
+        "precio_unitario": 1150.0,
+        "total": 1150,
+        "seccion": "LIBROS"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Confeti 4°Ed. Montenegro. ISBN: 9786078374830",
+        "precio_unitario": 230.0,
+        "total": 230,
+        "seccion": "LIBROS"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Juego y Repaso en 4° Ed. Montenegro.                                                        ISBN: 9786076277744",
+        "precio_unitario": 230.0,
+        "total": 230,
+        "seccion": "LIBROS"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Lineas y trazos 4° Ed. Montenegro Maria Elena Aguilar                          ISBN: 9789689181316",
+        "precio_unitario": 230.0,
+        "total": 230,
+        "seccion": "LIBROS"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Libreta de Tareas Alexander Dul",
+        "precio_unitario": 210.0,
+        "total": 210,
+        "seccion": "LIBROS"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Diccionario Escolar de lengua Española Larousse",
+        "precio_unitario": 182.0,
+        "total": 182,
+        "seccion": "LIBROS"
+      }
+    ],
+    "total_libros": 4267,
+    "total_paquete": 7106
+  },
+  "5to PRIMARIA": {
+    "items": [
+      {
+        "cantidad": 2.0,
+        "descripcion": "Cuadernos profesionales cuadro chico 100 hojas.",
+        "precio_unitario": 150.0,
+        "total": 300,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Cuaderno profesional cuadro chico 200 hojas",
+        "precio_unitario": 170.0,
+        "total": 170,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Cuaderno profesionales cuadro chico 100 hojas  (inglés)",
+        "precio_unitario": 150.0,
+        "total": 150,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Cuaderno profesional  NORMA  (música)",
+        "precio_unitario": 120.0,
+        "total": 120,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Melódica",
+        "precio_unitario": 280.0,
+        "total": 280,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Caja de 24 colores",
+        "precio_unitario": 280.0,
+        "total": 280,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Goma de migajon",
+        "precio_unitario": 10.0,
+        "total": 10,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Sacapuntas con depósito",
+        "precio_unitario": 35.0,
+        "total": 35,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Juego de geometría con compas",
+        "precio_unitario": 135.0,
+        "total": 135,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 2.0,
+        "descripcion": "Lápiz No. 2",
+        "precio_unitario": 10.0,
+        "total": 20,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Tijeras de punta roma",
+        "precio_unitario": 30.0,
+        "total": 30,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Kleenex",
+        "precio_unitario": 50.0,
+        "total": 50,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Sobre de plástico transparente",
+        "precio_unitario": 20.0,
+        "total": 20,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Barra de resistol tipo pritt de 22 grms",
+        "precio_unitario": 40.0,
+        "total": 40,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Silicon frio",
+        "precio_unitario": 40.0,
+        "total": 40,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 6.0,
+        "descripcion": "Boligrafo tinta azul, roja y negro.",
+        "precio_unitario": 10.0,
+        "total": 60,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "200 hojas blancas, tamaño carta",
+        "precio_unitario": 60.0,
+        "total": 60,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 2.0,
+        "descripcion": "Jabón liquido para manos 225ml",
+        "precio_unitario": 60.0,
+        "total": 120,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Cinta doble cara (1.27 x 2.03)",
+        "precio_unitario": 90.0,
+        "total": 90,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Nano cinta",
+        "precio_unitario": 75.0,
+        "total": 75,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 2.0,
+        "descripcion": "Cartulina color negro",
+        "precio_unitario": 17.0,
+        "total": 34,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 5.0,
+        "descripcion": "Hojas de fomi tamaño carta difentes colores",
+        "precio_unitario": 5.0,
+        "total": 25,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Paquete de sanitas",
+        "precio_unitario": 50.0,
+        "total": 50,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Paquete de 50 conos desechables",
+        "precio_unitario": 65.0,
+        "total": 65,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 6.0,
+        "descripcion": "Metros de papel américa color azul",
+        "precio_unitario": 15.0,
+        "total": 90,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Metro de foami diamantado azul",
+        "precio_unitario": 35.0,
+        "total": 35,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Metro de foami liso color azul",
+        "precio_unitario": 25.0,
+        "total": 25,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 4.0,
+        "descripcion": "Plumones para pizarrón blanco, colores: negro, rojo, verde y azul.",
+        "precio_unitario": 35.0,
+        "total": 140,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Pliego de papel crepé color naranja",
+        "precio_unitario": 15.0,
+        "total": 15,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Pliego de mica autoadeherible para forrar libros y cuadernos",
+        "precio_unitario": 200.0,
+        "total": 200,
+        "seccion": "PARA FORRAR"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Academy Stars 2nd Ed. Pupil´s Book 5.                            (ISBN: 9781035100620)",
+        "precio_unitario": 1145.0,
+        "total": 1145,
+        "seccion": "LIBROS"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Academy Stars 2nd Ed. Worbook 5 Ed. (ISBN: 9781035100699)",
+        "precio_unitario": 690.0,
+        "total": 690,
+        "seccion": "LIBROS"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Diccionario español-inglés pocket",
+        "precio_unitario": 200.0,
+        "total": 200,
+        "seccion": "LIBROS"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Paquete Montetodo 5 Ed. Montenegro Autor: Maria Elena Aguilar Incluye: Me divierto y aprendo, Mateprácticas/ Palabras a la vista, Pasame el acordeón y Financiera, Despiertamentes, Resuelvo y Practico, Plataforma Digital.                                                                  ISBN: 9786076279656",
+        "precio_unitario": 1150.0,
+        "total": 1150,
+        "seccion": "LIBROS"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Confeti 5°Ed. Montenegro. ISBN: 9786078374816",
+        "precio_unitario": 230.0,
+        "total": 230,
+        "seccion": "LIBROS"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Juego y Repaso en 5° Ed. Montenegro.                                                        ISBN: 9786076277751",
+        "precio_unitario": 230.0,
+        "total": 230,
+        "seccion": "LIBROS"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Lineas y trazos 5° Ed. Montenegro Maria Elena Aguilar                          ISBN: 9789689181323",
+        "precio_unitario": 230.0,
+        "total": 230,
+        "seccion": "LIBROS"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Libreta de Tareas Alexander Dul",
+        "precio_unitario": 210.0,
+        "total": 210,
+        "seccion": "LIBROS"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Diccionario Escolar de lengua Española Larousse",
+        "precio_unitario": 182.0,
+        "total": 182,
+        "seccion": "LIBROS"
+      }
+    ],
+    "total_libros": 4267,
+    "total_paquete": 7031
+  },
+  "6to PRIMARIA": {
+    "items": [
+      {
+        "cantidad": 2.0,
+        "descripcion": "Cuadernos profesionales cuadro chico 100 hojas",
+        "precio_unitario": 150.0,
+        "total": 300,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Cuaderno profesional cuadro chico 200 hojas",
+        "precio_unitario": 170.0,
+        "total": 170,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Cuaderno profesionales cuadro chico 100 hojas (inglés)",
+        "precio_unitario": 150.0,
+        "total": 150,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Cuaderno profesional  NORMA  (música)",
+        "precio_unitario": 120.0,
+        "total": 120,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Melódica",
+        "precio_unitario": 280.0,
+        "total": 280,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Caja de 24 colores",
+        "precio_unitario": 280.0,
+        "total": 280,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Goma de migajon",
+        "precio_unitario": 10.0,
+        "total": 10,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 2.0,
+        "descripcion": "Lápiz  No. 2",
+        "precio_unitario": 10.0,
+        "total": 20,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Juego de geometria con compás",
+        "precio_unitario": 135.0,
+        "total": 135,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Sacapuntas con depósito",
+        "precio_unitario": 35.0,
+        "total": 35,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Tijeras de punta roma",
+        "precio_unitario": 30.0,
+        "total": 30,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 6.0,
+        "descripcion": "Bolígrafo tinta azul, negro, rojo",
+        "precio_unitario": 10.0,
+        "total": 60,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Barra de resistol pritt 22 grms",
+        "precio_unitario": 40.0,
+        "total": 40,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Kleenex",
+        "precio_unitario": 50.0,
+        "total": 50,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "200 hojas blancas tamaño carta",
+        "precio_unitario": 60.0,
+        "total": 60,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 2.0,
+        "descripcion": "Jabón liquido para manos 225ml",
+        "precio_unitario": 60.0,
+        "total": 120,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Sobre de plastico transparente",
+        "precio_unitario": 20.0,
+        "total": 20,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Marca textos",
+        "precio_unitario": 35.0,
+        "total": 35,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Cinta doble cara (1.27 x 2.03)",
+        "precio_unitario": 90.0,
+        "total": 90,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Nano cinta",
+        "precio_unitario": 75.0,
+        "total": 75,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 2.0,
+        "descripcion": "Cartulina color negro",
+        "precio_unitario": 17.0,
+        "total": 34,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 5.0,
+        "descripcion": "Hojas de fomi tamaño carta difentes colores",
+        "precio_unitario": 5.0,
+        "total": 25,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Paquete de sanitas",
+        "precio_unitario": 50.0,
+        "total": 50,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Paquete de 50 conos desechables",
+        "precio_unitario": 65.0,
+        "total": 65,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Metro de foami diamantado amarillo",
+        "precio_unitario": 35.0,
+        "total": 35,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 6.0,
+        "descripcion": "Metros de papel america color amarillo",
+        "precio_unitario": 15.0,
+        "total": 90,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Metro de foami liso color amarillo",
+        "precio_unitario": 25.0,
+        "total": 25,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Pliego de papel crepe color azul cielo",
+        "precio_unitario": 15.0,
+        "total": 15,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 4.0,
+        "descripcion": "Plumones para pizarrón blanco, colores: negro, rojo, verde y azul.",
+        "precio_unitario": 35.0,
+        "total": 140,
+        "seccion": "MATERIAL DIARIO"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Pliego de mica autoadeherible para forrar libros y cuadernos",
+        "precio_unitario": 200.0,
+        "total": 200,
+        "seccion": "PARA FORRAR"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Academy Stars 2nd Ed. Pupil´s book 6 (9781035100781)",
+        "precio_unitario": 1145.0,
+        "total": 1145,
+        "seccion": "LIBROS"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Academy Stars worbook 6 Ed. (ISBN: 9781035100859)",
+        "precio_unitario": 690.0,
+        "total": 690,
+        "seccion": "LIBROS"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Diccionario español-inglés pocket",
+        "precio_unitario": 200.0,
+        "total": 200,
+        "seccion": "LIBROS"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Paquete Montetodo 6 Ed. Montenegro Autor: Maria Elena Aguilar Incluye: Me divierto y aprendo, Mateprácticas/ Palabras a la vista, Pasame el acordeón y Financiera, Despiertamentes, Resuelvo y Practico, Plataforma Digital.                                                                          ISBN: 9786076279670",
+        "precio_unitario": 1150.0,
+        "total": 1150,
+        "seccion": "LIBROS"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Confeti 6°Ed. Montenegro. ISBN: 9786078374809",
+        "precio_unitario": 230.0,
+        "total": 230,
+        "seccion": "LIBROS"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Juego y Repaso en 6° Ed. Montenegro.                                                        ISBN: 9786076277768",
+        "precio_unitario": 230.0,
+        "total": 230,
+        "seccion": "LIBROS"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Lineas y trazos 6° Ed. Montenegro Maria Elena Aguilar                          ISBN: 9789689181330",
+        "precio_unitario": 230.0,
+        "total": 230,
+        "seccion": "LIBROS"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Libreta de Tareas Alexander Dul",
+        "precio_unitario": 210.0,
+        "total": 210,
+        "seccion": "LIBROS"
+      },
+      {
+        "cantidad": 1.0,
+        "descripcion": "Diccionario Escolar de lengua Española Larousse",
+        "precio_unitario": 182.0,
+        "total": 182,
+        "seccion": "LIBROS"
+      }
+    ],
+    "total_libros": 4267,
+    "total_paquete": 7026
+  }
+}

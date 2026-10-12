@@ -1,0 +1,21 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    function isStaff() {
+      return request.auth != null &&
+        firestore.exists(/databases/(default)/documents/usuarios/$(request.auth.uid));
+    }
+
+    match /comprobantes/{folio}/{fileName} {
+      allow read: if true;
+      allow write: if request.resource.size < 5 * 1024 * 1024
+                    && request.resource.contentType.matches('image/.*');
+    }
+
+    match /firmas/{folio}/{fileName} {
+      allow read: if true;
+      allow write: if isStaff();
+    }
+  }
+}
