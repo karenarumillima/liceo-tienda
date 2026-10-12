@@ -325,9 +325,9 @@ const STAGES = [
    4. Copia aquí abajo tu Public Key (Account → General), el Service ID y el Template ID.
    5. Pon también el correo donde quieres que te lleguen los avisos de cada pedido (STAFF_NOTIFY_EMAIL).
    Mientras estos valores digan "PENDIENTE", el sitio sigue funcionando normal, solo no manda los correos. */
-const EMAILJS_PUBLIC_KEY = 'PENDIENTE';
-const EMAILJS_SERVICE_ID = 'PENDIENTE';
-const EMAILJS_TEMPLATE_ID = 'PENDIENTE';
+const EMAILJS_PUBLIC_KEY = 'SDMK4Gp5bKvJA5VUh';
+const EMAILJS_SERVICE_ID = 'liceo-alexander-dul';
+const EMAILJS_TEMPLATE_ID = 'template_lgoyigc';
 const STAFF_NOTIFY_EMAIL = 'PENDIENTE';
 const STAFF_NOTIFY_NAME = 'Liceo Alexander Dul';
 
@@ -349,7 +349,7 @@ async function enviarCorreoEstado(order, mensaje){
   if(STAFF_NOTIFY_EMAIL !== 'PENDIENTE') destinatarios.push({ to_email: STAFF_NOTIFY_EMAIL, to_name: STAFF_NOTIFY_NAME });
   for(const d of destinatarios){
     try{
-      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, { to_email: d.to_email, to_name: d.to_name, folio: order.folio, mensaje });
+      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, { to_email: d.to_email, to_name: d.to_name, folio: order.folio, mensaje, name: d.to_name, message: mensaje }); // name/message: la plantilla base de EmailJS usa esos nombres
     }catch(err){ console.error('No se pudo enviar el correo a ' + d.to_email + ':', err); }
   }
 }
