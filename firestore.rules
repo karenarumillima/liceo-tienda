@@ -25,6 +25,12 @@ service cloud.firestore {
       allow write: if isAdmin();
     }
 
+    // catálogo de uniformes (nombre, precio, tallas, foto): lo edita el Administrador
+    match /uniformes/{id} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
     match /inventario/{itemId} {
       allow read: if true;
       allow update: if isStaff() || (request.resource.data.stock <= resource.data.stock);

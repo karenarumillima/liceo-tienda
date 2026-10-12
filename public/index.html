@@ -131,6 +131,8 @@
   .uniform-card .swatch { width: 100%; height: 64px; border-radius: 4px; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; }
   .uniform-card h4 { margin: 0 0 2px; font-size: 0.98rem; }
   .uniform-card .price { color: var(--navy); font-weight: 800; margin-bottom: 10px; }
+  .uniform-card .field-row { flex-wrap: wrap; }
+  .uniform-card .field-row select { flex: 1 1 110px; min-width: 0; }
   .field-row { display: flex; gap: 8px; margin-bottom: 10px; }
 
   .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: none; border-radius: 5px; padding: 11px 18px; font-weight: 800; font-size: 0.92rem; cursor: pointer; }
@@ -184,6 +186,31 @@
   .upload-zone:hover { border-color: var(--navy); }
   .upload-zone input { display: none; }
   .preview-img { max-width: 100%; max-height: 220px; border-radius: 4px; margin-top: 12px; border: 1.5px solid var(--border); display: block; }
+  .kpi-row { display:grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap:12px; margin:14px 0; }
+  .kpi, .viz-card { background: var(--card-bg); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 16px; }
+  .kpi-label { font-size:0.78rem; color: var(--ink-soft); font-weight:700; text-transform:uppercase; letter-spacing:0.04em; }
+  .kpi-valor { font-size:1.7rem; font-weight:800; color: var(--ink); margin-top:4px; font-variant-numeric: tabular-nums; }
+  .kpi-nota { font-size:0.78rem; color: var(--ink-soft); margin-top:4px; }
+  .viz-card { margin-top:14px; } .viz-card h3 { margin:0 0 12px; font-size:1.05rem; }
+  .viz-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:0 14px; }
+  .viz-filtros { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+  .viz-nota { font-size:0.8rem; color: var(--ink-soft); margin:0 0 10px; } .viz-empty { color: var(--ink-soft); font-size:0.88rem; }
+  .viz-sub { margin:14px 0 6px; font-size:0.85rem; color: var(--ink-soft); }
+  .hbars { display:flex; flex-direction:column; gap:6px; }
+  .hbar-row { display:grid; grid-template-columns: minmax(110px, 38%) 1fr auto; gap:10px; align-items:center; padding:2px 0; cursor:default; }
+  .hbar-row:hover .hbar { filter: brightness(1.15); }
+  .hbar-label { font-size:0.84rem; color: var(--ink); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .hbar-track { height:14px; }
+  .hbar { height:100%; background: var(--navy); border-radius: 0 4px 4px 0; }
+  .hbar-val { font-size:0.82rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; white-space:nowrap; }
+  .cols { display:flex; align-items:flex-end; gap:2px; height:160px; border-bottom:1px solid var(--border); }
+  .col-slot { flex:1; height:100%; display:flex; align-items:flex-end; min-width:3px; }
+  .col-slot:hover .col { filter: brightness(1.15); }
+  .col { width:100%; background: var(--navy); border-radius: 4px 4px 0 0; min-height:1px; }
+  .cols-axis { display:flex; justify-content:space-between; font-size:0.75rem; color: var(--ink-soft); margin-top:4px; }
+  .viz-tip { position:fixed; z-index:50; pointer-events:none; background: var(--ink); color: var(--card-bg); font-size:0.8rem; padding:6px 9px; border-radius:4px; max-width:320px; box-shadow:0 2px 8px rgba(0,0,0,0.2); }
+  @media (max-width: 560px){ .hbar-row { grid-template-columns: 1fr auto; } .hbar-track { grid-column: 1 / -1; grid-row: 2; } }
+  .uni-foto { width: 100%; aspect-ratio: 1 / 1; object-fit: contain; background: #fff; border-radius: 4px; margin-bottom: 8px; }
   .note-box { background: var(--green-tint); color: var(--green); border-radius: 4px; padding: 12px 14px; font-size: 0.88rem; font-weight: 700; }
   .note-box.error { background: var(--red-tint); color: var(--red); }
   .note-box.neutral { background: var(--navy-tint); color: var(--navy); }
@@ -233,7 +260,7 @@ const LOGO_DATA_URI = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUAAAACDCAM
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
 import {
   getFirestore, collection, doc, getDoc, getDocs, setDoc, updateDoc,
-  onSnapshot, query, orderBy, runTransaction, arrayUnion
+  onSnapshot, query, orderBy, runTransaction, arrayUnion, writeBatch
 } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 import {
   getAuth, signInWithEmailAndPassword, signOut
@@ -277,14 +304,42 @@ async function loadInventario(){
   state.inventory = inv;
 }
 
+async function loadUniformes(){
+  const porId = {};
+  UNIFORMES_BASE.forEach((u,i) => { porId[u.id] = normalizarUniforme(u, i); });
+  try{
+    const snap = await getDocs(collection(db, 'uniformes'));
+    snap.forEach(d => { porId[d.id] = normalizarUniforme(Object.assign({}, porId[d.id]||{}, d.data(), { id:d.id }), 999); });
+  }catch(err){ console.error('No se pudo leer el catálogo de uniformes, se usa el de arranque:', err); }
+  UNIFORMS = Object.values(porId).sort((a,b) => (a.orden??999) - (b.orden??999));
+}
+
 let ordersUnsub = null;
 function subscribeOrders(){
   if(ordersUnsub) return;
   const q = query(collection(db, 'pedidos'), orderBy('createdAt', 'desc'));
+  let primeraCarga = true;
   ordersUnsub = onSnapshot(q, (snap) => {
     state.orders = snap.docs.map(d => d.data());
+    // pedidos que llegan con el panel abierto (no los que ya estaban al entrar): letrero + sonido
+    if(!primeraCarga){
+      const nuevos = snap.docChanges().filter(c => c.type === 'added').map(c => c.doc.data().folio);
+      if(nuevos.length){ state.pedidosNuevos = [...new Set([...(state.pedidosNuevos||[]), ...nuevos])]; sonarAviso(); }
+    }
+    primeraCarga = false;
     render();
   }, (err) => console.error('Error escuchando pedidos:', err));
+}
+function sonarAviso(){
+  try{
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    [0, 0.18].forEach((t, i) => {
+      const o = ctx.createOscillator(), g = ctx.createGain();
+      o.frequency.value = i ? 1046 : 784; g.gain.setValueAtTime(0.15, ctx.currentTime + t);
+      g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + t + 0.3);
+      o.connect(g); g.connect(ctx.destination); o.start(ctx.currentTime + t); o.stop(ctx.currentTime + t + 0.3);
+    });
+  }catch(e){}
 }
 function unsubscribeOrders(){
   if(ordersUnsub){ ordersUnsub(); ordersUnsub = null; }
@@ -310,17 +365,29 @@ function unsubscribeAvisos(){
 
 let GRADES = {};
 
-const UNIFORMS = [
-  { id:'u1', name:'Playera tipo polo (diario)', icon:'👕', color:'#22355F', price: 280 },
-  { id:'u2', name:'Playera de educación física', icon:'🎽', color:'#3f7d58', price: 260 },
-  { id:'u3', name:'Short deportivo', icon:'🩳', color:'#3f7d58', price: 240 },
-  { id:'u4', name:'Pants deportivo', icon:'👖', color:'#3f7d58', price: 380 },
-  { id:'u5', name:'Falda escolar', icon:'👗', color:'#22355F', price: 320 },
-  { id:'u6', name:'Pantalón de gala', icon:'👖', color:'#22355F', price: 360 },
-  { id:'u7', name:'Sudadera con logo', icon:'🧥', color:'#22355F', price: 420 },
-  { id:'u8', name:'Tenis blancos reglamentarios', icon:'👟', color:'#b8433a', price: 450 },
+// Catálogo de uniformes. Estos son los valores de arranque (fotos en public/img/uniformes/);
+// el Administrador los edita desde el panel → Uniformes y se guardan en la colección "uniformes",
+// que se sobrepone a esta lista por id. price null = "precio por definir" (no se puede comprar aún).
+const UNIFORMES_BASE = [
+  { id:'polo-verde',         name:'Playera polo verde',                   foto:'img/uniformes/polo-verde.jpg' },
+  { id:'polo-roja',          name:'Playera polo roja',                    foto:'img/uniformes/polo-roja.jpg' },
+  { id:'camisa-manga-corta', name:'Camisa blanca manga corta',            foto:'img/uniformes/camisa-manga-corta.jpg' },
+  { id:'camisa-manga-larga', name:'Camisa blanca manga larga',            foto:'img/uniformes/camisa-manga-larga.jpg' },
+  { id:'blusa-blanca',       name:'Blusa blanca cuello redondo',          foto:'img/uniformes/blusa-blanca.jpg' },
+  { id:'chaleco-gris',       name:'Chaleco gris',                         foto:'img/uniformes/chaleco-gris.jpg' },
+  { id:'sueter-gris',        name:'Suéter gris con botones',              foto:'img/uniformes/sueter-gris.jpg' },
+  { id:'chamarra-marino',    name:'Chamarra deportiva azul marino',       foto:'img/uniformes/chamarra-marino.jpg' },
+  { id:'pants-marino',       name:'Pants deportivo azul marino',          foto:'img/uniformes/pants-marino.jpg' },
+  { id:'chamarra-gris',      name:'Chamarra deportiva gris',              foto:'img/uniformes/chamarra-gris.jpg' },
+  { id:'pants-gris',         name:'Pants deportivo gris',                 foto:'img/uniformes/pants-gris.jpg' },
 ];
-const SIZES = ['6','8','10','12','14','16','32','34','36','38','40'];
+const SIZES = ['6','8','10','12','14','16','32','34','36','38','40'];   // tallas por omisión de una prenda nueva
+let UNIFORMS = [];             // catálogo completo (incluye prendas ocultas, para pedidos viejos y carritos)
+function normalizarUniforme(u, i){
+  return Object.assign({ price:null, tallas:SIZES.slice(), activo:true, orden:i, foto:'' }, u);
+}
+function uniformesVisibles(){ return UNIFORMS.filter(u => u.activo !== false); }
+function uniInfo(id){ return UNIFORMS.find(u => u.id === id) || { id, name:'Prenda', price:0, tallas:[], foto:'' }; }
 
 const DELIVERY_BASE = 40;
 const DELIVERY_PER_KM = 8;
@@ -356,16 +423,20 @@ function emailjsDisponible(){
   catch(err){ console.error('No se pudo inicializar EmailJS:', err); return false; }
   return true;
 }
-// manda el aviso de cambio de estado por correo al papá/mamá (si dejó correo) y a STAFF_NOTIFY_EMAIL.
+// manda el aviso de cambio de estado por correo al papá/mamá (si dejó correo). Sin copia al personal:
+// el personal es quien cambia el estado, y así se ahorra cupo del plan gratis de EmailJS (200 al mes).
 // nunca truena el flujo del pedido: si el correo falla, solo se queda en la consola.
 async function enviarCorreoEstado(order, mensaje){
-  if(!emailjsDisponible()) return;
-  const destinatarios = [];
-  if(order.cliente && order.cliente.correo) destinatarios.push({ to_email: order.cliente.correo, to_name: alumnosLabel(order) });
-  if(STAFF_NOTIFY_EMAIL !== 'PENDIENTE') destinatarios.push({ to_email: STAFF_NOTIFY_EMAIL, to_name: STAFF_NOTIFY_NAME });
-  for(const d of destinatarios){
-    await enviarCorreo(d.to_email, d.to_name, order.folio, mensaje, `Tu pedido ${order.folio} - Liceo Alexander Dul`);
-  }
+  if(!(order.cliente && order.cliente.correo)) return;
+  await enviarCorreo(order.cliente.correo, alumnosLabel(order), order.folio, mensaje, `Tu pedido ${order.folio} - Liceo Alexander Dul`);
+}
+// aviso al personal de que entró un pedido nuevo
+function avisarStaffPedidoNuevo(order){
+  if(STAFF_NOTIFY_EMAIL === 'PENDIENTE') return;
+  const entrega = order.fulfillment === 'delivery' ? `envío a domicilio (${order.direccion})` : 'recoger en el local';
+  const pago = order.payment === 'transferencia' ? 'transferencia (revisar comprobante)' : 'efectivo';
+  const mensaje = `Entró el pedido ${order.folio} por ${money(order.total)}. Alumno(s): ${alumnosLabel(order)}. Entrega: ${entrega}. Pago: ${pago}. Tel. ${order.cliente.telefono}. Revísalo en el panel de personal.`;
+  enviarCorreo(STAFF_NOTIFY_EMAIL, STAFF_NOTIFY_NAME, order.folio, mensaje, `Nuevo pedido ${order.folio} - ${money(order.total)}`);
 }
 // {{asunto}} es el asunto de la plantilla; name/message: la plantilla base de EmailJS usa esos nombres
 async function enviarCorreo(to_email, to_name, folio, mensaje, asunto){
@@ -422,6 +493,11 @@ let state = {
   uniSel: {},                  // { [uniformeId]: talla elegida } — para que la talla no se reinicie en cada render
   avisoForm: null,             // { uniId, size, telefono, correo, saving, error, enviado } — "avísame cuando haya"
   avisos: [],                  // (admin) papás esperando una prenda/talla agotada, en tiempo real
+  ventasPeriodo: 'todo', ventasAlcance: 'pagados', ventasSeccion: 'todas',
+  pedidosNuevos: [],           // (admin) folios que llegaron con el panel abierto, para el letrero
+  uniDraft: {},                // (admin) cambios sin guardar del catálogo de uniformes, por id
+  uniGuardando: null,          // id de la prenda que se está guardando
+  listaEdit: null,             // (admin) { grade, items:[{seccion,descripcion,cantidad,precio_unitario,stock}], guardando, mensaje }
 };
 
 /* ================= UTILIDADES ================= */
@@ -432,7 +508,7 @@ function idSafe(s){ return String(s).replace(/[^a-zA-Z0-9_-]/g, '_'); }
 // existencias: un artículo que no está dado de alta en inventario cuenta como 0 (igual que en el panel)
 function stockDe(invKey){ return state.inventory[invKey] ?? 0; }
 function utilDisponible(grade, i){ return stockDe(GRADES[grade].docId+'_'+i) > 0; }
-function uniTallaSel(uniId){ return state.uniSel[uniId] || SIZES[0]; }
+function uniTallaSel(uniId){ const t = uniInfo(uniId).tallas || []; return t.includes(state.uniSel[uniId]) ? state.uniSel[uniId] : (t[0] || ''); }
 function avisosPendientes(){ return state.avisos.filter(a => a.estado === 'pendiente'); }
 // avisos pendientes cuya prenda/talla ya tiene existencias: hay que avisarle a esos papás
 function avisosListos(){ return avisosPendientes().filter(a => stockDe(a.uniformeId+'_'+a.talla) > 0); }
@@ -484,7 +560,7 @@ function utilesCount(){
   return Object.keys(state.gradeQtys).reduce((s,g) => s + Object.values(state.gradeQtys[g]).reduce((a,b)=>a+(b||0),0), 0);
 }
 function uniformsTotal(){
-  return state.uniformCart.reduce((s,u) => s + (UNIFORMS.find(x=>x.id===u.id).price * u.qty), 0);
+  return state.uniformCart.reduce((s,u) => s + (uniInfo(u.id).price * u.qty), 0);
 }
 function uniformsCount(){
   return state.uniformCart.reduce((s,u)=>s+u.qty, 0);
@@ -637,7 +713,7 @@ async function buildOrder(){
     });
   });
   const uniformItems = state.uniformCart.map(u => {
-    const info = UNIFORMS.find(x=>x.id===u.id);
+    const info = uniInfo(u.id);
     const splits = Object.entries(u.assign||{}).filter(([,q])=>q>0).map(([studentId,q]) => ({studentId, qty:q}));
     return { id:u.id, name:info.name, size:u.size, qty:u.qty, price:info.price, splits, invKey: u.id+'_'+u.size };
   });
@@ -1052,17 +1128,18 @@ function uniformsView(){
     <h2 style="margin-top:0">Uniformes</h2>
     <p style="color:var(--ink-soft); margin-top:-6px">No requieren lista previa: elige talla y cantidad, se entregan en el momento en el local.</p>
     <div class="uniform-grid">
-      ${UNIFORMS.map(u => {
+      ${uniformesVisibles().map(u => {
         const talla = uniTallaSel(u.id);
         const agotada = stockDe(u.id+'_'+talla) <= 0;
+        const sinPrecio = !(u.price > 0);
         return `
         <div class="uniform-card">
-          <div class="swatch" style="background:${u.color}22;">${u.icon}</div>
+          ${u.foto ? `<img class="uni-foto" src="${esc(u.foto)}" alt="${esc(u.name)}" loading="lazy">` : `<div class="swatch">👕</div>`}
           <h4>${esc(u.name)}</h4>
-          <div class="price">${money(u.price)}</div>
-          <div class="field-row">
+          <div class="price">${sinPrecio ? '<span style="color:var(--ink-soft); font-size:0.9rem;">Precio por confirmar</span>' : money(u.price)}</div>
+          ${sinPrecio ? '' : `<div class="field-row">
             <select data-uni-size="${u.id}">
-              ${SIZES.map(s => `<option value="${s}" ${s===talla?'selected':''}>Talla ${s}${stockDe(u.id+'_'+s)<=0?' (agotada)':''}</option>`).join('')}
+              ${u.tallas.map(s => `<option value="${esc(s)}" ${s===talla?'selected':''}>Talla ${esc(s)}${stockDe(u.id+'_'+s)<=0?' (agotada)':''}</option>`).join('')}
             </select>
             ${agotada ? '' : `<div class="stepper">
               <button data-uni-dec="${u.id}" type="button">−</button>
@@ -1070,7 +1147,7 @@ function uniformsView(){
               <button data-uni-inc="${u.id}" type="button">+</button>
             </div>`}
           </div>
-          ${agotada ? avisoUniformeHtml(u, talla) : `<button class="btn btn-secondary btn-block btn-sm" data-uni-add="${u.id}">Agregar al carrito</button>`}
+          ${agotada ? avisoUniformeHtml(u, talla) : `<button class="btn btn-secondary btn-block btn-sm" data-uni-add="${u.id}">Agregar al carrito</button>`}`}
         </div>`;
       }).join('')}
     </div>
@@ -1160,7 +1237,7 @@ function cartView(){
     state.uniformCart.forEach((u,idx) => {
       const units = (u.assign||{})[al.id] || 0;
       if(units<=0) return;
-      const info = UNIFORMS.find(x=>x.id===u.id);
+      const info = uniInfo(u.id);
       const mostrarSplit = !splitYaMostrado.has(idx);
       if(mostrarSplit) splitYaMostrado.add(idx);
       rows += `<tr>
@@ -1286,7 +1363,7 @@ function etiquetaAsignacionPendiente(){
   if(p.kind==='uniform'){
     const u = state.uniformCart[p.uniIndex];
     if(!u) return '';
-    const info = UNIFORMS.find(x=>x.id===u.id);
+    const info = uniInfo(u.id);
     return u.qty + ' × ' + (info?info.name:u.id) + ', talla ' + u.size;
   }
   return '';
@@ -1338,7 +1415,7 @@ function subtotalAlumno(studentId){
   Object.keys(state.gradeAssign).forEach(g => { if(state.gradeAssign[g]===studentId) sum += gradeSubtotal(g); });
   state.uniformCart.forEach(u => {
     const units = (u.assign||{})[studentId] || 0;
-    if(units>0){ const info = UNIFORMS.find(x=>x.id===u.id); sum += info.price * units; }
+    if(units>0){ const info = uniInfo(u.id); sum += info.price * units; }
   });
   return sum;
 }
@@ -1711,71 +1788,157 @@ function exportCortesExcel(){
 function adminDashboard(){
   const listos = avisosListos();
   const tabItems = [['pedidos','Pedidos'],['cortes','Cortes / Innovat'],['avisos', 'Avisos' + (listos.length ? ` <span class="cart-count" style="display:inline-flex; vertical-align:middle;">${listos.length}</span>` : '')]];
-  if(state.auth.role==='Administrador') tabItems.push(['inventario','Inventario'], ['ventas','Ventas']);
+  if(state.auth.role==='Administrador') tabItems.push(['inventario','Inventario'], ['uniformes','Uniformes'], ['listas','Listas'], ['ventas','Ventas']);
   // en cuanto una prenda agotada vuelve a tener existencias y hay papás esperando, sale este letrero en todo el panel
   const banner = listos.length && state.adminTab !== 'avisos'
     ? `<div class="note-box error" style="margin-top:12px; display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;">
         <span>🔔 Ya hay existencias para ${listos.length} ${listos.length===1?'papá que está esperando':'papás que están esperando'} el aviso.</span>
         <button class="btn btn-primary btn-sm" data-admin-tab="avisos">Ver avisos</button>
       </div>` : '';
+  const nuevos = state.pedidosNuevos || [];
+  const bannerPedido = nuevos.length ? `<div class="note-box" style="margin-top:12px; display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;">
+      <span>🛎️ ${nuevos.length===1 ? 'Llegó un pedido nuevo' : `Llegaron ${nuevos.length} pedidos nuevos`}: ${nuevos.map(f => `<a href="#" data-open-order="${esc(f)}" style="color:inherit;">${esc(f)}</a>`).join(', ')}</span>
+      <button class="btn btn-secondary btn-sm" id="pedidosNuevosOkBtn">Entendido</button>
+    </div>` : '';
   return `
   <section class="view">
     <div class="tabs" style="padding-left:0;">
       ${tabItems.map(([k,l])=>`<button class="tab ${state.adminTab===k?'active':''}" data-admin-tab="${k}">${l}</button>`).join('')}
     </div>
+    ${bannerPedido}
     ${banner}
     <div style="margin-top:16px;">
       ${state.adminTab==='inventario' && state.auth.role==='Administrador' ? inventoryView()
         : state.adminTab==='ventas' && state.auth.role==='Administrador' ? ventasView()
+        : state.adminTab==='uniformes' && state.auth.role==='Administrador' ? uniformesAdminView()
+        : state.adminTab==='listas' && state.auth.role==='Administrador' ? listasAdminView()
         : state.adminTab==='avisos' ? avisosView()
         : state.adminTab==='cortes' ? cortesView() : ordersView()}
     </div>
   </section>`;
 }
 
-function ventasView(){
-  const pagados = state.orders.filter(o => o.pagoConfirmado);
-  const totalIngresos = pagados.reduce((s,o) => s + (o.total||0), 0);
-  const sum = { papeleria:0, libros:0, uniformes:0 };
-  const porMetodo = { transferencia: 0, efectivo: 0 };
-  const porArticulo = {};
-  pagados.forEach(o => {
-    const t = orderTotals(o);
-    sum.papeleria += t.papeleria; sum.libros += t.libros; sum.uniformes += uniformesTotalOrden(o);
-    porMetodo[o.payment] = (porMetodo[o.payment]||0) + (o.total||0);
-    o.items.utiles.forEach(it => {
-      const k = it.descripcion;
-      porArticulo[k] = porArticulo[k] || { cant:0, monto:0 };
-      porArticulo[k].cant += it.qty; porArticulo[k].monto += it.qty*it.precio_unitario;
+/* ---------- panel de ventas ---------- */
+function ventasPedidos(){
+  const ahora = new Date();
+  const desde = { todo:null, mes:new Date(ahora.getFullYear(), ahora.getMonth(), 1), d30:new Date(ahora - 30*864e5), d7:new Date(ahora - 7*864e5) }[state.ventasPeriodo||'todo'];
+  return state.orders.filter(o => (state.ventasAlcance==='todos' || o.pagoConfirmado) && (!desde || new Date(o.createdAt) >= desde));
+}
+// tasa de compra por artículo de lista: de las listas pedidas donde aparece el artículo, en cuántas lo compraron.
+// Así un artículo que viene en las 6 listas (p. ej. papel américa) no "gana" solo por aparecer más veces.
+function tasaDeCompra(pedidos){
+  const porArt = {};
+  pedidos.forEach(o => {
+    const listas = {};   // una "lista pedida" = grado + alumno dentro del pedido
+    ((o.items && o.items.utiles) || []).forEach(it => {
+      const k = it.grade + '|' + (it.studentId||'');
+      (listas[k] = listas[k] || { grade: it.grade, compras: {} }).compras[normTexto(it.descripcion)] = (listas[k].compras[normTexto(it.descripcion)]||0) + it.qty;
     });
-    o.items.uniformes.forEach(u => {
-      const k = u.name + ' (talla ' + u.size + ')';
-      porArticulo[k] = porArticulo[k] || { cant:0, monto:0 };
-      porArticulo[k].cant += u.qty; porArticulo[k].monto += u.qty*u.price;
+    Object.values(listas).forEach(L => {
+      const g = GRADES[L.grade];
+      if(!g) return;
+      g.items.forEach(item => {
+        const k = normTexto(item.descripcion);
+        const a = porArt[k] = porArt[k] || { nombre: item.descripcion, seccion: item.seccion, listas:0, compradas:0, piezas:0, sugeridas:0, monto:0 };
+        a.listas++; a.sugeridas += Number(item.cantidad)||0;
+        const q = L.compras[k] || 0;
+        if(q > 0){ a.compradas++; a.piezas += q; a.monto += q * item.precio_unitario; }
+      });
     });
   });
-  const topArticulos = Object.entries(porArticulo).sort((a,b) => b[1].cant - a[1].cant).slice(0, 15);
+  return Object.values(porArt).map(a => Object.assign(a, { tasa: a.listas ? a.compradas / a.listas : 0 }));
+}
+function barrasH(filas, opts){
+  // filas: [{label, valor, texto, tip}]; barras horizontales de un solo color, ancladas a la izquierda
+  const max = opts.max || Math.max(1, ...filas.map(f => f.valor));
+  return `<div class="hbars">${filas.map(f => `
+    <div class="hbar-row" data-tip="${esc(f.tip || (f.label+': '+f.texto))}">
+      <div class="hbar-label">${esc(f.label)}</div>
+      <div class="hbar-track"><div class="hbar" style="width:${Math.max(0.5, f.valor/max*100).toFixed(1)}%"></div></div>
+      <div class="hbar-val">${esc(f.texto)}</div>
+    </div>`).join('')}</div>`;
+}
+function columnasTiempo(pedidos){
+  if(!pedidos.length) return '<p class="viz-empty">Sin pedidos en este período.</p>';
+  const porDia = {};
+  pedidos.forEach(o => { const d = (o.createdAt||'').slice(0,10); porDia[d] = (porDia[d]||0) + (o.total||0); });
+  const dias = Object.keys(porDia).sort();
+  // rellena los días sin ventas para que el tiempo no se "comprima"
+  const serie = [];
+  for(let d = new Date(dias[0]+'T12:00'); d <= new Date(dias[dias.length-1]+'T12:00'); d = new Date(+d + 864e5)){
+    const k = d.toISOString().slice(0,10); serie.push({ k, v: porDia[k]||0 });
+  }
+  const max = Math.max(1, ...serie.map(x => x.v));
+  const fmt = k => new Date(k+'T12:00').toLocaleDateString('es-MX', { day:'numeric', month:'short' });
+  return `<div class="cols" role="img" aria-label="Ingresos por día">
+    ${serie.map(x => `<div class="col-slot" data-tip="${esc(fmt(x.k)+': '+money(x.v))}"><div class="col" style="height:${(x.v/max*100).toFixed(1)}%"></div></div>`).join('')}
+  </div>
+  <div class="cols-axis"><span>${esc(fmt(serie[0].k))}</span><span>máx. ${money(max)} en un día</span><span>${esc(fmt(serie[serie.length-1].k))}</span></div>`;
+}
+function ventasView(){
+  const pedidos = ventasPedidos();
+  const ingresos = pedidos.reduce((s,o) => s + (o.total||0), 0);
+  const cat = { 'Papelería':0, 'Libros':0, 'Uniformes':0 };
+  const porMetodo = { transferencia:0, efectivo:0 };
+  const porPrenda = {}, porTalla = {};
+  let piezas = 0;
+  pedidos.forEach(o => {
+    const t = orderTotals(o);
+    cat['Papelería'] += t.papeleria; cat['Libros'] += t.libros; cat['Uniformes'] += uniformesTotalOrden(o);
+    porMetodo[o.payment] = (porMetodo[o.payment]||0) + (o.total||0);
+    ((o.items && o.items.utiles) || []).forEach(it => { piezas += it.qty; });
+    ((o.items && o.items.uniformes) || []).forEach(u => {
+      piezas += u.qty;
+      porPrenda[u.name] = (porPrenda[u.name]||0) + u.qty;
+      porTalla[u.size] = (porTalla[u.size]||0) + u.qty;
+    });
+  });
+  const totalCat = Object.values(cat).reduce((a,b)=>a+b,0) || 1;
+  const sec = state.ventasSeccion || 'todas';
+  const arts = tasaDeCompra(pedidos).filter(a => sec==='todas' || a.seccion===sec).sort((a,b) => b.tasa - a.tasa || b.listas - a.listas);
+  const artFila = a => ({ label: a.nombre, valor: a.tasa*100, texto: Math.round(a.tasa*100)+'%',
+    tip: `${a.nombre}: comprado en ${a.compradas} de ${a.listas} listas (${Math.round(a.tasa*100)}%) · ${a.piezas} de ${a.sugeridas} piezas sugeridas · ${money(a.monto)}` });
+  const kpi = (label, valor, nota) => `<div class="kpi"><div class="kpi-label">${label}</div><div class="kpi-valor">${valor}</div>${nota?`<div class="kpi-nota">${nota}</div>`:''}</div>`;
+  const sel = (id, actual, opciones) => `<select id="${id}">${opciones.map(([v,l]) => `<option value="${v}" ${actual===v?'selected':''}>${l}</option>`).join('')}</select>`;
 
   return `
-  <div class="pay-detail">
-    <h3 style="margin-top:0;">Resumen de ventas (pagos confirmados)</h3>
-    <div class="rline"><span>Pedidos pagados:</span><span><b>${pagados.length}</b> de ${state.orders.length} totales</span></div>
-    <div class="rline" style="font-size:1.1rem;"><span>Ingresos totales:</span><span><b>${money(totalIngresos)}</b></span></div>
-    <hr>
-    <div class="rline"><span>Papelería:</span><span>${money(sum.papeleria)}</span></div>
-    <div class="rline"><span>Libros:</span><span>${money(sum.libros)}</span></div>
-    <div class="rline"><span>Uniformes:</span><span>${money(sum.uniformes)}</span></div>
-    <hr>
-    <div class="rline"><span>Por transferencia:</span><span>${money(porMetodo.transferencia||0)}</span></div>
-    <div class="rline"><span>Por efectivo:</span><span>${money(porMetodo.efectivo||0)}</span></div>
+  <div class="viz-filtros">
+    ${sel('ventasPeriodo', state.ventasPeriodo||'todo', [['todo','Todo el ciclo'],['mes','Este mes'],['d30','Últimos 30 días'],['d7','Últimos 7 días']])}
+    ${sel('ventasAlcance', state.ventasAlcance||'pagados', [['pagados','Solo pagos confirmados'],['todos','Todos los pedidos']])}
+    <button class="btn btn-secondary btn-sm" id="ventasExcelBtn">⬇️ Descargar Excel</button>
   </div>
-  <div class="pay-detail">
-    <h3 style="margin-top:0;">Artículos más vendidos</h3>
-    ${topArticulos.length ? `<table class="cart-table"><thead><tr><th>Artículo</th><th class="num">Cantidad</th><th class="num">Monto</th></tr></thead><tbody>
-      ${topArticulos.map(([nombre,d]) => `<tr><td>${esc(nombre)}</td><td class="num">${d.cant}</td><td class="num">${money(d.monto)}</td></tr>`).join('')}
-    </tbody></table>` : '<p style="color:var(--ink-soft);">Aún no hay pedidos con pago confirmado.</p>'}
+  <div class="kpi-row">
+    ${kpi('Ingresos', money(ingresos), `Transferencia ${money(porMetodo.transferencia||0)} · Efectivo ${money(porMetodo.efectivo||0)}`)}
+    ${kpi('Pedidos', pedidos.length, state.ventasAlcance==='todos' ? '' : `de ${state.orders.length} en total`)}
+    ${kpi('Ticket promedio', money(pedidos.length ? Math.round(ingresos/pedidos.length) : 0))}
+    ${kpi('Piezas vendidas', piezas.toLocaleString('es-MX'))}
   </div>
-  <p style="font-size:0.78rem; color:var(--ink-soft);">Este resumen solo cuenta pedidos cuyo pago ya marcaste como confirmado, para que refleje dinero real recibido.</p>`;
+  <div class="viz-card"><h3>Ingresos por día</h3>${columnasTiempo(pedidos)}</div>
+  <div class="viz-card"><h3>Ingresos por categoría</h3>
+    ${barrasH(Object.entries(cat).map(([k,v]) => ({ label:k, valor:v, texto:`${money(v)} · ${Math.round(v/totalCat*100)}%` })), {})}</div>
+  <div class="viz-card">
+    <div style="display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; align-items:baseline;">
+      <h3>Qué tanto se compra cada artículo de la lista</h3>
+      ${sel('ventasSeccion', sec, [['todas','Todas las secciones'],['MATERIAL DIARIO','Material diario'],['PARA FORRAR','Para forrar'],['LIBROS','Libros']])}
+    </div>
+    <p class="viz-nota">De las listas pedidas donde viene el artículo, en qué porcentaje lo compraron. Un artículo que aparece en varias listas no sale arriba solo por eso. Pasa el cursor sobre una barra para ver el detalle.</p>
+    ${arts.length ? `
+      <h4 class="viz-sub">Lo que casi todos compran</h4>${barrasH(arts.slice(0,10).map(artFila), { max:100 })}
+      ${arts.length > 10 ? `<h4 class="viz-sub">Lo que más se quedan sin comprar</h4>${barrasH(arts.slice(-10).reverse().map(artFila), { max:100 })}` : ''}
+      <details style="margin-top:12px;"><summary style="cursor:pointer; font-weight:700;">Ver tabla completa (${arts.length} artículos)</summary>
+        <div style="overflow-x:auto;"><table class="cart-table"><thead><tr><th>Artículo</th><th class="num">Listas</th><th class="num">Lo compraron</th><th class="num">Tasa</th><th class="num">Piezas / sugeridas</th><th class="num">Monto</th></tr></thead><tbody>
+        ${arts.map(a => `<tr><td>${esc(a.nombre)}</td><td class="num">${a.listas}</td><td class="num">${a.compradas}</td><td class="num">${Math.round(a.tasa*100)}%</td><td class="num">${a.piezas} / ${a.sugeridas}</td><td class="num">${money(a.monto)}</td></tr>`).join('')}
+        </tbody></table></div></details>`
+      : '<p class="viz-empty">Aún no hay listas pedidas en este período.</p>'}
+  </div>
+  <div class="viz-grid">
+    <div class="viz-card"><h3>Uniformes: piezas por prenda</h3>
+      ${Object.keys(porPrenda).length ? barrasH(Object.entries(porPrenda).sort((a,b)=>b[1]-a[1]).map(([k,v]) => ({ label:k, valor:v, texto:v+' pzas' })), {}) : '<p class="viz-empty">Sin uniformes vendidos en este período.</p>'}</div>
+    <div class="viz-card"><h3>Uniformes: tallas más pedidas</h3>
+      ${Object.keys(porTalla).length ? barrasH(Object.entries(porTalla).sort((a,b)=>b[1]-a[1]).map(([k,v]) => ({ label:'Talla '+k, valor:v, texto:v+' pzas' })), {}) : '<p class="viz-empty">Sin uniformes vendidos en este período.</p>'}</div>
+  </div>
+  <p class="viz-nota">${state.ventasAlcance==='todos' ? 'Incluye pedidos con pago aún sin confirmar.' : 'Solo cuenta pedidos cuyo pago ya marcaste como confirmado, para que refleje dinero real recibido.'}</p>
+  <div id="vizTip" class="viz-tip" hidden></div>`;
 }
 
 function ordersView(){
@@ -1976,14 +2139,14 @@ function inventoryView(){
       html += `<div class="item-row">
         <div class="info"><div class="desc">${esc(it.descripcion)}</div><div class="qty">P. unitario ${money(it.precio_unitario)}</div></div>
         <div class="amt" style="${stock<5?'color:var(--red);':''}">
-          <input type="number" min="0" id="inv_${idSafe(key)}" data-inv-key="${key}" value="${stock}" style="width:64px;"> uds.
+          <input type="text" inputmode="numeric" id="inv_${idSafe(key)}" data-inv-key="${esc(key)}" value="${stock}" style="width:64px;"> uds.
         </div>
       </div>`;
     });
     html += `</div>`;
   });
   const uniRows = [];
-  UNIFORMS.forEach(u => SIZES.forEach(sz => { if(!filter || u.name.toLowerCase().includes(filter)) uniRows.push({u,sz}); }));
+  uniformesVisibles().forEach(u => u.tallas.forEach(sz => { if(!filter || u.name.toLowerCase().includes(filter)) uniRows.push({u,sz}); }));
   if(uniRows.length){
     html += `<div class="section-block"><div class="section-title"><span>Uniformes</span></div>`;
     uniRows.forEach(({u,sz}) => {
@@ -1992,13 +2155,123 @@ function inventoryView(){
       html += `<div class="item-row">
         <div class="info"><div class="desc">${esc(u.name)} · talla ${esc(sz)}</div><div class="qty">P. unitario ${money(u.price)}</div></div>
         <div class="amt" style="${stock<5?'color:var(--red);':''}">
-          <input type="number" min="0" id="inv_${idSafe(key)}" data-inv-key="${key}" value="${stock}" style="width:64px;"> uds.
+          <input type="text" inputmode="numeric" id="inv_${idSafe(key)}" data-inv-key="${esc(key)}" value="${stock}" style="width:64px;"> uds.
         </div>
       </div>`;
     });
     html += `</div>`;
   }
   return html;
+}
+
+/* ---------- editor de listas de útiles (solo Administrador) ---------- */
+const SECCIONES_LISTA = ['MATERIAL DIARIO','PARA FORRAR','LIBROS'];
+function normTexto(t){ return String(t||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,' ').trim(); }
+function seccionDe(t){ const n = normTexto(t); return n.includes('libro') ? 'LIBROS' : n.includes('forr') ? 'PARA FORRAR' : 'MATERIAL DIARIO'; }
+function abrirListaEdit(grade){
+  const g = GRADES[grade];
+  state.listaEdit = { grade, guardando:false, mensaje:'',
+    items: g ? g.items.map((it,i) => ({ seccion: it.seccion||'MATERIAL DIARIO', descripcion: it.descripcion, cantidad: it.cantidad, precio_unitario: it.precio_unitario, stock: stockDe(g.docId+'_'+i) })) : [] };
+}
+function listasAdminView(){
+  const grados = Object.keys(GRADES);
+  if(!state.listaEdit && grados.length) abrirListaEdit(grados[0]);
+  const L = state.listaEdit;
+  const selector = `<div class="field-row" style="flex-wrap:wrap; gap:10px; align-items:flex-end; margin-bottom:12px;">
+    <div class="field-col" style="min-width:200px;"><label>Grado</label>
+      <select id="listaGrado">${grados.map(g => `<option value="${esc(g)}" ${L && L.grade===g?'selected':''}>${esc(g)}</option>`).join('')}
+</select></div>
+  </div>`;
+  if(!L) return selector + '<p>No hay listas todavía.</p>';
+  const filas = L.items.map((it,i) => `<tr>
+      <td><select data-li-edit="${i}" data-campo="seccion">${SECCIONES_LISTA.map(sec => `<option ${it.seccion===sec?'selected':''}>${sec}</option>`).join('')}</select></td>
+      <td><input type="text" data-li-edit="${i}" data-campo="descripcion" value="${esc(it.descripcion)}" style="width:100%; min-width:200px;"></td>
+      <td><input type="text" inputmode="decimal" data-li-edit="${i}" data-campo="cantidad" value="${esc(String(it.cantidad))}" style="width:60px;"></td>
+      <td><input type="text" inputmode="decimal" data-li-edit="${i}" data-campo="precio_unitario" value="${esc(String(it.precio_unitario))}" style="width:80px;"></td>
+      <td><input type="text" inputmode="numeric" data-li-edit="${i}" data-campo="stock" value="${esc(String(it.stock))}" style="width:60px;"></td>
+      <td><button class="btn-ghost" data-li-quitar="${i}" title="Quitar">✖</button></td>
+    </tr>`).join('');
+  return selector + `
+    <p style="color:var(--ink-soft); margin-top:0;">Edita la lista de <b>${esc(L.grade)}</b> y dale <b>Guardar lista</b>. Para el siguiente ciclo puedes <b>descargar la lista en Excel</b>, cambiarla ahí y volver a <b>cargarla</b>. El Excel lleva las columnas: Sección, Descripción, Cantidad, Precio unitario y Existencias. Los artículos con 0 existencias aparecen como "No disponible" en la tienda.</p>
+    <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px;">
+      <button class="btn btn-secondary btn-sm" id="listaExcelBajarBtn">⬇️ Descargar Excel</button>
+      <label class="btn btn-secondary btn-sm" style="cursor:pointer;">⬆️ Cargar desde Excel<input type="file" id="listaExcelSubir" accept=".xlsx,.xls,.csv" style="display:none;"></label>
+    </div>
+    ${L.mensaje ? `<div class="note-box ${L.mensaje.startsWith('⚠')?'error':''}" style="margin-bottom:10px;">${esc(L.mensaje)}</div>` : ''}
+    <div style="overflow-x:auto;"><table class="cart-table">
+      <thead><tr><th>Sección</th><th>Descripción</th><th>Cant.</th><th>Precio</th><th>Exist.</th><th></th></tr></thead>
+      <tbody>${filas}</tbody>
+    </table></div>
+    <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:12px;">
+      <button class="btn btn-secondary btn-sm" id="listaAgregarBtn">＋ Agregar artículo</button>
+      <button class="btn btn-primary" id="listaGuardarBtn" ${L.guardando?'disabled':''}>${L.guardando?'Guardando…':'Guardar lista'}</button>
+      <button class="btn-ghost" id="listaDescartarBtn">Descartar cambios</button>
+    </div>`;
+}
+async function guardarLista(){
+  const L = state.listaEdit;
+  const items = L.items
+    .map(it => ({ seccion: SECCIONES_LISTA.includes(it.seccion) ? it.seccion : seccionDe(it.seccion), descripcion: String(it.descripcion||'').trim(),
+      cantidad: Number(String(it.cantidad).replace(',','.'))||0, precio_unitario: Number(String(it.precio_unitario).replace(/[$,\s]/g,''))||0,
+      stock: Math.max(0, parseInt(it.stock)||0) }))
+    .filter(it => it.descripcion);
+  if(!items.length){ L.mensaje = '⚠ La lista no tiene artículos.'; render(); return; }
+  if(items.some(it => !(it.precio_unitario > 0))){ L.mensaje = '⚠ Hay artículos sin precio. Revisa la columna Precio.'; render(); return; }
+  const docId = GRADES[L.grade] ? GRADES[L.grade].docId : slug(L.grade);
+  const viejos = GRADES[L.grade] ? GRADES[L.grade].items.length : 0;
+  const listaItems = items.map(({stock, ...it}) => Object.assign(it, { total: it.cantidad * it.precio_unitario }));
+  const total_libros = listaItems.filter(it => it.seccion==='LIBROS').reduce((a,it) => a + it.total, 0);
+  const total_paquete = listaItems.reduce((a,it) => a + it.total, 0);
+  L.guardando = true; render();
+  try{
+    // el inventario de útiles va por posición (docId_índice), así que se reescribe completo para esta lista
+    const batch = writeBatch(db);
+    batch.set(doc(db, 'listas', docId), { nombre: L.grade, items: listaItems, total_libros, total_paquete });
+    items.forEach((it, i) => batch.set(doc(db, 'inventario', docId+'_'+i), { tipo:'util', grado:L.grade, idx:i, descripcion:it.descripcion, precio_unitario:it.precio_unitario, stock:it.stock }));
+    for(let j = items.length; j < viejos; j++) batch.delete(doc(db, 'inventario', docId+'_'+j));
+    await batch.commit();
+    GRADES[L.grade] = { docId, items: listaItems, total_libros, total_paquete };
+    items.forEach((it, i) => { state.inventory[docId+'_'+i] = it.stock; });
+    for(let j = items.length; j < viejos; j++) delete state.inventory[docId+'_'+j];
+    abrirListaEdit(L.grade);
+    state.listaEdit.mensaje = `✓ Lista de ${L.grade} guardada (${items.length} artículos, paquete completo ${money(total_paquete)}).`;
+  }catch(err){
+    console.error(err);
+    L.guardando = false; L.mensaje = '⚠ No se pudo guardar la lista. Intenta de nuevo.';
+  }
+  render();
+}
+
+/* ---------- catálogo de uniformes (solo Administrador) ---------- */
+// los borradores se guardan en state.uniDraft al teclear SIN re-renderizar, para que un render
+// por un pedido nuevo (onSnapshot) no borre lo que se está escribiendo.
+function uniDraftDe(u){
+  return Object.assign({ name:u.name, price: u.price ?? '', tallas:(u.tallas||[]).join(', '), activo:u.activo !== false }, state.uniDraft[u.id]||{});
+}
+function uniformesAdminView(){
+  const filas = UNIFORMS.map(u => {
+    const d = uniDraftDe(u);
+    const id = esc(u.id);
+    return `<div class="section-block" style="display:grid; grid-template-columns:110px 1fr; gap:14px; align-items:start;">
+      <div>
+        ${u.foto ? `<img class="uni-foto" src="${esc(u.foto)}" alt="">` : `<div class="swatch" style="aspect-ratio:1/1;">👕</div>`}
+        <label class="btn btn-secondary btn-sm" style="display:block; text-align:center; cursor:pointer;">📷 Cambiar foto
+          <input type="file" accept="image/*" data-uni-foto="${id}" style="display:none;"></label>
+      </div>
+      <div>
+        <div class="field-row" style="flex-wrap:wrap; gap:10px;">
+          <div class="field-col" style="flex:2; min-width:180px;"><label>Nombre</label><input type="text" data-uni-edit="${id}" data-campo="name" value="${esc(d.name)}"></div>
+          <div class="field-col" style="flex:1; min-width:100px;"><label>Precio ($)</label><input type="text" inputmode="decimal" data-uni-edit="${id}" data-campo="price" value="${esc(String(d.price))}" placeholder="Por confirmar"></div>
+        </div>
+        <div class="field-col"><label>Tallas (separadas por coma)</label><input type="text" data-uni-edit="${id}" data-campo="tallas" value="${esc(d.tallas)}" placeholder="Ej. 6, 8, 10, 12, CH, M, G"></div>
+        <label style="display:flex; gap:6px; align-items:center; font-size:0.88rem; margin:6px 0;"><input type="checkbox" data-uni-edit="${id}" data-campo="activo" ${d.activo?'checked':''}> Se muestra en la tienda</label>
+        <button class="btn btn-primary btn-sm" data-uni-guardar="${id}" ${state.uniGuardando===u.id?'disabled':''}>${state.uniGuardando===u.id?'Guardando…':'Guardar'}</button>
+      </div>
+    </div>`;
+  }).join('');
+  return `<p style="color:var(--ink-soft); margin-top:0;">Aquí cambias nombre, precio, tallas y foto de cada prenda. Mientras una prenda no tenga precio, en la tienda dice "Precio por confirmar" y no se puede comprar. Las existencias de cada talla se ponen en <b>Inventario</b>.</p>
+    ${filas}
+    <button class="btn btn-secondary" id="uniNuevaBtn">＋ Agregar prenda</button>`;
 }
 
 /* ---------- avisos de existencias (uniformes agotados) ---------- */
@@ -2202,7 +2475,7 @@ function wireEvents(){
   const avisoGuardarBtn = document.getElementById('avisoGuardarBtn');
   if(avisoGuardarBtn) avisoGuardarBtn.addEventListener('click', async () => {
     const f = state.avisoForm;
-    const info = UNIFORMS.find(x => x.id === f.uniId);
+    const info = uniInfo(f.uniId);
     f.saving = true; render();
     try{
       await setDoc(doc(collection(db, 'avisos')), {
@@ -2356,6 +2629,7 @@ function wireEvents(){
     confirmBtn.textContent = 'Guardando pedido...';
     try{
       const order = await buildOrder();
+      avisarStaffPedidoNuevo(order);
       state.currentFolio = order.folio;
       setTab('confirmacion');
     }catch(err){
@@ -2423,8 +2697,12 @@ function wireEvents(){
   document.querySelectorAll('[data-admin-tab]').forEach(el => el.addEventListener('click', () => {
     state.adminTab = el.getAttribute('data-admin-tab'); state.adminOrderFolio = null; render();
   }));
-  document.querySelectorAll('[data-open-order]').forEach(el => el.addEventListener('click', () => {
-    state.adminOrderFolio = el.getAttribute('data-open-order'); render();
+  document.querySelectorAll('[data-open-order]').forEach(el => el.addEventListener('click', (e) => {
+    e.preventDefault();
+    const folio = el.getAttribute('data-open-order');
+    state.adminTab = 'pedidos'; state.adminOrderFolio = folio;
+    state.pedidosNuevos = (state.pedidosNuevos||[]).filter(f => f !== folio);
+    render();
   }));
   const closeOrderBtn = document.querySelector('[data-close-order]');
   if(closeOrderBtn) closeOrderBtn.addEventListener('click', () => { state.adminOrderFolio = null; render(); });
@@ -2475,6 +2753,141 @@ function wireEvents(){
     try{ await updateDoc(doc(db, 'pedidos', folio), { [`checklist.${key}`]: el.checked }); }
     catch(err){ console.error(err); alert('No se pudo guardar el checklist.'); el.checked = !el.checked; }
   }));
+
+  // panel de ventas: filtros, tooltip y exportar
+  [['ventasPeriodo','ventasPeriodo'],['ventasAlcance','ventasAlcance'],['ventasSeccion','ventasSeccion']].forEach(([id,campo]) => {
+    const el = document.getElementById(id);
+    if(el) el.addEventListener('change', () => { state[campo] = el.value; render(); });
+  });
+  const vizTip = document.getElementById('vizTip');
+  if(vizTip) document.querySelectorAll('[data-tip]').forEach(el => {
+    el.addEventListener('mousemove', (e) => {
+      vizTip.textContent = el.getAttribute('data-tip'); vizTip.hidden = false;
+      vizTip.style.left = Math.min(e.clientX + 14, window.innerWidth - vizTip.offsetWidth - 8) + 'px';
+      vizTip.style.top = (e.clientY + 14) + 'px';
+    });
+    el.addEventListener('mouseleave', () => { vizTip.hidden = true; });
+  });
+  const ventasExcelBtn = document.getElementById('ventasExcelBtn');
+  if(ventasExcelBtn) ventasExcelBtn.addEventListener('click', () => {
+    const pedidos = ventasPedidos();
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(tasaDeCompra(pedidos).sort((a,b)=>b.tasa-a.tasa).map(a => ({
+      'Artículo': a.nombre, 'Sección': a.seccion, 'Listas pedidas donde aparece': a.listas, 'Lo compraron': a.compradas,
+      'Tasa de compra (%)': Math.round(a.tasa*100), 'Piezas vendidas': a.piezas, 'Piezas sugeridas': a.sugeridas, 'Monto': a.monto }))), 'Artículos de lista');
+    const uni = {};
+    pedidos.forEach(o => ((o.items && o.items.uniformes) || []).forEach(u => { const k = u.name+'|'+u.size; uni[k] = uni[k] || { 'Prenda':u.name, 'Talla':u.size, 'Piezas':0, 'Monto':0 }; uni[k]['Piezas'] += u.qty; uni[k]['Monto'] += u.qty*u.price; }));
+    XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(Object.values(uni)), 'Uniformes');
+    XLSX.writeFile(wb, 'Ventas Liceo Alexander Dul.xlsx');
+  });
+
+  // editor de listas (admin)
+  const listaGrado = document.getElementById('listaGrado');
+  if(listaGrado) listaGrado.addEventListener('change', () => {
+    if(GRADES[listaGrado.value]){ abrirListaEdit(listaGrado.value); render(); }
+  });
+  document.querySelectorAll('[data-li-edit]').forEach(el => el.addEventListener(el.tagName==='SELECT' ? 'change' : 'input', () => {
+    state.listaEdit.items[+el.getAttribute('data-li-edit')][el.getAttribute('data-campo')] = el.value;
+  }));
+  document.querySelectorAll('[data-li-quitar]').forEach(el => el.addEventListener('click', () => {
+    state.listaEdit.items.splice(+el.getAttribute('data-li-quitar'), 1); render();
+  }));
+  const listaAgregarBtn = document.getElementById('listaAgregarBtn');
+  if(listaAgregarBtn) listaAgregarBtn.addEventListener('click', () => {
+    state.listaEdit.items.push({ seccion:'MATERIAL DIARIO', descripcion:'', cantidad:1, precio_unitario:'', stock:0 }); render();
+  });
+  const listaDescartarBtn = document.getElementById('listaDescartarBtn');
+  if(listaDescartarBtn) listaDescartarBtn.addEventListener('click', () => {
+    const g = state.listaEdit.grade;
+    if(GRADES[g]) abrirListaEdit(g); else state.listaEdit = null;
+    render();
+  });
+  const listaGuardarBtn = document.getElementById('listaGuardarBtn');
+  if(listaGuardarBtn) listaGuardarBtn.addEventListener('click', guardarLista);
+  const listaExcelBajarBtn = document.getElementById('listaExcelBajarBtn');
+  if(listaExcelBajarBtn) listaExcelBajarBtn.addEventListener('click', () => {
+    const L = state.listaEdit;
+    const filas = L.items.map(it => ({ 'Sección': it.seccion, 'Descripción': it.descripcion, 'Cantidad': Number(it.cantidad)||0, 'Precio unitario': Number(it.precio_unitario)||0, 'Existencias': parseInt(it.stock)||0 }));
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(filas), 'Lista');
+    XLSX.writeFile(wb, `Lista ${L.grade}.xlsx`);
+  });
+  const listaExcelSubir = document.getElementById('listaExcelSubir');
+  if(listaExcelSubir) listaExcelSubir.addEventListener('change', async () => {
+    const file = listaExcelSubir.files && listaExcelSubir.files[0];
+    if(!file) return;
+    const L = state.listaEdit;
+    try{
+      const wb = XLSX.read(await file.arrayBuffer());
+      const filas = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { defval:'' });
+      // las columnas se reconocen sin importar acentos o mayúsculas
+      const col = (fila, ...nombres) => { const k = Object.keys(fila).find(k => nombres.some(n => normTexto(k).startsWith(n))); return k ? fila[k] : ''; };
+      const items = filas.map(f => ({ seccion: seccionDe(col(f,'seccion')), descripcion: String(col(f,'descripcion','articulo','producto')).trim(),
+        cantidad: col(f,'cantidad','cant'), precio_unitario: col(f,'precio'), stock: col(f,'existencia','stock','inventario') || 0 })).filter(it => it.descripcion);
+      if(!items.length) throw new Error('vacio');
+      L.items = items;
+      L.mensaje = `Se cargaron ${items.length} artículos del Excel. Revísalos y dale "Guardar lista" para que se apliquen en la tienda.`;
+    }catch(err){
+      console.error(err);
+      L.mensaje = '⚠ No se pudo leer el Excel. Revisa que tenga las columnas Sección, Descripción, Cantidad y Precio unitario.';
+    }
+    render();
+  });
+
+  // catálogo de uniformes (admin)
+  document.querySelectorAll('[data-uni-edit]').forEach(el => {
+    const evento = el.type === 'checkbox' ? 'change' : 'input';
+    el.addEventListener(evento, () => {
+      const id = el.getAttribute('data-uni-edit'), campo = el.getAttribute('data-campo');
+      state.uniDraft[id] = Object.assign(state.uniDraft[id]||{}, { [campo]: el.type === 'checkbox' ? el.checked : el.value });
+    });
+  });
+  document.querySelectorAll('[data-uni-guardar]').forEach(el => el.addEventListener('click', async () => {
+    const id = el.getAttribute('data-uni-guardar');
+    const u = uniInfo(id);
+    const d = uniDraftDe(u);
+    const precio = String(d.price).trim() === '' ? null : Number(String(d.price).replace(/[$,\s]/g,''));
+    if(precio !== null && !(precio > 0)){ alert('El precio debe ser un número mayor a 0, o déjalo vacío si aún no está definido.'); return; }
+    const tallas = [...new Set(String(d.tallas).split(',').map(t => t.trim()).filter(Boolean))];
+    if(!tallas.length){ alert('Pon al menos una talla.'); return; }
+    if(!d.name.trim()){ alert('Pon el nombre de la prenda.'); return; }
+    const datos = { name: d.name.trim(), price: precio, tallas, activo: !!d.activo, foto: u.foto || '', orden: u.orden ?? 999 };
+    state.uniGuardando = id; render();
+    try{
+      await setDoc(doc(db, 'uniformes', id), datos, { merge: true });
+      Object.assign(u, datos);
+      delete state.uniDraft[id];
+    }catch(err){ console.error(err); alert('No se pudo guardar la prenda.'); }
+    state.uniGuardando = null; render();
+  }));
+  document.querySelectorAll('[data-uni-foto]').forEach(el => el.addEventListener('change', async () => {
+    const id = el.getAttribute('data-uni-foto');
+    const file = el.files && el.files[0];
+    if(!file) return;
+    if(file.size > 5*1024*1024){ alert('La foto pesa más de 5 MB. Usa una más ligera.'); return; }
+    state.uniGuardando = id; render();
+    try{
+      const sref = storageRef(storage, `productos/${id}-${Date.now()}.jpg`);
+      await uploadBytes(sref, file, { contentType: file.type || 'image/jpeg' });
+      const url = await getDownloadURL(sref);
+      await setDoc(doc(db, 'uniformes', id), { foto: url }, { merge: true });
+      uniInfo(id).foto = url;
+    }catch(err){ console.error(err); alert('No se pudo subir la foto.'); }
+    state.uniGuardando = null; render();
+  }));
+  const uniNuevaBtn = document.getElementById('uniNuevaBtn');
+  if(uniNuevaBtn) uniNuevaBtn.addEventListener('click', () => {
+    const nombre = (prompt('Nombre de la prenda nueva:') || '').trim();
+    if(!nombre) return;
+    let id = slug(nombre) || ('prenda-' + Date.now());
+    if(UNIFORMS.some(u => u.id === id)) id += '-' + Date.now().toString(36);
+    UNIFORMS.push(normalizarUniforme({ id, name: nombre, activo: false }, UNIFORMS.length));
+    state.uniDraft[id] = { activo: true };
+    render();
+  });
+
+  const pedidosNuevosOkBtn = document.getElementById('pedidosNuevosOkBtn');
+  if(pedidosNuevosOkBtn) pedidosNuevosOkBtn.addEventListener('click', () => { state.pedidosNuevos = []; render(); });
 
   // avisos de existencias (panel)
   document.querySelectorAll('[data-aviso-hecho]').forEach(el => el.addEventListener('click', async () => {
@@ -2651,7 +3064,7 @@ async function boot(){
   const appEl = document.getElementById('app');
   appEl.innerHTML = `<div style="display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:'Nunito',sans-serif;color:#5b6785;">Cargando la tienda…</div>`;
   try{
-    await Promise.all([loadListas(), loadInventario()]);
+    await Promise.all([loadListas(), loadInventario(), loadUniformes()]);
   }catch(err){
     console.error(err);
     appEl.innerHTML = `<div style="padding:40px;text-align:center;color:#b8433a;font-family:'Nunito',sans-serif;">No se pudo conectar con la base de datos. Revisa tu conexión a internet y recarga la página.</div>`;

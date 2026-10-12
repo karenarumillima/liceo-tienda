@@ -13,6 +13,13 @@ service firebase.storage {
                     && request.resource.contentType.matches('image/.*');
     }
 
+    match /productos/{fileName} {
+      allow read: if true;
+      allow write: if isStaff()
+                    && request.resource.size < 5 * 1024 * 1024
+                    && request.resource.contentType.matches('image/.*');
+    }
+
     match /firmas/{folio}/{fileName} {
       allow read: if true;
       allow write: if isStaff();
