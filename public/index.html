@@ -222,6 +222,13 @@
   .lightbox-inner img { display: block; width: 100%; max-height: 72vh; object-fit: contain; }
   .lightbox-pie { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 8px; color: #22355F; font-weight: 700; font-size: 0.9rem; text-align: center; }
   .lightbox-cerrar { position: absolute; top: 8px; right: 8px; width: 34px; height: 34px; border-radius: 50%; border: none; background: rgba(0,0,0,0.6); color: #fff; font-size: 1rem; cursor: pointer; }
+  .mapa-label { display:block; font-weight:700; font-size:0.85rem; margin-bottom:4px; }
+  .mapa-buscador { margin-bottom:8px; }
+  .mapa-gps { margin-bottom:8px; }
+  .mapa-box { position:relative; height:340px; border-radius: var(--radius); overflow:hidden; border:1.5px solid var(--border); }
+  .mapa { width:100%; height:100%; }
+  .mapa-pin { position:absolute; left:50%; top:50%; transform:translate(-50%, -100%); font-size:2.4rem; line-height:1; pointer-events:none; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.35)); }
+  .mapa-ayuda { font-size:0.8rem; color: var(--ink-soft); margin-top:6px; }
   .uni-sin-foto { display: flex; align-items: center; justify-content: center; font-size: 3rem; }
   .note-box { background: var(--green-tint); color: var(--green); border-radius: 4px; padding: 12px 14px; font-size: 0.88rem; font-weight: 700; }
   .note-box.error { background: var(--red-tint); color: var(--red); }
@@ -410,8 +417,17 @@ function normalizarUniforme(u, i){
 function uniformesVisibles(){ return UNIFORMS.filter(u => u.activo !== false); }
 function uniInfo(id){ return UNIFORMS.find(u => u.id === id) || { id, name:'Prenda', price:0, tallas:[], foto:'' }; }
 
-const DELIVERY_BASE = 40;
-const DELIVERY_PER_KM = 8;
+// Envío a domicilio: tarifa por zonas según los km POR CALLES desde el local (sin límite de distancia)
+const ZONAS_ENVIO = [
+  { hastaKm: 3,        costo: 50 },
+  { hastaKm: 7,        costo: 90 },
+  { hastaKm: 12,       costo: 130 },
+  { hastaKm: 20,       costo: 180 },
+  { hastaKm: Infinity, costo: 250 },
+];
+// Llave de Google Maps (Maps JavaScript API + Places API (New) + Routes API), restringida al dominio de la tienda.
+// Mientras diga 'PENDIENTE' se usa el cálculo básico (OpenStreetMap, línea recta x1.3) sin mapa.
+const GOOGLE_MAPS_KEY = 'PENDIENTE';
 const STORE_HOURS_TEXT = 'Lunes a Viernes, 8:00 a 15:00 hrs.';
 const STAGES = [
   { key:'recibido', label:'Pedido recibido' },
@@ -454,7 +470,9 @@ async function enviarCorreoEstado(order, mensaje){
 // aviso al personal de que entró un pedido nuevo
 function avisarStaffPedidoNuevo(order){
   if(STAFF_NOTIFY_EMAIL === 'PENDIENTE') return;
-  const entrega = order.fulfillment === 'delivery' ? `envío a domicilio (${order.direccion})` : 'recoger en el local';
+  const entrega = order.fulfillment === 'delivery'
+    ? `envío a domicilio (${order.direccion}${order.referencias ? '; ref.: '+order.referencias : ''})${order.destino ? ' — mapa: https://www.google.com/maps/search/?api=1&query='+order.destino.lat.toFixed(6)+','+order.destino.lng.toFixed(6) : ''}`
+    : 'recoger en el local';
   const pago = order.payment === 'transferencia' ? 'transferencia (revisar comprobante)' : 'efectivo';
   const mensaje = `Entró el pedido ${order.folio} por ${money(order.total)}. Alumno(s): ${alumnosLabel(order)}. Entrega: ${entrega}. Pago: ${pago}. Tel. ${order.cliente.telefono}. Revísalo en el panel de personal.`;
   enviarCorreo(STAFF_NOTIFY_EMAIL, STAFF_NOTIFY_NAME, order.folio, mensaje, `Nuevo pedido ${order.folio} - ${money(order.total)}`);
@@ -494,7 +512,6 @@ let state = {
   kmAuto: null,
   geoStatus: 'idle',
   geoMessage: '',
-  storeCoords: null,
   payment: null,               // 'transferencia' | 'efectivo'
   comprobante: null,
   comprobanteFile: null,
@@ -511,6 +528,9 @@ let state = {
   cortesDesde: '',
   cortesHasta: '',
   track: { mode:'folio', folio:'', tel:'', nombres:'', apPaterno:'', apMaterno:'', loading:false, error:'', order:null },
+  destino: null,               // { lat, lng } del pin que el papá dejó en su puerta (modo Google Maps)
+  referencias: '',             // referencias para el repartidor
+  rutaMin: null,               // minutos aproximados en coche
   uniSel: {},
   uniFotoIdx: {},              // { [uniformeId]: índice de la foto que se ve en la tarjeta }
   lightbox: null,              // { uniId, idx } — foto de uniforme en grande                  // { [uniformeId]: talla elegida } — para que la talla no se reinicie en cada render
@@ -596,7 +616,7 @@ function deliveryKm(){
 }
 
 const STORE_ADDRESS = 'Azcapotzalco 5, Merced Gómez, Álvaro Obregón, 01600 Ciudad de México, CDMX';
-const STORE_FALLBACK = { lat: 19.3590, lng: -99.1880 };   // respaldo aproximado (colonia Merced Gómez)
+const STORE_COORDS = { lat: 19.36574, lng: -99.19990 };    // calle Azcapotzalco, Merced Gómez (verificar el punto exacto del local)
 const ROAD_FACTOR = 1.3;                                   // la distancia en línea recta se ajusta x1.3 para aproximar calles reales
 function haversineKm(a, b){
   const R = 6371, toRad = d => d*Math.PI/180;
@@ -617,17 +637,12 @@ async function calcularDistancia(){
   if(dir.length < 8) return;
   state.geoStatus = 'loading'; state.geoMessage = ''; render();
   try{
-    if(!state.storeCoords){
-      let c = null;
-      try{ c = await geocodeAddress(STORE_ADDRESS); }catch(e){ console.warn('No se pudo ubicar el local, usando respaldo', e); }
-      state.storeCoords = c || STORE_FALLBACK;
-    }
     const dest = await geocodeAddress(dir);
     if(!dest){
       state.geoStatus = 'error'; state.kmAuto = null;
       state.geoMessage = 'No pudimos ubicar esa dirección. Agrega colonia, alcaldía/municipio o código postal, y vuelve a intentar.';
     } else {
-      state.kmAuto = Math.round(haversineKm(state.storeCoords, dest) * ROAD_FACTOR * 10) / 10;
+      state.kmAuto = Math.round(haversineKm(STORE_COORDS, dest) * ROAD_FACTOR * 10) / 10;
       state.geoStatus = 'ok'; state.geoMessage = '';
     }
   }catch(e){
@@ -637,11 +652,147 @@ async function calcularDistancia(){
   }
   render();
 }
+function zonaEnvio(km){ return ZONAS_ENVIO.find(z => km <= z.hastaKm); }
 function deliveryFee(){
   if(state.fulfillment !== 'delivery') return 0;
   const km = deliveryKm();
   if(km === null) return null;
-  return Math.round(DELIVERY_BASE + km * DELIVERY_PER_KM);
+  return zonaEnvio(km).costo;
+}
+function tarifasEnvioTexto(){
+  let desde = 0;
+  return ZONAS_ENVIO.map(z => {
+    const t = z.hastaKm === Infinity ? `más de ${desde} km ${money(z.costo)}` : `${desde ? desde+'–' : 'hasta '}${z.hastaKm} km ${money(z.costo)}`;
+    desde = z.hastaKm; return t;
+  }).join(' · ');
+}
+// ligas para que el repartidor navegue al punto exacto que marcó el papá
+function ligasNavegacion(o){
+  if(!o.destino) return '';
+  const lat = Number(o.destino.lat), lng = Number(o.destino.lng);
+  if(!isFinite(lat) || !isFinite(lng)) return '';
+  const ll = lat.toFixed(6) + ',' + lng.toFixed(6);
+  return `<div style="display:flex; gap:8px; flex-wrap:wrap; margin:6px 0;">
+    <a class="btn btn-secondary btn-sm" target="_blank" rel="noopener" style="text-decoration:none;" href="https://www.google.com/maps/dir/?api=1&destination=${ll}">🗺️ Abrir en Google Maps</a>
+    <a class="btn btn-secondary btn-sm" target="_blank" rel="noopener" style="text-decoration:none;" href="https://waze.com/ul?ll=${ll}&navigate=yes">🚗 Abrir en Waze</a>
+  </div>`;
+}
+
+/* ---------- mapa de Google para envío a domicilio ---------- */
+// El mapa vive en un nodo que se crea UNA vez (mapaUI) y que después de cada render() se vuelve a
+// colocar en #mapaSlot: así el re-render de toda la página no destruye el mapa ni el buscador.
+let gmPromesa = null, gmFallo = false;
+let mapaUI = null, gMapa = null, gRuta = null, rutaTimer = null, ultimoPunto = null;
+function usarGoogleMaps(){ return GOOGLE_MAPS_KEY !== 'PENDIENTE' && !gmFallo; }
+window.gm_authFailure = () => { gmFallo = true; console.error('Google Maps rechazó la llave (revisa restricciones y APIs habilitadas).'); render(); };
+function cargarGoogleMaps(){
+  if(gmPromesa) return gmPromesa;
+  gmPromesa = new Promise((resolve, reject) => {
+    window.__liceoMapsListo = resolve;
+    const sc = document.createElement('script');
+    sc.src = `https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(GOOGLE_MAPS_KEY)}&v=weekly&language=es&region=MX&loading=async&callback=__liceoMapsListo`;
+    sc.async = true; sc.onerror = () => reject(new Error('No cargó Google Maps'));
+    document.head.appendChild(sc);
+  });
+  return gmPromesa;
+}
+function crearMapaUI(){
+  mapaUI = document.createElement('div');
+  mapaUI.className = 'mapa-ui';
+  mapaUI.innerHTML = `
+    <label class="mapa-label">Busca tu dirección</label>
+    <div class="mapa-buscador"></div>
+    <button type="button" class="btn btn-secondary btn-sm mapa-gps">📍 Usar mi ubicación actual</button>
+    <div class="mapa-box"><div class="mapa"></div><div class="mapa-pin" aria-hidden="true">📍</div></div>
+    <div class="mapa-ayuda">Mueve el mapa hasta que el pin quede justo en tu puerta. El costo se calcula con la ruta en coche desde el local.</div>`;
+  (async () => {
+    try{
+      await cargarGoogleMaps();
+      const { Map, Polyline } = await google.maps.importLibrary('maps');
+      await google.maps.importLibrary('geometry');
+      const { PlaceAutocompleteElement } = await google.maps.importLibrary('places');
+      const inicio = state.destino || STORE_COORDS;
+      ultimoPunto = inicio;
+      gMapa = new Map(mapaUI.querySelector('.mapa'), { center: inicio, zoom: state.destino ? 17 : 14,
+        disableDefaultUI: true, zoomControl: true, gestureHandling: 'greedy', clickableIcons: false });
+      gRuta = new Polyline({ map: gMapa, strokeColor: '#22355F', strokeOpacity: 0.85, strokeWeight: 4 });
+      const pac = new PlaceAutocompleteElement({ includedRegionCodes: ['mx'], locationBias: { center: STORE_COORDS, radius: 30000 } });
+      pac.style.width = '100%';
+      mapaUI.querySelector('.mapa-buscador').appendChild(pac);
+      const alElegir = async (ev) => {
+        const place = ev.placePrediction ? ev.placePrediction.toPlace() : ev.place;
+        if(!place) return;
+        await place.fetchFields({ fields: ['formattedAddress', 'location'] });
+        if(place.formattedAddress) state.direccion = place.formattedAddress;
+        if(place.location){ gMapa.setCenter(place.location); gMapa.setZoom(18); }
+        render();   // el evento 'idle' del mapa calcula la ruta
+      };
+      pac.addEventListener('gmp-select', alElegir);
+      pac.addEventListener('gmp-placeselect', alElegir);   // nombre anterior del evento
+      gMapa.addListener('idle', () => {
+        const c = gMapa.getCenter(); const pnt = { lat: c.lat(), lng: c.lng() };
+        if(ultimoPunto && haversineKm(ultimoPunto, pnt) < 0.02) return;   // menos de 20 m: no recalcula
+        ultimoPunto = pnt;
+        state.destino = pnt;
+        clearTimeout(rutaTimer); rutaTimer = setTimeout(calcularRuta, 500);
+      });
+      mapaUI.querySelector('.mapa-gps').addEventListener('click', () => {
+        if(!navigator.geolocation){ alert('Tu navegador no permite usar la ubicación.'); return; }
+        navigator.geolocation.getCurrentPosition(
+          (pos) => { gMapa.setCenter({ lat: pos.coords.latitude, lng: pos.coords.longitude }); gMapa.setZoom(18); },
+          () => alert('No pudimos obtener tu ubicación. Revisa que hayas dado permiso, o busca tu dirección.'),
+          { enableHighAccuracy: true, timeout: 10000 });
+      });
+    }catch(err){
+      console.error(err);
+      gmFallo = true; render();   // sin Google Maps: vuelve al cálculo básico
+    }
+  })();
+}
+function montarMapa(){
+  const slot = document.getElementById('mapaSlot');
+  if(!slot) return;
+  if(!mapaUI) crearMapaUI();
+  slot.appendChild(mapaUI);
+}
+async function calcularRuta(){
+  const d = state.destino;
+  if(!d) return;
+  state.geoStatus = 'loading'; state.geoMessage = ''; render();
+  try{
+    const res = await fetch('https://routes.googleapis.com/directions/v2:computeRoutes', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Goog-Api-Key': GOOGLE_MAPS_KEY,
+        'X-Goog-FieldMask': 'routes.distanceMeters,routes.duration,routes.polyline.encodedPolyline' },
+      body: JSON.stringify({
+        origin: { location: { latLng: { latitude: STORE_COORDS.lat, longitude: STORE_COORDS.lng } } },
+        destination: { location: { latLng: { latitude: d.lat, longitude: d.lng } } },
+        travelMode: 'DRIVE', routingPreference: 'TRAFFIC_UNAWARE', languageCode: 'es-MX', units: 'METRIC' }),
+    });
+    if(!res.ok) throw new Error('routes-' + res.status);
+    const data = await res.json();
+    if(state.destino !== d) return;   // el papá movió el pin mientras se calculaba
+    const r = data.routes && data.routes[0];
+    if(!r){
+      state.kmAuto = null; state.geoStatus = 'error';
+      state.geoMessage = 'No encontramos una ruta en coche hasta ese punto. Mueve el pin a una calle cercana.';
+      gRuta.setPath([]);
+    } else {
+      state.kmAuto = Math.round(r.distanceMeters / 100) / 10;
+      state.rutaMin = Math.round(parseInt(r.duration) / 60);
+      gRuta.setPath(google.maps.geometry.encoding.decodePath(r.polyline.encodedPolyline));
+      state.geoStatus = 'ok';
+    }
+  }catch(err){
+    console.error(err);
+    if(state.destino !== d) return;
+    // si falla la ruta, se cobra con la distancia aproximada para no frenar el pedido
+    state.kmAuto = Math.round(haversineKm(STORE_COORDS, d) * ROAD_FACTOR * 10) / 10;
+    state.rutaMin = null; state.geoStatus = 'ok';
+    state.geoMessage = 'No pudimos trazar la ruta; el envío se calculó con la distancia aproximada.';
+    gRuta.setPath([]);
+  }
+  render();
 }
 function grandTotal(){
   const fee = deliveryFee();
@@ -766,6 +917,9 @@ async function buildOrder(){
     },
     fulfillment: state.fulfillment,
     direccion: state.fulfillment==='delivery' ? state.direccion.trim() : '',
+    referencias: state.fulfillment==='delivery' ? (state.referencias||'').trim() : '',
+    destino: state.fulfillment==='delivery' && state.destino ? { lat: state.destino.lat, lng: state.destino.lng } : null,
+    rutaMin: state.fulfillment==='delivery' ? state.rutaMin : null,
     deliveryFee: fee,
     deliveryKm: deliveryKm(),
     payment: state.payment,
@@ -842,6 +996,7 @@ function render(){
     app.innerHTML = topbar() + tabs() + `<main>${viewFor(state.activeTab)}</main>` + disclaimer() + asignacionModalHtml() + lightboxHtml();
   }
   wireEvents();
+  montarMapa();
   initSignaturePad();
   if(document.getElementById('scanVideo')) startScanner(); else stopScanner();
 
@@ -1537,7 +1692,30 @@ function deliveryView(){
       </div>
     ` : ''}
 
-    ${state.fulfillment==='delivery' ? `
+    ${state.fulfillment==='delivery' && usarGoogleMaps() ? `
+      <div class="map-wrap">
+        <div id="mapaSlot"></div>
+        <div class="field-col" style="margin-top:12px;">
+          <label>Calle, número, colonia y código postal *</label>
+          <textarea id="direccionInput" rows="2" placeholder="Se llena al elegir tu dirección en el buscador; corrígela si hace falta." style="font-family:inherit; padding:9px 10px; resize:vertical;">${esc(state.direccion||'')}</textarea>
+        </div>
+        <div class="field-col">
+          <label>Referencias para el repartidor</label>
+          <textarea id="referenciasInput" rows="2" placeholder="Número interior, entre qué calles, color de portón…" style="font-family:inherit; padding:9px 10px; resize:vertical;">${esc(state.referencias||'')}</textarea>
+        </div>
+        ${state.geoMessage ? `<div class="note-box ${state.geoStatus==='error'?'error':'neutral'}" style="margin-top:10px;">${esc(state.geoMessage)}</div>` : ''}
+        <div class="fee-box">
+          <div class="km">${state.geoStatus==='loading' ? 'Calculando la ruta…' : km !== null ? `Distancia por calles: ${km.toFixed(1)} km${state.rutaMin ? ' (~'+state.rutaMin+' min)' : ''}` : 'Mueve el pin a tu puerta para calcular el envío'}</div>
+          <div class="fee">${fee !== null && state.geoStatus!=='loading' ? 'Envío: ' + money(fee) : ''}</div>
+        </div>
+        <div style="font-size:0.78rem; color:var(--ink-soft); margin-top:6px;">Tarifas: ${esc(tarifasEnvioTexto())}</div>
+        <div class="note-box neutral" style="margin-top:14px;">
+          Fecha estimada de entrega: ${fmtDate(computeEstimatedReady())}. Te avisaremos por correo conforme avance tu pedido; el repartidor llegará al punto que marcaste en el mapa.
+        </div>
+      </div>
+    ` : ''}
+
+    ${state.fulfillment==='delivery' && !usarGoogleMaps() ? `
       <div class="map-wrap">
         <div class="field-col">
           <label>Dirección completa de entrega *</label>
@@ -1549,6 +1727,7 @@ function deliveryView(){
           <div class="km">${km !== null ? 'Distancia: ' + km.toFixed(1) + ' km' : 'Calcula la distancia con tu dirección'}</div>
           <div class="fee">${fee !== null ? 'Envío: ' + money(fee) : ''}</div>
         </div>
+        <div style="font-size:0.78rem; color:var(--ink-soft); margin-top:6px;">Tarifas: ${esc(tarifasEnvioTexto())}</div>
         <div class="note-box neutral" style="margin-top:14px;">
           Fecha estimada de entrega: ${fmtDate(computeEstimatedReady())}. Te avisaremos por mensaje conforme avance tu pedido; el repartidor llegará a la dirección que escribiste.
         </div>
@@ -1564,7 +1743,8 @@ function deliveryView(){
 
 function canContinueFromDelivery(){
   if(state.fulfillment === 'pickup') return true;
-  if(state.fulfillment === 'delivery') return deliveryFee() !== null && state.direccion.trim().length > 8;
+  if(state.fulfillment === 'delivery') return deliveryFee() !== null && state.direccion.trim().length > 8
+    && state.geoStatus !== 'loading' && (!usarGoogleMaps() || !!state.destino);
   return false;
 }
 
@@ -1650,6 +1830,7 @@ function confirmationView(){
       <hr>
       ${order.fulfillment==='delivery'
         ? `<div class="rline"><span>Entrega a:</span><span>${esc(order.direccion||'')}</span></div>
+           ${order.referencias ? `<div class="rline"><span>Referencias:</span><span>${esc(order.referencias)}</span></div>` : ''}
            <div class="rline"><span>Fecha estimada:</span><span>${fmtDate(order.estimatedReady)}</span></div>`
         : `<div class="rline"><span>Entrega:</span><span>Recoger en el local</span></div>
            <div class="rline"><span>Horario de atención:</span><span>${STORE_HOURS_TEXT}</span></div>
@@ -2137,7 +2318,9 @@ function orderDetailView(order){
     <div class="rline" style="font-weight:800;"><span>Total:</span><span>${money(order.total)}</span></div>
     <hr>
     <div class="rline"><span>Entrega:</span><span>${order.fulfillment==='delivery' ? 'Domicilio: '+esc(order.direccion||'') : 'Recoger en el local'}</span></div>
-    ${order.fulfillment==='delivery' ? `<div class="rline"><span>Distancia:</span><span>${order.deliveryKm!=null ? order.deliveryKm.toFixed(1)+' km' : ''}</span></div>` : ''}
+    ${order.fulfillment==='delivery' && order.referencias ? `<div class="rline"><span>Referencias:</span><span>${esc(order.referencias)}</span></div>` : ''}
+    ${order.fulfillment==='delivery' ? `<div class="rline"><span>Distancia:</span><span>${order.deliveryKm!=null ? order.deliveryKm.toFixed(1)+' km' : ''}${order.rutaMin ? ' (~'+order.rutaMin+' min)' : ''}</span></div>` : ''}
+    ${order.fulfillment==='delivery' ? ligasNavegacion(order) : ''}
     <div class="rline"><span>Pago:</span><span>${payBadge(order)}</span></div>
     <div style="margin:6px 0 4px;"><button class="btn btn-secondary btn-sm" data-pago="${esc(order.folio)}">${order.pagoConfirmado ? '↩ Marcar como NO pagado' : '✓ Confirmar pago recibido'}</button></div>
     ${order.payment==='efectivo' ? `<div class="note-box error" style="margin-top:8px;">Recuerda pedir el recibo con QR antes de entregar.</div>` : ''}
@@ -2581,9 +2764,12 @@ function wireEvents(){
   const direccionInput = document.getElementById('direccionInput');
   if(direccionInput) direccionInput.addEventListener('input', () => {
     state.direccion = direccionInput.value;
-    state.kmAuto = null; state.geoStatus = 'idle'; state.geoMessage = '';
+    // con mapa, el costo depende del pin, no del texto; sin mapa, el texto es lo que se ubica
+    if(!usarGoogleMaps()){ state.kmAuto = null; state.geoStatus = 'idle'; state.geoMessage = ''; }
     render();
   });
+  const referenciasInput = document.getElementById('referenciasInput');
+  if(referenciasInput) referenciasInput.addEventListener('input', () => { state.referencias = referenciasInput.value; });
   const geoBtn = document.getElementById('geoBtn');
   if(geoBtn) geoBtn.addEventListener('click', () => { calcularDistancia(); });
 
@@ -2721,6 +2907,8 @@ function wireEvents(){
     state.comprobante = null; state.comprobanteFile = null; state.currentFolio = null;
     state.cliente = { telefono:'', correo:'' };
     state.direccion = ''; state.kmAuto = null; state.geoStatus = 'idle'; state.geoMessage = '';
+    state.destino = null; state.referencias = ''; state.rutaMin = null;
+    mapaUI = null; gMapa = null; gRuta = null; ultimoPunto = null;   // el siguiente pedido arranca con mapa nuevo
     setTab('inicio');
   });
 
