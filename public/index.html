@@ -548,7 +548,9 @@ let state = {
   pedidosNuevos: [],           // (admin) folios que llegaron con el panel abierto, para el letrero
   uniDraft: {},                // (admin) cambios sin guardar del catálogo de uniformes, por id
   uniGuardando: null,          // id de la prenda que se está guardando
-  listaEdit: null,             // (admin) { grade, items:[{seccion,descripcion,cantidad,precio_unitario,stock}], guardando, mensaje }
+  listaEdit: null,
+  unifDraft: {},               // (admin) existencias reales escritas en "unificar inventario", por clave de artículo
+  unificando: false,             // (admin) { grade, items:[{seccion,descripcion,cantidad,precio_unitario,stock}], guardando, mensaje }
 };
 
 /* ================= UTILIDADES ================= */
@@ -712,8 +714,29 @@ function uniInfo(id){ return UNIFORMS.find(u => u.id === id) || { id, name:'Pren
 // existencias: un artículo que no está dado de alta en inventario cuenta como 0 (igual que en el panel)
 function stockDe(invKey){ return state.inventory[invKey] ?? 0; }
 
-// clave de inventario: útiles = {docId de la lista}_{posición}; uniformes = {id}_{talla}
-function invKeyUtil(grade, i){ return GRADES[grade].docId + '_' + i; }
+// Clave de inventario. Uniformes: {id}_{talla}. Útiles: una sola existencia por ARTÍCULO aunque venga en
+// varias listas (el cuaderno de 1° y el de 3° son el mismo): util_{descripción normalizada}.
+// Antes del "unificar inventario" se usaba {docId de la lista}_{posición}; mientras no se unifique, se sigue usando.
+const PALABRAS_VACIAS = new Set(['de','del','la','el','los','las','tipo','y','con','para','en','a']);
+function claveArticulo(descripcion){
+  const toks = normTexto(descripcion).split(' ').filter(w => w && !PALABRAS_VACIAS.has(w))
+    .map(w => w.length > 3 && w.endsWith('s') && !/\d/.test(w) ? w.slice(0, -1) : w);   // "tijeras" = "tijera"
+  return 'util_' + toks.join('_').slice(0, 120);
+}
+function inventarioUnificado(){ return Object.keys(state.inventory).some(k => k.startsWith('util_')); }
+function invKeyPosicional(grade, i){ return GRADES[grade].docId + '_' + i; }
+function invKeyUtil(grade, i){ return inventarioUnificado() ? claveArticulo(GRADES[grade].items[i].descripcion) : invKeyPosicional(grade, i); }
+// todos los artículos de las listas agrupados por clave: en qué grados aparecen y su existencia anterior por grado
+function articulosUtiles(){
+  const arts = {};
+  Object.keys(GRADES).forEach(g => GRADES[g].items.forEach((it, i) => {
+    const k = claveArticulo(it.descripcion);
+    const a = arts[k] = arts[k] || { key: k, descripcion: it.descripcion, seccion: it.seccion || 'MATERIAL DIARIO', precio: it.precio_unitario, grados: [], antes: [] };
+    if(!a.grados.includes(g)) a.grados.push(g);
+    a.antes.push({ grado: g, stock: stockDe(invKeyPosicional(g, i)) });
+  }));
+  return Object.values(arts).sort((a, b) => SECCIONES_LISTA.indexOf(a.seccion) - SECCIONES_LISTA.indexOf(b.seccion) || a.descripcion.localeCompare(b.descripcion, 'es'));
+}
 
 function utilDisponible(grade, i){ return stockDe(invKeyUtil(grade, i)) > 0; }
 
@@ -2760,41 +2783,61 @@ function exportCortesExcel(){
 
 function inventoryView(){
   const filter = (state.adminInvFilter||'').toLowerCase();
+  const fila = (key, titulo, nota) => {
+    const stock = state.inventory[key] ?? 0;
+    return `<div class="item-row">
+      <div class="info"><div class="desc">${titulo}</div><div class="qty">${nota}</div></div>
+      <div class="amt" style="${stock<5?'color:var(--red);':''}">
+        <input type="text" inputmode="numeric" id="inv_${idSafe(key)}" data-inv-key="${esc(key)}" value="${stock}" style="width:64px;"> uds.
+      </div>
+    </div>`;
+  };
   let html = `<div class="field-col" style="max-width:320px;"><label>Buscar artículo</label><input type="text" id="invFilter" placeholder="Ej. cuaderno, tenis..." value="${esc(state.adminInvFilter||'')}"></div>`;
-  Object.keys(GRADES).forEach(g => {
-    const rows = GRADES[g].items.map((it,i)=>({it,i})).filter(({it}) => !filter || it.descripcion.toLowerCase().includes(filter));
-    if(!rows.length) return;
-    const label = gradoLargo(g);
-    html += `<div class="section-block"><div class="section-title"><span>${esc(label)}</span></div>`;
-    rows.forEach(({it,i}) => {
-      const key = invKeyUtil(g, i);
-      const stock = state.inventory[key] ?? 0;
-      html += `<div class="item-row">
-        <div class="info"><div class="desc">${esc(it.descripcion)}</div><div class="qty">P. unitario ${money(it.precio_unitario)}</div></div>
-        <div class="amt" style="${stock<5?'color:var(--red);':''}">
-          <input type="text" inputmode="numeric" id="inv_${idSafe(key)}" data-inv-key="${esc(key)}" value="${stock}" style="width:64px;"> uds.
-        </div>
-      </div>`;
+  if(inventarioUnificado()){
+    // útiles y libros: un renglón por artículo, con los grados donde aparece
+    const arts = articulosUtiles().filter(a => !filter || a.descripcion.toLowerCase().includes(filter));
+    SECCIONES_LISTA.forEach(sec => {
+      const deSec = arts.filter(a => a.seccion === sec);
+      if(!deSec.length) return;
+      html += `<div class="section-block"><div class="section-title"><span>${esc({'MATERIAL DIARIO':'Material de uso diario','PARA FORRAR':'Para forrar','LIBROS':'Libros de texto'}[sec])}</span></div>`;
+      deSec.forEach(a => { html += fila(a.key, esc(a.descripcion), `${money(a.precio)} · en ${a.grados.map(g => `<span class="chip" style="background:var(--cream); margin:0 2px;">${esc(gradoCorto(g))}</span>`).join('')}`); });
+      html += `</div>`;
     });
-    html += `</div>`;
-  });
+  } else {
+    html += unificarInventarioHtml();
+    Object.keys(GRADES).forEach(g => {
+      const rows = GRADES[g].items.map((it,i)=>({it,i})).filter(({it}) => !filter || it.descripcion.toLowerCase().includes(filter));
+      if(!rows.length) return;
+      html += `<div class="section-block"><div class="section-title"><span>${esc(gradoLargo(g))}</span></div>`;
+      rows.forEach(({it,i}) => { html += fila(invKeyPosicional(g, i), esc(it.descripcion), `P. unitario ${money(it.precio_unitario)}`); });
+      html += `</div>`;
+    });
+  }
   const uniRows = [];
   uniformesVisibles().forEach(u => u.tallas.forEach(sz => { if(!filter || u.name.toLowerCase().includes(filter)) uniRows.push({u,sz}); }));
   if(uniRows.length){
     html += `<div class="section-block"><div class="section-title"><span>Uniformes</span></div>`;
-    uniRows.forEach(({u,sz}) => {
-      const key = u.id+'_'+sz;
-      const stock = state.inventory[key] ?? 0;
-      html += `<div class="item-row">
-        <div class="info"><div class="desc">${esc(u.name)} · talla ${esc(sz)}</div><div class="qty">P. unitario ${money(u.price)}</div></div>
-        <div class="amt" style="${stock<5?'color:var(--red);':''}">
-          <input type="text" inputmode="numeric" id="inv_${idSafe(key)}" data-inv-key="${esc(key)}" value="${stock}" style="width:64px;"> uds.
-        </div>
-      </div>`;
-    });
+    uniRows.forEach(({u,sz}) => { html += fila(u.id+'_'+sz, `${esc(u.name)} · talla ${esc(sz)}`, `P. unitario ${money(u.price)}`); });
     html += `</div>`;
   }
   return html;
+}
+// paso único: pasar del inventario por grado al inventario por artículo
+function unificarInventarioHtml(){
+  const repetidos = articulosUtiles().filter(a => a.grados.length > 1);
+  const total = a => state.unifDraft[a.key] ?? a.antes.reduce((s, x) => s + x.stock, 0);
+  return `<div class="verifica-pago" style="margin-bottom:18px;">
+    <div class="vp-titulo">🔄 Unificar artículos que se repiten entre grados</div>
+    <p style="font-size:0.88rem; margin:4px 0 10px;">Hoy cada grado lleva su propia existencia, aunque sea el mismo artículo (el cuaderno de 1° y el de 3°). Al unificar, cada artículo tendrá <b>una sola existencia</b> y se descontará de ahí sin importar el grado. ${repetidos.length} artículos se repiten: revisa la existencia real de cada uno (por omisión es la suma de lo que tenía cada grado) y da clic en <b>Unificar</b>. Los que solo están en un grado conservan su número.</p>
+    <div style="max-height:360px; overflow-y:auto; border:1.5px solid var(--border); border-radius:14px; padding:0 10px;">
+      ${repetidos.map(a => `<div class="item-row">
+        <div class="info"><div class="desc">${esc(a.descripcion)}</div>
+          <div class="qty">Antes: ${a.antes.map(x => `${esc(gradoCorto(x.grado))} ${x.stock}`).join(' · ')}</div></div>
+        <div class="amt"><input type="text" inputmode="numeric" data-unif-key="${esc(a.key)}" value="${total(a)}" style="width:64px;"> uds.</div>
+      </div>`).join('')}
+    </div>
+    <button class="btn btn-primary" id="unificarInvBtn" style="margin-top:12px;" ${state.unificando ? 'disabled' : ''}>${state.unificando ? 'Unificando…' : 'Unificar inventario'}</button>
+  </div>`;
 }
 
 function avisosView(){
@@ -2876,7 +2919,7 @@ function uniformesAdminView(){
 function abrirListaEdit(grade){
   const g = GRADES[grade];
   state.listaEdit = { grade, guardando:false, mensaje:'',
-    items: g ? g.items.map((it,i) => ({ seccion: it.seccion||'MATERIAL DIARIO', descripcion: it.descripcion, cantidad: it.cantidad, precio_unitario: it.precio_unitario, stock: stockDe(g.docId+'_'+i) })) : [] };
+    items: g ? g.items.map((it,i) => ({ seccion: it.seccion||'MATERIAL DIARIO', descripcion: it.descripcion, cantidad: it.cantidad, precio_unitario: it.precio_unitario, stock: stockDe(invKeyUtil(grade, i)) })) : [] };
 }
 
 function listasAdminView(){
@@ -2934,12 +2977,21 @@ async function guardarLista(){
     // el inventario de útiles va por posición (docId_índice), así que se reescribe completo para esta lista
     const batch = writeBatch(db);
     batch.set(doc(db, 'listas', docId), { nombre: L.grade, items: listaItems, total_libros, total_paquete });
-    items.forEach((it, i) => batch.set(doc(db, 'inventario', docId+'_'+i), { tipo:'util', grado:L.grade, idx:i, descripcion:it.descripcion, precio_unitario:it.precio_unitario, stock:it.stock }));
-    for(let j = items.length; j < viejos; j++) batch.delete(doc(db, 'inventario', docId+'_'+j));
+    const unificado = inventarioUnificado();
+    if(unificado){
+      // inventario por artículo: la existencia es compartida con las otras listas donde venga el mismo artículo
+      items.forEach(it => batch.set(doc(db, 'inventario', claveArticulo(it.descripcion)), { tipo:'util', descripcion:it.descripcion, stock:it.stock }, { merge: true }));
+    } else {
+      items.forEach((it, i) => batch.set(doc(db, 'inventario', docId+'_'+i), { tipo:'util', grado:L.grade, idx:i, descripcion:it.descripcion, precio_unitario:it.precio_unitario, stock:it.stock }));
+      for(let j = items.length; j < viejos; j++) batch.delete(doc(db, 'inventario', docId+'_'+j));
+    }
     await batch.commit();
     GRADES[L.grade] = { docId, items: listaItems, total_libros, total_paquete };
-    items.forEach((it, i) => { state.inventory[docId+'_'+i] = it.stock; });
-    for(let j = items.length; j < viejos; j++) delete state.inventory[docId+'_'+j];
+    if(unificado) items.forEach(it => { state.inventory[claveArticulo(it.descripcion)] = it.stock; });
+    else {
+      items.forEach((it, i) => { state.inventory[docId+'_'+i] = it.stock; });
+      for(let j = items.length; j < viejos; j++) delete state.inventory[docId+'_'+j];
+    }
     abrirListaEdit(L.grade);
     state.listaEdit.mensaje = `✓ Lista de ${L.grade} guardada (${items.length} artículos, paquete completo ${money(total_paquete)}).`;
   }catch(err){
@@ -3832,6 +3884,28 @@ function eventosAvisosAdmin(){
 
 // panel: inventario
 function eventosInventario(){
+  document.querySelectorAll('[data-unif-key]').forEach(el => el.addEventListener('input', () => {
+    state.unifDraft[el.getAttribute('data-unif-key')] = Math.max(0, parseInt(el.value) || 0);
+  }));
+  const unificarInvBtn = document.getElementById('unificarInvBtn');
+  if(unificarInvBtn) unificarInvBtn.addEventListener('click', async () => {
+    if(!confirm('¿Unificar el inventario de útiles? Cada artículo quedará con una sola existencia compartida entre grados.')) return;
+    const arts = articulosUtiles();
+    state.unificando = true; render();
+    try{
+      const batch = writeBatch(db);
+      const nuevos = {};
+      arts.forEach(a => {
+        const stock = state.unifDraft[a.key] ?? a.antes.reduce((s, x) => s + x.stock, 0);
+        nuevos[a.key] = stock;
+        batch.set(doc(db, 'inventario', a.key), { tipo: 'util', descripcion: a.descripcion, grados: a.grados, stock });
+      });
+      await batch.commit();
+      Object.assign(state.inventory, nuevos);
+      state.unifDraft = {};
+    }catch(err){ console.error(err); alert('No se pudo unificar el inventario. Intenta de nuevo.'); }
+    state.unificando = false; render();
+  });
   document.querySelectorAll('[data-inv-key]').forEach(el => el.addEventListener('change', async () => {
     const key = el.getAttribute('data-inv-key');
     const val = Math.max(0, parseInt(el.value)||0);

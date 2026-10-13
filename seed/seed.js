@@ -38,6 +38,16 @@ function slug(str) {
     .replace(/^_+|_+$/g, '');
 }
 
+const PALABRAS_VACIAS = new Set(['de','del','la','el','los','las','tipo','y','con','para','en','a']);
+function normTexto(t) {
+  return String(t || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
+}
+function claveArticulo(descripcion) {
+  const toks = normTexto(descripcion).split(' ').filter(w => w && !PALABRAS_VACIAS.has(w))
+    .map(w => w.length > 3 && w.endsWith('s') && !/\d/.test(w) ? w.slice(0, -1) : w);
+  return 'util_' + toks.join('_').slice(0, 120);
+}
+
 async function seedListas() {
   const batch = db.batch();
   for (const [gradeName, gradeData] of Object.entries(grades)) {
@@ -56,15 +66,17 @@ async function seedListas() {
 async function seedInventario() {
   const batch = db.batch();
   let count = 0;
+  // útiles: una existencia por ARTÍCULO (misma clave que claveArticulo() en public/index.html),
+  // aunque el artículo venga en varias listas
+  const vistos = new Set();
   for (const [gradeName, gradeData] of Object.entries(grades)) {
-    gradeData.items.forEach((it, i) => {
-      const key = `${slug(gradeName)}_${i}`;
+    gradeData.items.forEach((it) => {
+      const key = claveArticulo(it.descripcion);
+      if (vistos.has(key)) return;
+      vistos.add(key);
       batch.set(db.collection('inventario').doc(key), {
         tipo: 'util',
-        grado: gradeName,
-        idx: i,
         descripcion: it.descripcion,
-        precio_unitario: it.precio_unitario,
         stock: STOCK_UTILES_DEFAULT,
       });
       count++;
