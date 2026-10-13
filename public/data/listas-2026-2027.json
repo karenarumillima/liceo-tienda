@@ -259,7 +259,7 @@
      "seccion": "LIBROS",
      "cantidad": 1,
      "precio_unitario": 210,
-     "descripcion": "Libreta de tareas Liceo Alexander Dul",
+     "descripcion": "Libreta de tareas",
      "total": 210
     },
     {
@@ -526,7 +526,7 @@
      "seccion": "LIBROS",
      "cantidad": 1,
      "precio_unitario": 210,
-     "descripcion": "Libreta de tareas Liceo Alexander Dul",
+     "descripcion": "Libreta de tareas",
      "total": 210
     },
     {
@@ -821,7 +821,7 @@
      "seccion": "LIBROS",
      "cantidad": 1,
      "precio_unitario": 210,
-     "descripcion": "Libreta de tareas Liceo Alexander Dul",
+     "descripcion": "Libreta de tareas",
      "total": 210
     },
     {
@@ -1116,7 +1116,7 @@
      "seccion": "LIBROS",
      "cantidad": 1,
      "precio_unitario": 210,
-     "descripcion": "Libreta de tareas Liceo Alexander Dul",
+     "descripcion": "Libreta de tareas",
      "total": 210
     },
     {
@@ -1404,7 +1404,7 @@
      "seccion": "LIBROS",
      "cantidad": 1,
      "precio_unitario": 210,
-     "descripcion": "Libreta de tareas Liceo Alexander Dul",
+     "descripcion": "Libreta de tareas",
      "total": 210
     },
     {
@@ -1692,7 +1692,7 @@
      "seccion": "LIBROS",
      "cantidad": 1,
      "precio_unitario": 210,
-     "descripcion": "Libreta de tareas Liceo Alexander Dul",
+     "descripcion": "Libreta de tareas",
      "total": 210
     },
     {
@@ -1855,7 +1855,7 @@
      "seccion": "MATERIAL DIARIO",
      "cantidad": 1,
      "precio_unitario": 210,
-     "descripcion": "Libreta de tareas Colegio Floresta",
+     "descripcion": "Libreta de tareas",
      "total": 210
     },
     {
@@ -2189,7 +2189,7 @@
      "seccion": "MATERIAL DIARIO",
      "cantidad": 1,
      "precio_unitario": 210,
-     "descripcion": "Libreta de tareas Colegio Floresta",
+     "descripcion": "Libreta de tareas",
      "total": 210
     },
     {
@@ -2503,7 +2503,7 @@
      "seccion": "MATERIAL DIARIO",
      "cantidad": 1,
      "precio_unitario": 210,
-     "descripcion": "Libreta de tareas Colegio Floresta",
+     "descripcion": "Libreta de tareas",
      "total": 210
     },
     {
@@ -3327,7 +3327,7 @@
      "cantidad": 5,
      "precio_unitario": 150,
      "descripcion": "Cuaderno profesional cuadro chico 100 hojas",
-     "nota": "Español, Inglés (forrado color verde), Química, Historia (2",
+     "nota": "Español, Inglés (forrado color verde), Química, Historia (2)",
      "total": 750
     },
     {
@@ -3651,7 +3651,7 @@
   "util_silicon_frio": "util_silicon_frio_100_ml",
   "util_pliego_mica_autoadeherible_forrar_libro_cuaderno": "util_pliego_mica_autoadherible_forrar_libro_cuaderno",
   "util_academy_star_2nd_ed_worbook_1_isbn_9781035100057": "util_academy_star_2nd_ed_workbook_1_isbn_9781035100057",
-  "util_libreta_tarea_alexander_dul": "util_libreta_tarea_liceo_alexander_dul",
+  "util_libreta_tarea_alexander_dul": "util_libreta_tarea",
   "util_kleneex": "util_kleenex",
   "util_hoja_fomi_tamano_carta_difente_colore": "util_hoja_foami_tamano_carta",
   "util_plumone_pizarron_blanco_colore_negro_rojo_verde_azul": "util_plumon_pizarron_blanco",
@@ -3681,7 +3681,6 @@
   "util_pluma_tinta_azul": "util_boligrafo_tinta_azul",
   "util_marca_texto_cualquier_color": "util_marcatexto",
   "util_pluma_tinta_roja": "util_boligrafo_tinta_roja",
-  "util_libreta_tarea": "util_libreta_tarea_colegio_floresta",
   "util_lapiz_adhesivo_pritt_220_grs": "util_lapiz_adhesivo_pritt_22_g",
   "util_pluma_tinta_rosa": "util_boligrafo_tinta_rosa",
   "util_plumon_pizarron_blanco_magistral_negro_azul_rojo_verde": "util_plumon_pizarron_blanco",
