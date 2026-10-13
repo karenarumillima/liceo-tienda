@@ -68,6 +68,14 @@ service cloud.firestore {
       allow delete: if isAdmin();
     }
 
+    // Nivel de inglés de 1° de secundaria: se consulta por nombre exacto (la clave es el nombre normalizado);
+    // nunca se puede listar completo desde la tienda. Solo el Administrador lo carga.
+    match /nivelesIngles/{clave} {
+      allow get: if true;
+      allow list: if isAdmin();
+      allow write: if isAdmin();
+    }
+
     match /busquedas/{key} {
       allow get: if true;
       allow create, update: if true;

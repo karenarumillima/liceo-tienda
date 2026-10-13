@@ -155,6 +155,24 @@
   .uni-mini .t { font-family: var(--font-display); font-weight: 800; font-size: 1.05rem; line-height: 1; letter-spacing: -0.03em; margin: 10px 4px 6px; }
   .chip { display: inline-block; background: rgba(255,255,255,0.75); color: var(--ink); font-size: 0.72rem; font-weight: 800; padding: 3px 9px; border-radius: 999px; margin: 0 4px; }
 
+  .para-chips { margin: 0 4px 8px; display: flex; flex-wrap: wrap; gap: 4px; }
+  .para-chips .chip { margin: 0; }
+  .grupo-grados { font-size: 1.3rem; margin: 26px 0 10px; letter-spacing: -0.02em; }
+  .nota-item { font-size: 0.78rem; color: var(--hand); font-weight: 600; margin-top: 1px; }
+  .btn-link { background: none; border: none; padding: 0; color: var(--pink); font-weight: 800; text-decoration: underline; cursor: pointer; font-size: inherit; font-family: inherit; }
+  .opcion-ingles { margin-top: 14px; border: 2px solid var(--ink); border-radius: 20px; padding: 16px; background: #FFFDF3; }
+  .oi-titulo { font-family: var(--font-display); font-weight: 800; font-size: 1.2rem; letter-spacing: -0.02em; margin-bottom: 6px; }
+  .oi-aviso { font-size: 0.88rem; margin-bottom: 10px; padding: 9px 12px; border-radius: 12px; background: var(--cream); }
+  .oi-aviso.ok { background: var(--green-tint); color: var(--green); }
+  .oi-aviso.error { background: var(--red-tint); color: var(--red); }
+  .oi-opciones { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
+  .oi-op { text-align: left; border: 2px solid var(--border); border-radius: 16px; background: #fff; padding: 12px 14px; cursor: pointer; display: flex; flex-direction: column; gap: 3px; color: var(--ink); font-family: inherit; }
+  .oi-op:hover:not(:disabled) { border-color: var(--ink); }
+  .oi-op.sel { border-color: var(--ink); background: var(--marigold); }
+  .oi-op:disabled { opacity: 0.5; cursor: not-allowed; }
+  .oi-nivel { font-family: var(--font-display); font-weight: 800; font-size: 1.1rem; }
+  .oi-desc { font-size: 0.82rem; }
+  .oi-precio { font-weight: 800; font-size: 0.9rem; }
   .grade-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 18px; padding: 6px 0 10px; }
   .grade-card { border: none; border-radius: 22px; padding: 20px 18px 18px; cursor: pointer; text-align: left; position: relative; box-shadow: var(--shadow); transition: transform .2s ease; color: var(--ink); }
   .grade-card:nth-child(6n+1) { background: var(--cyan); } .grade-card:nth-child(6n+2) { background: var(--magenta); } .grade-card:nth-child(6n+3) { background: var(--marigold); }
@@ -444,6 +462,7 @@ const STORE_COORDS = { lat: 19.366021, lng: -99.199932 };   // puerta del local,
 const ROAD_FACTOR = 1.3;                                   // la distancia en línea recta se ajusta x1.3 para aproximar calles reales
 
 const STORE_HOURS_TEXT = 'Lunes a Viernes, 8:00 a 15:00 hrs.';
+const DIAS_PARA_RECOGER = 7;   // días para recoger un pedido "listo" en el local; después se puede cancelar
 
 // Envío a domicilio: tarifa por zonas según los km POR CALLES desde el local (sin límite de distancia)
 const ZONAS_ENVIO = [
@@ -466,26 +485,34 @@ const SIZES = ['6','8','10','12','14','16','32','34','36','38','40'];   // talla
 // Catálogo de uniformes. Estos son los valores de arranque (fotos en public/img/uniformes/);
 // el Administrador los edita desde el panel → Uniformes y se guardan en la colección "uniformes",
 // que se sobrepone a esta lista por id. price null = "precio por definir" (no se puede comprar aún).
+// para: a quién le toca cada prenda (PN primaria niño, PA primaria niña, SH secundaria hombre, SM secundaria mujer)
 const UNIFORMES_BASE = [
-  { id:'polo-verde',          name:'Playera polo verde',                              price:500,  foto:'img/uniformes/polo-verde.jpg' },
-  { id:'polo-roja',           name:'Playera polo roja',                               price:500,  foto:'img/uniformes/polo-roja.jpg' },
-  { id:'camisa-manga-larga',  name:'Camisa blanca',                                   price:500,  foto:'img/uniformes/camisa-manga-larga.jpg' },
-  { id:'camisa-manga-corta',  name:'Chazarilla manga corta',                          price:500,  foto:'img/uniformes/camisa-manga-corta.jpg' },
-  { id:'blusa-blanca',        name:'Blusa cuello ratón',                              price:400,  foto:'img/uniformes/blusa-blanca.jpg' },
-  { id:'jumper',              name:'Jumper',                                          price:560,  icon:'👗' },
-  { id:'falda-cuadros-verde', name:'Falda de cuadros verde',                          price:500,  icon:'👗' },
-  { id:'chaleco-gris',        name:'Chaleco gris',                                    price:400,  foto:'img/uniformes/chaleco-gris.jpg' },
-  { id:'sueter-gris',         name:'Suéter gris',                                     price:620,  foto:'img/uniformes/sueter-gris.jpg' },
+  { id:'polo-verde',          name:'Playera polo verde',                              price:500,  para:['SH','SM'], foto:'img/uniformes/polo-verde.jpg' },
+  { id:'polo-roja',           name:'Playera polo roja',                               price:500,  para:['PN','PA'], foto:'img/uniformes/polo-roja.jpg' },
+  { id:'camisa-manga-larga',  name:'Camisa blanca',                                   price:500,  para:['SH'],      foto:'img/uniformes/camisa-manga-larga.jpg' },
+  { id:'camisa-manga-corta',  name:'Chazarilla manga corta',                          price:500,  para:['SM'],      foto:'img/uniformes/camisa-manga-corta.jpg' },
+  { id:'blusa-blanca',        name:'Blusa cuello ratón',                              price:400,  para:['PA'],      foto:'img/uniformes/blusa-blanca.jpg' },
+  { id:'jumper',              name:'Jumper',                                          price:560,  para:['PA'],      icon:'👗' },
+  { id:'falda-cuadros-verde', name:'Falda de cuadros verde',                          price:500,  para:['SM'],      icon:'👗' },
+  { id:'chaleco-gris',        name:'Chaleco gris',                                    price:400,  para:['PN','PA'], foto:'img/uniformes/chaleco-gris.jpg' },
+  { id:'sueter-gris',         name:'Suéter gris',                                     price:620,  para:['PN','PA'], foto:'img/uniformes/sueter-gris.jpg' },
   // el pants se vende completo: chamarra + pantalón juntos, no por separado
-  { id:'pants-marino',        name:'Pants completo azul marino (chamarra + pantalón)', price:1110,
+  { id:'pants-marino',        name:'Pants completo azul marino (chamarra + pantalón)', price:1110, para:['SH','SM'],
     fotos:['img/uniformes/pants-marino.jpg','img/uniformes/chamarra-marino.jpg','img/uniformes/pantalon-marino.jpg','img/uniformes/pantalon-marino-2.jpg'] },
-  { id:'pants-gris',          name:'Pants completo gris (chamarra + pantalón)',        price:1110,
+  { id:'pants-gris',          name:'Pants completo gris (chamarra + pantalón)',        price:1110, para:['PN','PA'],
     fotos:['img/uniformes/pants-gris.jpg','img/uniformes/chamarra-gris.jpg','img/uniformes/pantalon-gris.jpg','img/uniformes/pantalon-gris-2.jpg'] },
-  { id:'corbata',             name:'Corbata',                                         price:210,  icon:'👔', tallas:['Única'] },
-  { id:'escudo',              name:'Escudo suelto',                                   price:60,   icon:'🛡️', tallas:['Única'] },
+  { id:'pants-negro',         name:'Pants completo negro (chamarra + pantalón)',       price:1110, para:['PN','PA','SH','SM'], icon:'🩳' },
+  { id:'corbata',             name:'Corbata',                                         price:210,  para:['SH','SM'], icon:'👔', tallas:['Única'] },
+  { id:'escudo',              name:'Escudo suelto',                                   price:60,   para:['PN','PA','SH','SM'], icon:'🛡️', tallas:['Única'] },
+];
+const GRUPOS_UNIFORME = { PN: 'Primaria · Niño', PA: 'Primaria · Niña', SM: 'Secundaria · Mujer', SH: 'Secundaria · Hombre' };
+// prendas del uniforme que NO se venden en la escuela (solo se informan)
+const UNIFORME_NO_SE_VENDE = [
+  { nombre: 'Pantalón azul marino', para: ['PN'] },
+  { nombre: 'Saco azul marino', para: ['SM', 'SH'] },
 ];
 
-const SECCIONES_LISTA = ['MATERIAL DIARIO','PARA FORRAR','LIBROS'];
+const SECCIONES_LISTA = ['MATERIAL DIARIO','PARA FORRAR','PARA ENTREGAR EN EL COLEGIO','LIBROS'];
 
 const PALABRAS_COMPROBANTE = ['transferencia','spei','rastreo','referencia','operacion','importe','monto','clabe','cuenta','beneficiario',
   'destino','ordenante','comprobante','enviado','enviaste','exitosa','aprobada','autorizacion','folio','concepto',
@@ -541,6 +568,7 @@ let state = {
   ubicacionConfirmada: false,
   direccionAuto: false,        // la dirección la llenó el mapa (se puede volver a llenar si mueve el pin)  // el papá confirmó "sí, aquí es mi casa"
   uniSel: {},
+  uniFiltro: '',               // grupo del uniforme a mostrar: '' todos, PN, PA, SH, SM
   uniFotoIdx: {},              // { [uniformeId]: índice de la foto que se ve en la tarjeta }
   lightbox: null,              // { uniId, idx } — foto de uniforme en grande                  // { [uniformeId]: talla elegida } — para que la talla no se reinicie en cada render
   avisoForm: null,             // { uniId, size, telefono, correo, saving, error, enviado } — "avísame cuando haya"
@@ -550,6 +578,10 @@ let state = {
   uniDraft: {},                // (admin) cambios sin guardar del catálogo de uniformes, por id
   uniGuardando: null,          // id de la prenda que se está guardando
   listaEdit: null,
+  nivelesIngles: {},           // claveAlumno → 'BASICO' | 'AVANZADO' | null (no está) | 'buscando'
+  nivelConsulta: { nombres:'', apellidoPaterno:'', apellidoMaterno:'', buscado:false },
+  cargaListas: { estado: '', mensaje: '' },
+  nivelesCarga: { filas: null, omitidos: 0, guardando: false, mensaje: '' },
   unifDraft: {},               // (admin) existencias reales escritas en "unificar inventario", por clave de artículo
   unificando: false,             // (admin) { grade, items:[{seccion,descripcion,cantidad,precio_unitario,stock}], guardando, mensaje }
 };
@@ -584,9 +616,30 @@ function addBusinessDays(date, days){
 }
 
 // "1ro PRIMARIA" → "1ro" / "1ro de primaria"
-function gradoCorto(g){ return String(g||'').replace(' PRIMARIA','').trim(); }
+// Grados: "1ro PRIMARIA", "1ro SECUNDARIA" (matutino) y "1ro SECUNDARIA VESPERTINO".
+function infoGrado(g){
+  const t = String(g || '').toUpperCase();
+  const d = GRADES[g] || {};
+  return { numero: d.numero || String(g||'').split(' ')[0], nivel: d.nivel || (t.includes('SECUNDARIA') ? 'SECUNDARIA' : 'PRIMARIA'),
+           turno: d.turno || (t.includes('VESPERTINO') ? 'VESPERTINO' : 'MATUTINO') };
+}
+function gradoCorto(g){
+  if(!g) return '';
+  const i = infoGrado(g);
+  return i.nivel === 'PRIMARIA' ? i.numero : `${i.numero} Sec.${i.turno === 'VESPERTINO' ? ' vesp.' : ''}`;
+}
 
-function gradoLargo(g){ return gradoCorto(g) + ' de primaria'; }
+function gradoLargo(g){
+  if(!g) return '';
+  const i = infoGrado(g);
+  return `${i.numero} de ${i.nivel === 'PRIMARIA' ? 'primaria' : 'secundaria'}${i.turno === 'VESPERTINO' ? ' (vespertino)' : ''}`;
+}
+// grados en orden: primaria, secundaria matutina, secundaria vespertina
+function gradosOrdenados(){
+  const peso = g => { const i = infoGrado(g); return (i.nivel === 'PRIMARIA' ? 0 : i.turno === 'MATUTINO' ? 10 : 20) + (parseInt(i.numero) || 0); };
+  return Object.keys(GRADES).sort((a, b) => peso(a) - peso(b));
+}
+const SECCION_LABEL = { 'MATERIAL DIARIO':'Material de uso diario', 'PARA FORRAR':'Para forrar', 'PARA ENTREGAR EN EL COLEGIO':'Material para entregar en el colegio', 'LIBROS':'Libros de texto' };
 
 function telValido(t){ return String(t||'').replace(/\D/g,'').length === 10; }
 
@@ -624,7 +677,8 @@ async function loadListas(){
   const g = {};
   snap.forEach(d => {
     const data = d.data();
-    g[data.nombre] = { docId: d.id, items: data.items, total_libros: data.total_libros, total_paquete: data.total_paquete };
+    g[data.nombre] = { docId: d.id, items: data.items, total_libros: data.total_libros, total_paquete: data.total_paquete,
+      nivel: data.nivel, turno: data.turno, numero: data.numero, notas: data.notas || [] };
   });
   GRADES = g;
 }
@@ -702,7 +756,7 @@ function unsubscribeAvisos(){
 
 // una prenda puede tener varias fotos (fotos[]); foto = la principal (fotos[0])
 function normalizarUniforme(u, i){
-  const o = Object.assign({ price:null, tallas:SIZES.slice(), activo:true, orden:i, foto:'' }, u);
+  const o = Object.assign({ price:null, tallas:SIZES.slice(), activo:true, orden:i, foto:'', para:[] }, u);
   o.fotos = (o.fotos && o.fotos.length) ? o.fotos.slice() : (o.foto ? [o.foto] : []);
   o.foto = o.fotos[0] || '';
   return o;
@@ -748,7 +802,7 @@ function avisosPendientes(){ return state.avisos.filter(a => a.estado === 'pendi
 // avisos pendientes cuya prenda/talla ya tiene existencias: hay que avisarle a esos papás
 function avisosListos(){ return avisosPendientes().filter(a => stockDe(a.uniformeId+'_'+a.talla) > 0); }
 
-function seccionDe(t){ const n = normTexto(t); return n.includes('libro') ? 'LIBROS' : n.includes('forr') ? 'PARA FORRAR' : 'MATERIAL DIARIO'; }
+function seccionDe(t){ const n = normTexto(t); return n.includes('libro') ? 'LIBROS' : n.includes('forr') ? 'PARA FORRAR' : n.includes('entreg') ? 'PARA ENTREGAR EN EL COLEGIO' : 'MATERIAL DIARIO'; }
 
 /* ================= CARRITO Y ALUMNOS — canastas por grado, hermanos y gemelos ================= */
 
@@ -772,8 +826,12 @@ function newBasketId(grade){
 function ensureGradeQtys(basketId){
   if(!state.gradeQtys[basketId]){
     const qtys = {};
-    GRADES[gradeNameOf(basketId)].items.forEach((it,i) => qtys[i] = it.cantidad); // por defecto: cantidad sugerida completa
+    // por defecto: cantidad sugerida completa, salvo lo que no hay en existencia y los libros alternativos
+    // (el libro de inglés se elige aparte: Básico o Avanzado)
+    const grade = gradeNameOf(basketId);
+    GRADES[grade].items.forEach((it,i) => qtys[i] = (it.opcion || !utilDisponible(grade, i)) ? 0 : it.cantidad);
     state.gradeQtys[basketId] = qtys;
+    elegirOpcionPorNivel(basketId, false);
   }
   return state.gradeQtys[basketId];
 }
@@ -1280,7 +1338,8 @@ async function buildOrder(){
     const realGrade = gradeNameOf(g);
     GRADES[realGrade].items.forEach((it,i) => {
       const qty = state.gradeQtys[g][i] || 0;
-      if(qty>0) utilesItems.push({ descripcion: it.descripcion, qty, precio_unitario: it.precio_unitario, seccion: it.seccion || 'MATERIAL DIARIO', grade: realGrade, studentId: state.gradeAssign[g]||null, invKey: invKeyUtil(realGrade, i) });
+      if(qty>0) utilesItems.push(Object.assign({ descripcion: it.descripcion, qty, precio_unitario: it.precio_unitario, seccion: it.seccion || 'MATERIAL DIARIO', grade: realGrade, studentId: state.gradeAssign[g]||null, invKey: invKeyUtil(realGrade, i) },
+        it.nota ? { nota: it.nota } : {}, it.nivel ? { nivel: it.nivel } : {}));
     });
   });
   const uniformItems = state.uniformCart.map(u => {
@@ -1425,13 +1484,37 @@ function alumnosLabel(order){
 
 function gradosLabel(order){
   const al = (order.alumnos && order.alumnos.length) ? order.alumnos : (order.cliente && order.cliente.grado ? [order.cliente] : []);
-  const grados = al.map(a => gradoCorto(a.grado)).filter(Boolean);
+  const grados = al.map(a => gradoLargo(a.grado)).filter(Boolean);
   return [...new Set(grados)].join(', ');
 }
 
 function nombreAlumnoPorId(order, id){
   const al = (order.alumnos||[]).find(a=>a.id===id);
   return al ? nombreCompleto(al) : '';
+}
+
+// Recoger en el local: cuando el pedido pasa a "listo" se fija recogerAntes = listo + DIAS_PARA_RECOGER días.
+function limiteRecoger(desde){ const d = new Date(desde); d.setDate(d.getDate() + DIAS_PARA_RECOGER); d.setHours(23, 59, 59, 0); return d; }
+function pedidoVencido(o){ return !o.cancelado && o.fulfillment === 'pickup' && o.stageIndex === 2 && !!o.recogerAntes && new Date() > new Date(o.recogerAntes); }
+function avisoPlazoRecoger(){ return `Cuando tu pedido esté listo te avisaremos por correo y tendrás ${DIAS_PARA_RECOGER} días para recogerlo. Si no lo recoges en ese plazo, el pedido se cancelará.`; }
+// cancela un pedido y regresa sus piezas al inventario
+async function cancelarPedido(order, motivo){
+  const piezas = {};
+  ((order.items && order.items.utiles) || []).forEach(it => { if(inventarioUnificado()){ const k = claveArticulo(it.descripcion); piezas[k] = (piezas[k]||0) + it.qty; } });
+  ((order.items && order.items.uniformes) || []).forEach(u => { const k = u.id + '_' + u.size; piezas[k] = (piezas[k]||0) + u.qty; });
+  const claves = Object.keys(piezas);
+  await runTransaction(db, async (tx) => {
+    const refs = claves.map(k => doc(db, 'inventario', k));
+    const snaps = await Promise.all(refs.map(r => tx.get(r)));
+    const pedidoRef = doc(db, 'pedidos', order.folio);
+    const actual = await tx.get(pedidoRef);
+    if(actual.exists() && actual.data().cancelado) throw new Error('ya-cancelado');
+    refs.forEach((r, i) => { if(snaps[i].exists()) tx.update(r, { stock: (snaps[i].data().stock || 0) + piezas[claves[i]] }); });
+    tx.update(pedidoRef, { cancelado: true, canceladoAt: new Date().toISOString(), motivoCancelacion: motivo,
+      historial: arrayUnion({ texto: `Pedido cancelado: ${motivo}`, por: quienPersonal(), at: new Date().toISOString() }) });
+  });
+  claves.forEach(k => { if(k in state.inventory) state.inventory[k] += piezas[k]; });
+  enviarCorreoEstado(order, `Tu pedido ${order.folio} fue cancelado: ${motivo}. Si crees que es un error, comunícate con el Liceo.`);
 }
 
 // un pedido por transferencia solo puede pasar de "preparando" (listo / en camino / entregado)
@@ -1533,6 +1616,7 @@ function viewFor(tab){
     case 'entrega': return deliveryView();
     case 'pago': return paymentView();
     case 'confirmacion': return confirmationView();
+    case 'nivel-ingles': return nivelInglesView();
     default: return homeView();
   }
 }
@@ -1603,18 +1687,22 @@ function smsLogHtml(order, title){
   </div>`;
 }
 
+function etiquetaUtil(it){
+  const extra = it.nivel ? `Inglés ${NIVEL_LABEL[it.nivel] || it.nivel}` : it.nota;
+  return esc(it.descripcion) + (extra ? ` <span style="color:var(--ink-soft); font-size:0.8em;">(${esc(extra)})</span>` : '');
+}
 function pedidoItemsHtml(order){
   const multi = order.alumnos && order.alumnos.length > 1;
   if(!multi){
     let html = '';
-    order.items.utiles.forEach(it => { html += `<div class="rline"><span>${esc(it.descripcion)} x${it.qty}</span><span>${money(it.qty*it.precio_unitario)}</span></div>`; });
+    order.items.utiles.forEach(it => { html += `<div class="rline"><span>${etiquetaUtil(it)} x${it.qty}</span><span>${money(it.qty*it.precio_unitario)}</span></div>`; });
     order.items.uniformes.forEach(u => { html += `<div class="rline"><span>${esc(u.name)} (talla ${esc(u.size)}) x${u.qty}</span><span>${money(u.price*u.qty)}</span></div>`; });
     return html;
   }
   let html = '';
   order.alumnos.forEach(al => {
     let sub = '';
-    order.items.utiles.filter(it=>it.studentId===al.id).forEach(it => { sub += `<div class="rline"><span>${esc(it.descripcion)} x${it.qty}</span><span>${money(it.qty*it.precio_unitario)}</span></div>`; });
+    order.items.utiles.filter(it=>it.studentId===al.id).forEach(it => { sub += `<div class="rline"><span>${etiquetaUtil(it)} x${it.qty}</span><span>${money(it.qty*it.precio_unitario)}</span></div>`; });
     order.items.uniformes.forEach(u => {
       const split = (u.splits||[]).find(s=>s.studentId===al.id);
       if(split && split.qty>0) sub += `<div class="rline"><span>${esc(u.name)} (talla ${esc(u.size)}) x${split.qty}</span><span>${money(u.price*split.qty)}</span></div>`;
@@ -1651,7 +1739,7 @@ function homeView(){
         <button class="cat-card" data-nav="utiles">
           <span class="icon">📚</span>
           <h3>Útiles y libros</h3>
-          <p>La lista oficial de 1° a 6° de primaria. Llévala completa o elige pieza por pieza.</p>
+          <p>Las listas oficiales de primaria y secundaria (matutino y vespertino). Llévala completa o elige pieza por pieza.</p>
           <span class="ir">Ver listas →</span>
         </button>
         <button class="cat-card" data-nav="uniformes">
@@ -1701,23 +1789,34 @@ function manchasSvg(){
 }
 
 function gradeGridView(){
-  const keys = Object.keys(GRADES);
+  const grupos = [
+    ['Primaria', g => infoGrado(g).nivel === 'PRIMARIA'],
+    ['Secundaria · turno matutino', g => infoGrado(g).nivel === 'SECUNDARIA' && infoGrado(g).turno === 'MATUTINO'],
+    ['Secundaria · turno vespertino', g => infoGrado(g).nivel === 'SECUNDARIA' && infoGrado(g).turno === 'VESPERTINO'],
+  ];
+  const tarjeta = g => {
+    const i = infoGrado(g);
+    const n = basketsForGrade(g).length;
+    return `<button class="grade-card" data-grade="${esc(g)}">
+      <div class="num">${esc(i.numero)}</div>
+      <div class="lbl">${i.nivel === 'PRIMARIA' ? 'Primaria' : 'Secundaria'}${i.turno === 'VESPERTINO' ? ' · vespertino' : ''}</div>
+      <div class="price">Paquete: ${money(GRADES[g].total_paquete)}</div>
+      ${n>0 ? `<div style="font-size:0.74rem; color:var(--green); margin-top:4px; font-weight:700;">✓ ${n>1?n+' listas ya agregadas':'Ya tienes una lista'}</div>` : ''}
+    </button>`;
+  };
+  const orden = gradosOrdenados();
   return `
   <section class="view">
     <div class="titulo-con-nota"><h2 style="margin:0">¿De qué grado es la lista?</h2><span class="nota-mano">elige el de<br>tu hijo(a)</span></div>
-    <p style="color:var(--ink-soft); margin-top:-6px">Primaria · Ciclo escolar 2026‑2027</p>
-    <div class="grade-grid">
-      ${keys.map(g => {
-        const label = gradoCorto(g);
-        const n = basketsForGrade(g).length;
-        return `<button class="grade-card" data-grade="${esc(g)}">
-          <div class="num">${esc(label)}</div>
-          <div class="lbl">Primaria</div>
-          <div class="price">Paquete: ${money(GRADES[g].total_paquete)}</div>
-          ${n>0 ? `<div style="font-size:0.74rem; color:var(--green); margin-top:4px; font-weight:700;">✓ ${n>1?n+' listas ya agregadas':'Ya tienes una lista'}</div>` : ''}
-        </button>`;
-      }).join('')}
-    </div>
+    <p style="color:var(--ink-soft); margin-top:-6px">Ciclo escolar 2026‑2027</p>
+    ${grupos.map(([titulo, f]) => {
+      const gs = orden.filter(f);
+      if(!gs.length) return '';
+      const esSec = titulo.startsWith('Secundaria');
+      return `<h3 class="grupo-grados">${titulo}</h3>
+        <div class="grade-grid">${gs.map(tarjeta).join('')}</div>
+        ${esSec && gs.some(esPrimeroSecundaria) ? `<p class="viz-nota" style="margin-top:4px;">📘 ¿No sabes el nivel de inglés de 1° de secundaria? <button class="btn-link" data-nav="nivel-ingles">Consúltalo aquí</button></p>` : ''}`;
+    }).join('')}
   </section>`;
 }
 
@@ -1725,74 +1824,79 @@ function gradeListView(basketId){
   const grade = gradeNameOf(basketId);
   const data = GRADES[grade];
   const qtys = ensureGradeQtys(basketId);
-  const label = gradoCorto(grade);
-  const sections = ['MATERIAL DIARIO','PARA FORRAR','LIBROS'];
-  const sectionLabels = {'MATERIAL DIARIO':'Material de uso diario', 'PARA FORRAR':'Para forrar', 'LIBROS':'Libros de texto'};
+  const label = gradoLargo(grade);
   const sub = gradeSubtotal(basketId);
   const gid = idSafe(basketId);
   const dueño = state.gradeAssign[basketId] ? studentById(state.gradeAssign[basketId]) : null;
   const otrasCanastas = basketsForGrade(grade).length > 1;
 
-  const sectionsHtml = sections.map(sec => {
-    const rows = data.items.map((it,i) => ({it,i})).filter(x => x.it.seccion === sec);
-    if(!rows.length) return '';
+  const filaHtml = ({it, i}) => {
+    const stock = stockDe(invKeyUtil(grade, i));
+    const nota = it.nota ? `<div class="nota-item">${esc(it.nota)}</div>` : '';
+    if(stock <= 0){
+      // útiles y libros agotados: solo se marcan como no disponibles (no hay "avísame")
+      return `
+    <div class="item-row unselected">
+      <div class="info">
+        <div class="desc">${esc(it.descripcion)}</div>${nota}
+        <div class="qty">Sugerido: ${it.cantidad} · P. unitario ${money(it.precio_unitario)} · <span style="color:var(--red); font-weight:700;">No disponible por ahora</span></div>
+      </div>
+      <div class="stepper">
+        <button type="button" disabled>−</button>
+        <input type="text" value="0" disabled>
+        <button type="button" disabled>+</button>
+      </div>
+      <div class="amt">—</div>
+    </div>`;
+    }
+    const qty = qtys[i]||0;
+    return `
+    <div class="item-row ${qty>0?'':'unselected'}">
+      <div class="info">
+        <div class="desc">${esc(it.descripcion)}</div>${nota}
+        <div class="qty">Sugerido: ${it.cantidad} · P. unitario ${money(it.precio_unitario)} ${stock<5 ? '· <span style="color:var(--red)">pocas existencias</span>' : ''}</div>
+      </div>
+      <div class="stepper">
+        <button type="button" data-qty-dec="${i}" data-grade="${esc(basketId)}">−</button>
+        <input type="text" inputmode="numeric" pattern="[0-9]*" id="qty_${gid}_${i}" value="${qty}" data-qty-input="${i}" data-grade="${esc(basketId)}">
+        <button type="button" data-qty-inc="${i}" data-grade="${esc(basketId)}">+</button>
+      </div>
+      <div class="amt">${money(qty*it.precio_unitario)}</div>
+    </div>`;
+  };
+
+  const sectionsHtml = SECCIONES_LISTA.map(sec => {
+    const todas = data.items.map((it,i) => ({it,i})).filter(x => x.it.seccion === sec);
+    if(!todas.length) return '';
+    const normales = todas.filter(x => !x.it.opcion);
     return `
     <div class="section-block">
       <div class="section-title">
-        <span>${sectionLabels[sec]}</span>
-        <button data-toggle-section="${sec}" data-grade="${esc(basketId)}">activar/desactivar todo</button>
+        <span>${esc(SECCION_LABEL[sec] || sec)}</span>
+        ${normales.length ? `<button data-toggle-section="${sec}" data-grade="${esc(basketId)}">activar/desactivar todo</button>` : ''}
       </div>
-      ${rows.map(({it,i}) => {
-        const stock = stockDe(invKeyUtil(grade, i));
-        if(stock <= 0){
-          // útiles y libros agotados: solo se marcan como no disponibles (no hay "avísame")
-          return `
-        <div class="item-row unselected">
-          <div class="info">
-            <div class="desc">${esc(it.descripcion)}</div>
-            <div class="qty">Sugerido: ${it.cantidad} · P. unitario ${money(it.precio_unitario)} · <span style="color:var(--red); font-weight:700;">No disponible por ahora</span></div>
-          </div>
-          <div class="stepper">
-            <button type="button" disabled>−</button>
-            <input type="text" value="0" disabled>
-            <button type="button" disabled>+</button>
-          </div>
-          <div class="amt">—</div>
-        </div>`;
-        }
-        const qty = qtys[i]||0;
-        return `
-        <div class="item-row ${qty>0?'':'unselected'}">
-          <div class="info">
-            <div class="desc">${esc(it.descripcion)}</div>
-            <div class="qty">Sugerido: ${it.cantidad} · P. unitario ${money(it.precio_unitario)} ${stock<5 ? '· <span style="color:var(--red)">pocas existencias</span>' : ''}</div>
-          </div>
-          <div class="stepper">
-            <button type="button" data-qty-dec="${i}" data-grade="${esc(basketId)}">−</button>
-            <input type="text" inputmode="numeric" pattern="[0-9]*" id="qty_${gid}_${i}" value="${qty}" data-qty-input="${i}" data-grade="${esc(basketId)}">
-            <button type="button" data-qty-inc="${i}" data-grade="${esc(basketId)}">+</button>
-          </div>
-          <div class="amt">${money(qty*it.precio_unitario)}</div>
-        </div>`;
-      }).join('')}
+      ${normales.map(filaHtml).join('')}
+      ${opcionesHtml(basketId, todas.filter(x => x.it.opcion))}
     </div>`;
   }).join('');
+  const notasLista = (data.notas || []).length ? `<div class="note-box neutral" style="margin-top:18px;">📝 ${data.notas.map(esc).join('<br>📝 ')}</div>` : '';
 
   return `
   <section class="view">
     <button class="backlink" data-back-grades="1">← Cambiar de grado</button>
     <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:10px;">
-      <h2 style="margin:0">${esc(label)} de primaria${dueño ? ' <span style="font-size:0.7em; color:var(--ink-soft); font-weight:400;">· para '+esc(nombreCompleto(dueño))+'</span>' : ''}</h2>
+      <h2 style="margin:0">${esc(label)}${dueño ? ' <span style="font-size:0.7em; color:var(--ink-soft); font-weight:400;">· para '+esc(nombreCompleto(dueño))+'</span>' : ''}</h2>
       <button class="btn btn-secondary btn-sm" data-download-lista="${esc(grade)}">🖨️ Descargar / imprimir lista (PDF)</button>
     </div>
-    ${otrasCanastas ? `<div class="note-box neutral" style="margin-bottom:10px;">Tienes más de una lista de ${esc(label)} de primaria en este pedido (por ejemplo, gemelos en el mismo grado). Entra desde el carrito a "editar esta lista" para no confundirlas.</div>` : ''}
+    ${otrasCanastas ? `<div class="note-box neutral" style="margin-bottom:10px;">Tienes más de una lista de ${esc(label)} en este pedido (por ejemplo, gemelos en el mismo grado). Entra desde el carrito a "editar esta lista" para no confundirlas.</div>` : ''}
     <div class="preset-row">
       <button class="btn btn-secondary btn-sm" data-preset="completo" data-grade="${esc(basketId)}">📦 Paquete completo</button>
       <button class="btn btn-secondary btn-sm" data-preset="libros" data-grade="${esc(basketId)}">📚 Solo libros</button>
-      <button class="btn btn-secondary btn-sm" data-preset="diario" data-grade="${esc(basketId)}">✏️ Solo material diario</button>
+      <button class="btn btn-secondary btn-sm" data-preset="diario" data-grade="${esc(basketId)}">✏️ Solo material (sin libros)</button>
       <button class="btn btn-secondary btn-sm" data-preset="ninguno" data-grade="${esc(basketId)}">✖️ Quitar todo</button>
     </div>
     ${sectionsHtml}
+    ${notasLista}
     <div class="summary-bar">
       <div class="tot"><div class="label">Subtotal de esta lista</div><div class="amt">${money(sub)}</div></div>
       <button class="btn btn-primary" data-nav="carrito">Ir al carrito →</button>
@@ -1802,13 +1906,110 @@ function gradeListView(basketId){
 
 // se muestra cuando el papá/mamá vuelve a elegir un grado que ya tiene una lista en el carrito —
 // por ejemplo gemelos/cuates en el mismo grado — para no mezclar por accidente las dos listas.
+const NIVEL_LABEL = { BASICO: 'Básico', AVANZADO: 'Avanzado' };
+// artículos alternativos (p. ej. libro de inglés Básico o Avanzado): se elige solo uno
+function opcionesHtml(basketId, filas){
+  if(!filas.length) return '';
+  const grade = gradeNameOf(basketId);
+  const qtys = ensureGradeQtys(basketId);
+  const dueño = state.gradeAssign[basketId] ? studentById(state.gradeAssign[basketId]) : null;
+  return `<div class="opcion-ingles">
+    <div class="oi-titulo">📘 Libro de inglés · elige solo uno</div>
+    ${avisoNivelInglesHtml(grade, dueño)}
+    <div class="oi-opciones">
+      ${filas.map(({it, i}) => {
+        const agotado = !utilDisponible(grade, i);
+        const sel = (qtys[i]||0) > 0;
+        return `<button type="button" class="oi-op ${sel?'sel':''}" data-opcion-pick="${i}" data-grade="${esc(basketId)}" ${agotado?'disabled':''}>
+          <span class="oi-nivel">${sel ? '✓ ' : ''}${esc(NIVEL_LABEL[it.nivel] || it.nivel || 'Opción')}</span>
+          <span class="oi-desc">${esc(it.descripcion)}</span>
+          <span class="oi-precio">${agotado ? 'No disponible por ahora' : money(it.precio_unitario)}</span>
+        </button>`;
+      }).join('')}
+    </div>
+    ${filas.some(({i}) => (qtys[i]||0) > 0) ? `<button type="button" class="btn-ghost" data-opcion-pick="-1" data-grade="${esc(basketId)}">No llevar libro de inglés</button>` : ''}
+  </div>`;
+}
+// 1° de secundaria: el nivel lo da el Liceo (lista que carga el Administrador); en 2° y 3° lo elige el papá
+function esPrimeroSecundaria(grade){ const i = infoGrado(grade); return i.nivel === 'SECUNDARIA' && i.numero === '1ro'; }
+function avisoNivelInglesHtml(grade, alumno){
+  if(!esPrimeroSecundaria(grade)) return `<div class="oi-aviso">Elige el libro según el nivel de inglés de tu hijo(a).</div>`;
+  if(!alumno) return `<div class="oi-aviso">El nivel de inglés de 1° de secundaria lo asigna el colegio. <button type="button" class="btn-link" data-nav="nivel-ingles">Consultar nivel de inglés</button></div>`;
+  const k = claveAlumno(alumno);
+  const nivel = state.nivelesIngles[k];
+  if(nivel === undefined){ setTimeout(() => consultarNivelIngles(alumno), 0); return `<div class="oi-aviso">Buscando el nivel de inglés de ${esc(nombreCompleto(alumno))}…</div>`; }
+  if(nivel === 'buscando') return `<div class="oi-aviso">Buscando el nivel de inglés de ${esc(nombreCompleto(alumno))}…</div>`;
+  if(nivel) return `<div class="oi-aviso ok">✓ Nivel de inglés de <b>${esc(nombreCompleto(alumno))}</b>: <b>${esc(NIVEL_LABEL[nivel] || nivel)}</b>. Le corresponde el libro ${esc(NIVEL_LABEL[nivel] || nivel)}.</div>`;
+  return `<div class="oi-aviso error">No encontramos el nivel de inglés de <b>${esc(nombreCompleto(alumno))}</b>. Revisa que el nombre esté completo y bien escrito, o
+    <button type="button" class="btn-link" data-nav="nivel-ingles" data-nivel-nombre="${esc(alumno.id)}">consúltalo aquí</button>.</div>`;
+}
+// clave del alumno en nivelesIngles: palabras del nombre completo, sin acentos y ordenadas (el orden no importa)
+function claveAlumno(a){
+  return 'al_' + normTexto([a.nombres, a.apellidoPaterno, a.apellidoMaterno].join(' ')).split(' ').filter(Boolean).sort().join('_').slice(0, 140);
+}
+async function consultarNivelIngles(alumno){
+  const k = claveAlumno(alumno);
+  if(state.nivelesIngles[k] !== undefined && state.nivelesIngles[k] !== 'buscando') return state.nivelesIngles[k];
+  if(state.nivelesIngles[k] === 'buscando') return null;
+  state.nivelesIngles[k] = 'buscando';
+  try{
+    const snap = await getDoc(doc(db, 'nivelesIngles', k));
+    state.nivelesIngles[k] = snap.exists() ? (snap.data().nivel || null) : null;
+  }catch(err){ console.error(err); state.nivelesIngles[k] = null; }
+  // si ya se sabe el nivel, en sus listas de 1° de secundaria se elige solo el libro que le toca
+  if(state.nivelesIngles[k] && alumno.id) Object.keys(state.gradeAssign).filter(b => state.gradeAssign[b] === alumno.id && esPrimeroSecundaria(gradeNameOf(b))).forEach(b => elegirOpcionPorNivel(b, false));
+  render();
+  return state.nivelesIngles[k];
+}
+// marca la opción que corresponde al nivel conocido; si sobrescribir=false, no cambia una elección ya hecha
+function elegirOpcionPorNivel(basketId, sobrescribir){
+  const grade = gradeNameOf(basketId);
+  const qtys = ensureGradeQtys(basketId);
+  const dueño = state.gradeAssign[basketId] ? studentById(state.gradeAssign[basketId]) : null;
+  const nivel = dueño && esPrimeroSecundaria(grade) ? state.nivelesIngles[claveAlumno(dueño)] : null;
+  const ops = GRADES[grade].items.map((it, i) => ({ it, i })).filter(x => x.it.opcion);
+  if(!ops.length || !(nivel === 'BASICO' || nivel === 'AVANZADO')) return;
+  if(!sobrescribir && ops.some(({i}) => (qtys[i]||0) > 0)) return;
+  ops.forEach(({it, i}) => { qtys[i] = (it.nivel === nivel && utilDisponible(grade, i)) ? 1 : 0; });
+}
+// listas del carrito donde falta elegir el libro de inglés
+function opcionesSinElegir(){
+  return Object.keys(state.gradeQtys).filter(b => {
+    const qtys = state.gradeQtys[b];
+    if(!Object.values(qtys).some(q => q > 0)) return false;
+    const ops = GRADES[gradeNameOf(b)].items.map((it, i) => ({ it, i })).filter(x => x.it.opcion && utilDisponible(gradeNameOf(b), x.i));
+    return ops.length && !ops.some(({i}) => (qtys[i]||0) > 0);
+  });
+}
+
+// consulta del nivel de inglés de 1° de secundaria (para papás)
+function nivelInglesView(){
+  const c = state.nivelConsulta;
+  const k = (c.nombres && c.apellidoPaterno) ? claveAlumno(c) : null;
+  const r = c.buscado && k ? state.nivelesIngles[k] : undefined;
+  return `<section class="view">
+    <div class="titulo-con-nota"><h2 style="margin:0">Nivel de inglés</h2><span class="nota-mano">1° de<br>secundaria</span></div>
+    <p style="color:var(--ink-soft); max-width:56ch;">Los alumnos de 1° de secundaria llevan el libro de inglés que corresponde a su nivel (Básico o Avanzado). Escribe el nombre completo del alumno(a) como está inscrito.</p>
+    <div class="pay-detail" style="max-width:520px;">
+      <div class="field-col"><label>Nombre(s)</label><input type="text" id="niNombres" value="${esc(c.nombres)}" placeholder="Ej. María Fernanda"></div>
+      <div class="field-col"><label>Apellido paterno</label><input type="text" id="niApPaterno" value="${esc(c.apellidoPaterno)}" placeholder="Ej. Gómez"></div>
+      <div class="field-col"><label>Apellido materno</label><input type="text" id="niApMaterno" value="${esc(c.apellidoMaterno)}" placeholder="Ej. Ruiz"></div>
+      <button class="btn btn-primary" id="niBuscarBtn">Consultar nivel</button>
+      ${r === 'buscando' ? `<div class="note-box neutral" style="margin-top:12px;">Buscando…</div>`
+        : r ? `<div class="note-box" style="margin-top:12px; font-size:1rem;">✓ Nivel de inglés: <b>${esc(NIVEL_LABEL[r] || r)}</b>. Al comprar la lista de 1° de secundaria elige el libro ${esc(NIVEL_LABEL[r] || r)}.</div>`
+        : r === null ? `<div class="note-box error" style="margin-top:12px;">No encontramos a ese alumno(a). Revisa que el nombre esté completo y bien escrito; si sigue sin aparecer, pregunta en el colegio.</div>` : ''}
+    </div>
+    <button class="btn btn-secondary" data-nav="utiles" style="margin-top:16px;">← Volver a las listas</button>
+  </section>`;
+}
+
 function gradeChooserView(grade){
   const baskets = basketsForGrade(grade);
   const label = gradoCorto(grade);
   return `
   <section class="view">
     <button class="backlink" data-back-grades="1">← Cambiar de grado</button>
-    <h2 style="margin-top:0">Ya tienes una lista de ${esc(label)} de primaria</h2>
+    <h2 style="margin-top:0">Ya tienes una lista de ${esc(gradoLargo(grade))}</h2>
     <p style="color:var(--ink-soft); margin-top:-6px;">¿Es para el mismo alumno(a) o es para otro (por ejemplo, gemelos o cuates en el mismo grado)?</p>
     <div style="display:flex; flex-direction:column; gap:10px; max-width:420px; margin-top:16px;">
       ${baskets.map(b => {
@@ -1824,22 +2025,25 @@ function gradeChooserView(grade){
 function downloadListaPDF(grade){
   const data = GRADES[grade];
   const label = gradoLargo(grade);
-  const sectionLabels = { 'MATERIAL DIARIO': 'Material de uso diario', 'PARA FORRAR': 'Para forrar', 'LIBROS': 'Libros de texto' };
+  const colegio = infoGrado(grade).nivel === 'SECUNDARIA' ? 'Colegio Floresta · Liceo Alexander Dul' : 'Liceo Alexander Dul';
 
   let rowsHtml = '';
-  let currentSection = null;
-  data.items.forEach(it => {
-    if(it.seccion !== currentSection){
-      currentSection = it.seccion;
-      rowsHtml += `<tr><td colspan="4" style="background:#eef1f7; font-weight:700; padding:6px 8px;">${esc(sectionLabels[currentSection] || currentSection)}</td></tr>`;
-    }
-    rowsHtml += `<tr>
-      <td style="text-align:center;">${it.cantidad}</td>
-      <td>${esc(it.descripcion)}</td>
-      <td style="text-align:right;">${money(it.precio_unitario)}</td>
-      <td style="text-align:right;">${money(it.total != null ? it.total : it.cantidad*it.precio_unitario)}</td>
-    </tr>`;
+  SECCIONES_LISTA.forEach(sec => {
+    const items = data.items.filter(it => it.seccion === sec);
+    if(!items.length) return;
+    rowsHtml += `<tr><td colspan="4" style="background:#FFF5CC; font-weight:700; padding:6px 8px;">${esc(SECCION_LABEL[sec] || sec)}</td></tr>`;
+    items.forEach(it => {
+      const extra = it.opcion ? `Inglés ${NIVEL_LABEL[it.nivel] || ''} — elegir solo un libro de inglés` : it.nota;
+      rowsHtml += `<tr>
+        <td style="text-align:center;">${it.cantidad}</td>
+        <td>${esc(it.descripcion)}${extra ? `<div style="font-size:11px; color:#55534E;">${esc(extra)}</div>` : ''}</td>
+        <td style="text-align:right;">${money(it.precio_unitario)}</td>
+        <td style="text-align:right;">${money(it.total != null ? it.total : it.cantidad*it.precio_unitario)}</td>
+      </tr>`;
+    });
   });
+  const tieneOpcion = data.items.some(it => it.opcion);
+  const notas = (data.notas || []).map(n => `<div>📝 ${esc(n)}</div>`).join('');
 
   const win = window.open('', '_blank');
   if(!win){ alert('Tu navegador bloqueó la ventana de impresión. Permite ventanas emergentes para este sitio e intenta de nuevo.'); return; }
@@ -1849,12 +2053,12 @@ function downloadListaPDF(grade){
     h1{ font-size:18px; margin:0 0 2px; } h2{ font-size:14px; margin:0 0 16px; font-weight:400; color:#5b6785; }
     table{ width:100%; border-collapse:collapse; font-size:13px; }
     td, th{ border:1px solid #cfd5e3; padding:5px 8px; }
-    th{ background:#22355F; color:#fff; text-align:left; }
+    th{ background:#121212; color:#fff; text-align:left; }
     .totales{ margin-top:14px; text-align:right; font-size:14px; }
     .totales b{ font-size:16px; }
   </style>
   </head><body>
-    <h1>Liceo Alexander Dul</h1>
+    <h1>${esc(colegio)}</h1>
     <h2>Lista de útiles — ${esc(label)} — Ciclo 2026-2027</h2>
     <table>
       <thead><tr><th>Cant.</th><th>Material</th><th>P. unitario</th><th>Total</th></tr></thead>
@@ -1862,8 +2066,9 @@ function downloadListaPDF(grade){
     </table>
     <div class="totales">
       <div>Total libros: ${money(data.total_libros)}</div>
-      <div><b>Total paquete completo: ${money(data.total_paquete)}</b></div>
+      <div><b>Total paquete completo: ${money(data.total_paquete)}</b>${tieneOpcion ? '<div style="font-size:11px;">(incluye un solo libro de inglés)</div>' : ''}</div>
     </div>
+    ${notas ? `<div style="margin-top:14px; font-size:12px;">${notas}</div>` : ''}
     <script>window.onload = function(){ window.print(); };<\/script>
   </body></html>`);
   win.document.close();
@@ -1874,8 +2079,12 @@ function uniformsView(){
   <section class="view">
     <div class="titulo-con-nota"><h2 style="margin:0">Uniformes</h2><span class="nota-mano">toca la foto para<br>verla en grande</span></div>
     <p style="color:var(--ink-soft); margin-top:-6px">No requieren lista previa: elige talla y cantidad, se entregan en el momento en el local.</p>
+    <div class="nav-pills" style="justify-content:flex-start; flex-wrap:wrap; margin:6px 0 14px;">
+      ${[['', 'Todos'], ...Object.entries(GRUPOS_UNIFORME)].map(([k, l]) => `<button class="pill ${state.uniFiltro===k?'active':''}" data-uni-filtro="${k}">${l}</button>`).join('')}
+    </div>
+    ${state.uniFiltro ? uniformeCompletoHtml(state.uniFiltro) : ''}
     <div class="uniform-grid">
-      ${uniformesVisibles().map(u => {
+      ${uniformesVisibles().filter(u => !state.uniFiltro || (u.para||[]).includes(state.uniFiltro)).map(u => {
         const talla = uniTallaSel(u.id);
         const agotada = stockDe(u.id+'_'+talla) <= 0;
         const sinPrecio = !(u.price > 0);
@@ -1883,6 +2092,7 @@ function uniformsView(){
         <div class="uniform-card">
           ${uniGaleriaHtml(u)}
           <h4>${esc(u.name)}</h4>
+          ${(u.para||[]).length ? `<div class="para-chips">${etiquetasPara(u.para).map(t => `<span class="chip">${esc(t)}</span>`).join('')}</div>` : ''}
           <div class="price">${sinPrecio ? '<span style="color:var(--ink-soft); font-size:0.9rem;">Precio por confirmar</span>' : money(u.price)}</div>
           ${sinPrecio ? '' : `<div class="field-row">
             <select data-uni-size="${u.id}">
@@ -1927,6 +2137,24 @@ function lightboxHtml(){
         ${n > 1 ? `<button class="btn btn-secondary btn-sm" data-lb="next" aria-label="Siguiente">›</button>` : ''}
       </div>
     </div>
+  </div>`;
+}
+
+// "Primaria · niño y niña", "Secundaria · hombre y mujer", "Primaria y secundaria"
+function etiquetasPara(para){
+  const p = new Set(para || []);
+  if(['PN','PA','SH','SM'].every(x => p.has(x))) return ['Primaria y secundaria'];
+  const out = [];
+  if(p.has('PN') || p.has('PA')) out.push('Primaria · ' + [p.has('PN') && 'niño', p.has('PA') && 'niña'].filter(Boolean).join(' y '));
+  if(p.has('SH') || p.has('SM')) out.push('Secundaria · ' + [p.has('SH') && 'hombre', p.has('SM') && 'mujer'].filter(Boolean).join(' y '));
+  return out;
+}
+// lista de lo que lleva el uniforme de un grupo, incluyendo lo que no se vende en la escuela
+function uniformeCompletoHtml(grupo){
+  const prendas = uniformesVisibles().filter(u => (u.para||[]).includes(grupo));
+  const noVende = UNIFORME_NO_SE_VENDE.filter(x => x.para.includes(grupo));
+  return `<div class="note-box neutral" style="margin-bottom:16px; font-weight:500;">
+    <b>Uniforme de ${esc(GRUPOS_UNIFORME[grupo])}:</b> ${prendas.map(u => esc(u.name)).join(' · ')}${noVende.length ? ` · ${noVende.map(x => `${esc(x.nombre)} <i>(no se vende en la escuela)</i>`).join(' · ')}` : ''}
   </div>`;
 }
 
@@ -1987,10 +2215,7 @@ function asignacionModalHtml(){
         <label>Grado</label>
         <select id="panGrado">
           <option value="">Selecciona un grado</option>
-          ${Object.keys(GRADES).map(g=>{
-            const short = gradoCorto(g);
-            return `<option value="${esc(g)}" ${n.grado===g?'selected':''}>${esc(short)} de primaria</option>`;
-          }).join('')}
+          ${gradosOrdenados().map(g => `<option value="${esc(g)}" ${n.grado===g?'selected':''}>${esc(gradoLargo(g))}</option>`).join('')}
         </select>
       </div>
       <button class="btn btn-primary btn-block" id="panGuardarBtn" style="margin-top:10px;" ${(n.nombres||'').trim().length>1 && (n.apellidoPaterno||'').trim().length>1 && (n.apellidoMaterno||'').trim().length>1 ? '' : 'disabled'}>Guardar y continuar</button>
@@ -2084,10 +2309,16 @@ function cartView(){
 
   const faltaRepartir = !carritoRepartidoCompleto();
   const totalNoDisponibles = gradeKeys.reduce((n, g) => n + noDisponiblesDeLista(g).length, 0);
+  const sinLibroIngles = opcionesSinElegir();
 
   return `
   <section class="view">
     <h2 style="margin-top:0">Tu carrito</h2>
+    ${sinLibroIngles.length ? `
+      <div class="note-box neutral" style="margin-bottom:14px;">
+        📘 Falta elegir el libro de inglés (Básico o Avanzado) en ${sinLibroIngles.map(b => `<button class="btn-link" data-nav="utiles" data-open-grade="${esc(b)}">${esc(gradoLargo(gradeNameOf(b)))}${state.gradeAssign[b] && studentById(state.gradeAssign[b]) ? ' · '+esc(nombreCompleto(studentById(state.gradeAssign[b]))) : ''}</button>`).join(', ')}. Si no lo vas a llevar, puedes seguir así.
+      </div>
+    ` : ''}
     ${totalNoDisponibles ? `
       <div class="note-box error" style="margin-bottom:14px;">
         ⚠️ ${totalNoDisponibles === 1 ? 'Un artículo de tu lista no está disponible' : totalNoDisponibles+' artículos de tus listas no están disponibles'} por ahora, así que tu pedido <b>no es el paquete completo</b>. Los verás marcados abajo como "No disponible"; tendrás que conseguirlos por tu cuenta.
@@ -2162,7 +2393,7 @@ function deliveryView(){
       <button class="choice-card ${state.fulfillment==='pickup'?'selected':''}" data-fulfillment="pickup">
         <span class="icon">🏪</span>
         <h4>Recoger en el local</h4>
-        <p>Sin costo adicional. Te avisamos cuando esté listo tu pedido.</p>
+        <p>Sin costo adicional. Te avisamos cuando esté listo y tienes ${DIAS_PARA_RECOGER} días para recogerlo.</p>
       </button>
       <button class="choice-card ${state.fulfillment==='delivery'?'selected':''}" data-fulfillment="delivery">
         <span class="icon">🚚</span>
@@ -2174,7 +2405,8 @@ function deliveryView(){
     ${state.fulfillment==='pickup' ? `
       <div class="note-box neutral">
         Horario de atención: ${STORE_HOURS_TEXT}<br>
-        Tu pedido estará preparado para recoger a partir del ${fmtDate(computeEstimatedReady())}, dentro de ese horario.
+        Tu pedido estará preparado para recoger a partir del ${fmtDate(computeEstimatedReady())}, dentro de ese horario.<br>
+        ⏰ ${avisoPlazoRecoger()}
       </div>
     ` : ''}
 
@@ -2358,7 +2590,9 @@ function confirmationView(){
            <div class="rline"><span>Fecha estimada:</span><span>${fmtDate(order.estimatedReady)}</span></div>`
         : `<div class="rline"><span>Entrega:</span><span>Recoger en el local</span></div>
            <div class="rline"><span>Horario de atención:</span><span>${STORE_HOURS_TEXT}</span></div>
-           <div class="rline"><span>Listo a partir de:</span><span>${fmtDate(order.estimatedReady)}</span></div>`}
+           <div class="rline"><span>Listo a partir de:</span><span>${fmtDate(order.estimatedReady)}</span></div>
+           <div class="rline"><span>Plazo para recoger:</span><span>${order.recogerAntes ? 'hasta el '+fmtDate(order.recogerAntes) : DIAS_PARA_RECOGER+' días desde que esté listo'}</span></div>
+           <div class="note-box neutral" style="margin-top:8px; font-weight:600;">⏰ ${avisoPlazoRecoger()}</div>`}
       <div class="rline"><span>Pago:</span><span>${order.payment==='transferencia' ? 'Transferencia (comprobante recibido)' : 'Efectivo'}</span></div>
       <hr>
       <p style="font-size:0.8rem; color:var(--ink-soft); margin:0 0 10px;">Muestra este folio o código al llegar al local:</p>
@@ -2394,6 +2628,8 @@ function trackView(){
       <div class="rline"><span>Total:</span><span>${money(o.total)}</span></div>
       <div class="rline"><span>Entrega:</span><span>${o.fulfillment==='delivery' ? 'A domicilio: '+esc(o.direccion||'') : 'Recoger en el local ('+STORE_HOURS_TEXT+')'}</span></div>
       <div class="rline"><span>Fecha estimada:</span><span>${fmtDate(o.estimatedReady)}</span></div>
+      ${o.cancelado ? `<div class="note-box error" style="margin-top:8px;">Este pedido fue cancelado${o.motivoCancelacion ? ': '+esc(o.motivoCancelacion) : ''}.</div>`
+        : o.fulfillment !== 'delivery' ? `<div class="note-box neutral" style="margin-top:8px; font-weight:600;">⏰ ${o.recogerAntes ? `Tu pedido está listo. Recógelo a más tardar el <b>${esc(fmtDate(o.recogerAntes))}</b>; si no, se cancelará.` : avisoPlazoRecoger()}</div>` : ''}
     </div>
     ${smsLogHtml(o, '💬 Seguimiento de tu pedido')}`;
   }
@@ -2463,6 +2699,10 @@ function adminDashboard(){
         <span>🔔 Ya hay existencias para ${listos.length} ${listos.length===1?'papá que está esperando':'papás que están esperando'} el aviso.</span>
         <button class="btn btn-primary btn-sm" data-admin-tab="avisos">Ver avisos</button>
       </div>` : '';
+  const vencidos = state.orders.filter(pedidoVencido);
+  const bannerVencidos = vencidos.length ? `<div class="note-box error" style="margin-top:12px;">
+      ⏰ ${vencidos.length===1 ? 'Un pedido no se recogió' : vencidos.length+' pedidos no se recogieron'} en los ${DIAS_PARA_RECOGER} días: ${vencidos.map(o => `<a href="#" data-open-order="${esc(o.folio)}" style="color:inherit;">${esc(o.folio)}</a>`).join(', ')}. Ábrelos para cancelarlos.
+    </div>` : '';
   const nuevos = state.pedidosNuevos || [];
   const bannerPedido = nuevos.length ? `<div class="note-box" style="margin-top:12px; display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;">
       <span>🛎️ ${nuevos.length===1 ? 'Llegó un pedido nuevo' : `Llegaron ${nuevos.length} pedidos nuevos`}: ${nuevos.map(f => `<a href="#" data-open-order="${esc(f)}" style="color:inherit;">${esc(f)}</a>`).join(', ')}</span>
@@ -2474,6 +2714,7 @@ function adminDashboard(){
       ${tabItems.map(([k,l])=>`<button class="tab ${state.adminTab===k?'active':''}" data-admin-tab="${k}">${l}</button>`).join('')}
     </div>
     ${bannerPedido}
+    ${bannerVencidos}
     ${banner}
     <div style="margin-top:16px;">
       ${state.adminTab==='inventario' && state.auth.role==='Administrador' ? inventoryView()
@@ -2509,10 +2750,11 @@ function ordersView(){
   const rows = filtered.slice().reverse().map(o => `
     <tr data-open-order="${esc(o.folio)}" style="cursor:pointer;">
       <td>${esc(o.folio)}</td>
-      <td>${esc(alumnosLabel(o))}<br><span style="color:var(--ink-soft); font-size:0.78rem;">${gradosLabel(o) ? esc(gradosLabel(o))+' de primaria' : ''}</span></td>
+      <td>${esc(alumnosLabel(o))}<br><span style="color:var(--ink-soft); font-size:0.78rem;">${gradosLabel(o) ? esc(gradosLabel(o)) : ''}</span></td>
       <td>${o.fulfillment==='delivery' ? 'Domicilio' : 'Recoger en local'}</td>
       <td>${payBadge(o)}</td>
-      <td><span class="badge" style="background:${stageColor(o.stageIndex)}">${stageLabel(o,o.stageIndex)}</span></td>
+      <td>${o.cancelado ? `<span class="badge" style="background:#8a8780">Cancelado</span>`
+        : `<span class="badge" style="background:${stageColor(o.stageIndex)}">${stageLabel(o,o.stageIndex)}</span>${pedidoVencido(o) ? ` <span class="badge" style="background:var(--red)">⏰ Vencido</span>` : ''}`}</td>
       <td class="num">${money(o.total)}</td>
     </tr>`).join('');
   return scanBtn + `
@@ -2527,7 +2769,9 @@ function orderDetailView(order){
 
   const isFinalNext = order.stageIndex === STAGES.length-2;
   let actionHtml = '';
-  if(order.stageIndex < STAGES.length-1 && pagoPendienteBloquea(order, order.stageIndex+1)){
+  if(order.cancelado){
+    actionHtml = `<div class="note-box error">Pedido cancelado el ${order.canceladoAt ? new Date(order.canceladoAt).toLocaleString('es-MX') : ''}${order.motivoCancelacion ? ': '+esc(order.motivoCancelacion) : ''}. Las piezas regresaron al inventario.</div>`;
+  } else if(order.stageIndex < STAGES.length-1 && pagoPendienteBloquea(order, order.stageIndex+1)){
     actionHtml = `<div class="note-box error">🔒 No se puede marcar como "${esc(stageLabel(order, order.stageIndex+1))}" hasta confirmar que la transferencia llegó a la cuenta. Revisa arriba y da clic en <b>"✓ Confirmar pago recibido"</b>.</div>`;
   } else if(order.stageIndex < STAGES.length-1){
     actionHtml = isFinalNext ? signaturePanel(order) : `<button class="btn btn-primary" id="advanceStageBtn">Marcar como: ${stageLabel(order, order.stageIndex+1)} →</button>`;
@@ -2542,7 +2786,7 @@ function orderDetailView(order){
     <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:16px;">
       <div>
         <h3 style="margin:0 0 4px;">Folio ${esc(order.folio)}</h3>
-        <div style="font-size:0.85rem; color:var(--ink-soft);">${esc(alumnosLabel(order))}${gradosLabel(order) ? ' · '+esc(gradosLabel(order))+' de primaria' : ''} · Tel. ${esc(order.cliente.telefono)}${order.cliente.correo ? ' · '+esc(order.cliente.correo) : ''}</div>
+        <div style="font-size:0.85rem; color:var(--ink-soft);">${esc(alumnosLabel(order))}${gradosLabel(order) ? ' · '+esc(gradosLabel(order)) : ''} · Tel. ${esc(order.cliente.telefono)}${order.cliente.correo ? ' · '+esc(order.cliente.correo) : ''}</div>
       </div>
       ${makeQrHtml(order.folio, 96)}
     </div>
@@ -2573,7 +2817,10 @@ function orderDetailView(order){
 
   <div class="pay-detail">
     ${adminStageTrack(order)}
+    ${!order.cancelado && order.fulfillment !== 'delivery' && order.recogerAntes && order.stageIndex === 2
+      ? `<div class="note-box ${pedidoVencido(order)?'error':'neutral'}" style="margin-bottom:10px;">⏰ ${pedidoVencido(order) ? `Venció el plazo: debía recogerse a más tardar el ${esc(fmtDate(order.recogerAntes))}.` : `Debe recogerse a más tardar el ${esc(fmtDate(order.recogerAntes))}.`}</div>` : ''}
     ${actionHtml}
+    ${!order.cancelado && order.stageIndex < STAGES.length-1 ? `<div style="margin-top:14px;"><button class="${pedidoVencido(order) ? 'btn btn-primary' : 'btn-ghost'}" id="cancelarPedidoBtn">${pedidoVencido(order) ? '✖ Cancelar pedido (no se recogió)' : 'Cancelar pedido'}</button></div>` : ''}
   </div>
   ${waButton(order)}
   ${smsLogHtml(order, '💬 Seguimiento del pedido')}
@@ -2683,6 +2930,7 @@ function cortesRows(){
   const desde = state.cortesDesde ? new Date(state.cortesDesde + 'T00:00:00') : null;
   const hasta = state.cortesHasta ? new Date(state.cortesHasta + 'T23:59:59') : null;
   return state.orders.filter(o => {
+    if(o.cancelado) return false;
     if(f==='porcobrar' && o.pagoConfirmado) return false;
     if(f==='porcapturar' && !(o.pagoConfirmado && !o.capturadoInnovat)) return false;
     if(f==='capturados' && !o.capturadoInnovat) return false;
@@ -2800,7 +3048,7 @@ function inventoryView(){
     SECCIONES_LISTA.forEach(sec => {
       const deSec = arts.filter(a => a.seccion === sec);
       if(!deSec.length) return;
-      html += `<div class="section-block"><div class="section-title"><span>${esc({'MATERIAL DIARIO':'Material de uso diario','PARA FORRAR':'Para forrar','LIBROS':'Libros de texto'}[sec])}</span></div>`;
+      html += `<div class="section-block"><div class="section-title"><span>${esc(SECCION_LABEL[sec] || sec)}</span></div>`;
       deSec.forEach(a => { html += fila(a.key, esc(a.descripcion), `${money(a.precio)} · en ${a.grados.map(g => `<span class="chip" style="background:var(--cream); margin:0 2px;">${esc(gradoCorto(g))}</span>`).join('')}`); });
       html += `</div>`;
     });
@@ -2884,7 +3132,7 @@ function mensajeAvisoPapa(a){
 // los borradores se guardan en state.uniDraft al teclear SIN re-renderizar, para que un render
 // por un pedido nuevo (onSnapshot) no borre lo que se está escribiendo.
 function uniDraftDe(u){
-  return Object.assign({ name:u.name, price: u.price ?? '', tallas:(u.tallas||[]).join(', '), activo:u.activo !== false }, state.uniDraft[u.id]||{});
+  return Object.assign({ name:u.name, price: u.price ?? '', tallas:(u.tallas||[]).join(', '), activo:u.activo !== false, para:(u.para||[]).slice() }, state.uniDraft[u.id]||{});
 }
 
 function uniformesAdminView(){
@@ -2907,6 +3155,10 @@ function uniformesAdminView(){
           <div class="field-col" style="flex:1; min-width:100px;"><label>Precio ($)</label><input type="text" inputmode="decimal" data-uni-edit="${id}" data-campo="price" value="${esc(String(d.price))}" placeholder="Por confirmar"></div>
         </div>
         <div class="field-col"><label>Tallas (separadas por coma)</label><input type="text" data-uni-edit="${id}" data-campo="tallas" value="${esc(d.tallas)}" placeholder="Ej. 6, 8, 10, 12, CH, M, G"></div>
+        <div style="font-size:0.82rem; font-weight:800; margin-top:6px;">¿Para quién es?</div>
+        <div style="display:flex; flex-wrap:wrap; gap:4px 14px; font-size:0.86rem; margin:4px 0;">
+          ${Object.entries(GRUPOS_UNIFORME).map(([k, l]) => `<label style="display:flex; gap:5px; align-items:center;"><input type="checkbox" data-uni-para="${id}" data-grupo="${k}" ${d.para.includes(k)?'checked':''}> ${l}</label>`).join('')}
+        </div>
         <label style="display:flex; gap:6px; align-items:center; font-size:0.88rem; margin:6px 0;"><input type="checkbox" data-uni-edit="${id}" data-campo="activo" ${d.activo?'checked':''}> Se muestra en la tienda</label>
         <button class="btn btn-primary btn-sm" data-uni-guardar="${id}" ${state.uniGuardando===u.id?'disabled':''}>${state.uniGuardando===u.id?'Guardando…':'Guardar'}</button>
       </div>
@@ -2920,49 +3172,156 @@ function uniformesAdminView(){
 function abrirListaEdit(grade){
   const g = GRADES[grade];
   state.listaEdit = { grade, guardando:false, mensaje:'',
-    items: g ? g.items.map((it,i) => ({ seccion: it.seccion||'MATERIAL DIARIO', descripcion: it.descripcion, cantidad: it.cantidad, precio_unitario: it.precio_unitario })) : [] };
+    notas: g && g.notas ? g.notas.join('\n') : '',
+    items: g ? g.items.map((it,i) => ({ seccion: it.seccion||'MATERIAL DIARIO', descripcion: it.descripcion, cantidad: it.cantidad, precio_unitario: it.precio_unitario,
+      nota: it.nota || '', nivel: it.opcion ? (it.nivel || '') : '' })) : [] };
 }
 
 function listasAdminView(){
-  const grados = Object.keys(GRADES);
+  const grados = gradosOrdenados();
   if(!state.listaEdit && grados.length) abrirListaEdit(grados[0]);
   const L = state.listaEdit;
   const selector = `<div class="field-row" style="flex-wrap:wrap; gap:10px; align-items:flex-end; margin-bottom:12px;">
-    <div class="field-col" style="min-width:200px;"><label>Grado</label>
-      <select id="listaGrado">${grados.map(g => `<option value="${esc(g)}" ${L && L.grade===g?'selected':''}>${esc(g)}</option>`).join('')}
+    <div class="field-col" style="min-width:240px;"><label>Grado</label>
+      <select id="listaGrado">${grados.map(g => `<option value="${esc(g)}" ${L && L.grade===g?'selected':''}>${esc(gradoLargo(g))}</option>`).join('')}
 </select></div>
   </div>`;
-  if(!L) return selector + '<p>No hay listas todavía.</p>';
+  const extras = cargaListasHtml() + nivelesInglesAdminHtml();
+  if(!L) return extras + selector + '<p>No hay listas todavía.</p>';
   const filas = L.items.map((it,i) => `<tr>
-      <td><select data-li-edit="${i}" data-campo="seccion">${SECCIONES_LISTA.map(sec => `<option ${it.seccion===sec?'selected':''}>${sec}</option>`).join('')}</select></td>
+      <td><select data-li-edit="${i}" data-campo="seccion">${SECCIONES_LISTA.map(sec => `<option value="${sec}" ${it.seccion===sec?'selected':''}>${esc(SECCION_LABEL[sec])}</option>`).join('')}</select></td>
       <td><input type="text" data-li-edit="${i}" data-campo="descripcion" value="${esc(it.descripcion)}" style="width:100%; min-width:200px;"></td>
+      <td><input type="text" data-li-edit="${i}" data-campo="nota" value="${esc(it.nota||'')}" placeholder="Ej. Español, 1 para entregar" style="width:100%; min-width:140px;"></td>
+      <td><select data-li-edit="${i}" data-campo="nivel"><option value="">—</option><option value="BASICO" ${it.nivel==='BASICO'?'selected':''}>Inglés básico</option><option value="AVANZADO" ${it.nivel==='AVANZADO'?'selected':''}>Inglés avanzado</option></select></td>
       <td><input type="text" inputmode="decimal" data-li-edit="${i}" data-campo="cantidad" value="${esc(String(it.cantidad))}" style="width:60px;"></td>
       <td><input type="text" inputmode="decimal" data-li-edit="${i}" data-campo="precio_unitario" value="${esc(String(it.precio_unitario))}" style="width:80px;"></td>
       <td><button class="btn-ghost" data-li-quitar="${i}" title="Quitar">✖</button></td>
     </tr>`).join('');
-  return selector + `
-    <p style="color:var(--ink-soft); margin-top:0;">Edita la lista de <b>${esc(L.grade)}</b> y dale <b>Guardar lista</b>. Para el siguiente ciclo puedes <b>descargar la lista en Excel</b>, cambiarla ahí y volver a <b>cargarla</b>. El Excel lleva las columnas: Sección, Descripción, Cantidad y Precio unitario. Las existencias se manejan en <b>Inventario</b>; un artículo nuevo empieza en 0 (no disponible) hasta que le pongas existencias ahí. Si un artículo ya viene en otra lista, escríbelo igual para que comparta su existencia.</p>
+  return extras + selector + `
+    <p style="color:var(--ink-soft); margin-top:0;">Edita la lista de <b>${esc(gradoLargo(L.grade))}</b> y dale <b>Guardar lista</b>. Para el siguiente ciclo puedes <b>descargar la lista en Excel</b>, cambiarla ahí y volver a <b>cargarla</b>. El Excel lleva las columnas: Sección, Descripción, Nota, Opción inglés, Cantidad y Precio unitario. La <b>Opción inglés</b> marca los libros alternativos (el papá elige solo uno). Las existencias se manejan en <b>Inventario</b>; un artículo nuevo empieza en 0 (no disponible) hasta que le pongas existencias ahí. Si un artículo ya viene en otra lista, escríbelo igual para que comparta su existencia.</p>
     <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px;">
       <button class="btn btn-secondary btn-sm" id="listaExcelBajarBtn">⬇️ Descargar Excel</button>
       <label class="btn btn-secondary btn-sm" style="cursor:pointer;">⬆️ Cargar desde Excel<input type="file" id="listaExcelSubir" accept=".xlsx,.xls,.csv" style="display:none;"></label>
     </div>
     ${L.mensaje ? `<div class="note-box ${L.mensaje.startsWith('⚠')?'error':''}" style="margin-bottom:10px;">${esc(L.mensaje)}</div>` : ''}
     <div style="overflow-x:auto;"><table class="cart-table">
-      <thead><tr><th>Sección</th><th>Descripción</th><th>Cant.</th><th>Precio</th><th></th></tr></thead>
+      <thead><tr><th>Sección</th><th>Descripción</th><th>Nota</th><th>Opción</th><th>Cant.</th><th>Precio</th><th></th></tr></thead>
       <tbody>${filas}</tbody>
     </table></div>
+    <div class="field-col" style="margin-top:12px; max-width:640px;"><label>Notas de la lista (una por renglón; ej. color de forro)</label>
+      <textarea id="listaNotas" rows="2" style="font-family:inherit;">${esc(L.notas||'')}</textarea></div>
     <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:12px;">
       <button class="btn btn-secondary btn-sm" id="listaAgregarBtn">＋ Agregar artículo</button>
       <button class="btn btn-primary" id="listaGuardarBtn" ${L.guardando?'disabled':''}>${L.guardando?'Guardando…':'Guardar lista'}</button>
       <button class="btn-ghost" id="listaDescartarBtn">Descartar cambios</button>
     </div>`;
 }
+// Listas corregidas del ciclo (data/listas-2026-2027.json, se publica con la tienda): primaria y secundaria
+// matutina / vespertina con nombres y precios unificados. Se cargan de una vez desde el panel.
+const ARCHIVO_LISTAS = 'data/listas-2026-2027.json';
+function cargaListasHtml(){
+  const c = state.cargaListas;
+  if(c.estado === 'listo') return '';
+  return `<div class="verifica-pago" style="margin-bottom:18px;">
+    <div class="vp-titulo">📦 Listas 2026–2027 corregidas: primaria y secundaria (matutino y vespertino)</div>
+    <p style="font-size:0.88rem; margin:4px 0 10px;">Reemplaza las listas de la tienda por las 12 listas revisadas: 6 de primaria, 3 de secundaria matutino y 3 de secundaria vespertino. Mismo nombre y mismo precio para un artículo en todos los grados, notas de cada cuaderno y libro de inglés Básico/Avanzado. Las existencias se conservan: los artículos que cambiaron de nombre pasan su existencia al nombre nuevo.</p>
+    ${c.mensaje ? `<div class="note-box ${c.mensaje.startsWith('⚠')?'error':''}" style="margin-bottom:10px;">${esc(c.mensaje)}</div>` : ''}
+    <button class="btn btn-primary" id="cargarListasBtn" ${c.estado==='cargando'?'disabled':''}>${c.estado==='cargando' ? 'Cargando…' : 'Cargar las 12 listas'}</button>
+  </div>`;
+}
+async function cargarListasCiclo(){
+  const c = state.cargaListas;
+  if(!inventarioUnificado()){ c.mensaje = '⚠ Primero unifica el inventario en la pestaña Inventario.'; render(); return; }
+  c.estado = 'cargando'; c.mensaje = ''; render();
+  try{
+    const res = await fetch(ARCHIVO_LISTAS, { cache: 'no-store' });
+    if(!res.ok) throw new Error('No se encontró ' + ARCHIVO_LISTAS);
+    const datos = await res.json();
+    const listas = Object.values(datos.listas);
+    if(!confirm(`Se van a cargar ${listas.length} listas (${listas.map(l => gradoCorto(l.nombre)).join(', ')}). Las listas actuales se reemplazan. ¿Continuar?`)){ c.estado = ''; render(); return; }
+    // existencias de artículos renombrados: el nombre nuevo recibe la suma de los nombres viejos
+    const nuevas = {};
+    Object.entries(datos.renombres || {}).forEach(([viejo, nuevo]) => {
+      if(state.inventory[nuevo] !== undefined || state.inventory[viejo] === undefined) return;
+      nuevas[nuevo] = (nuevas[nuevo] || 0) + state.inventory[viejo];
+    });
+    const batch = writeBatch(db);
+    listas.forEach(l => batch.set(doc(db, 'listas', slug(l.nombre)), l));
+    Object.entries(nuevas).forEach(([k, stock]) => batch.set(doc(db, 'inventario', k), { tipo: 'util', stock }, { merge: true }));
+    await batch.commit();
+    Object.assign(state.inventory, nuevas);
+    await loadListas();
+    state.listaEdit = null;
+    c.estado = 'listo';
+    alert(`✓ Se cargaron ${listas.length} listas. ${Object.keys(nuevas).length} artículos renombrados conservaron su existencia. Revisa en Inventario los artículos nuevos de secundaria: empiezan en 0.`);
+  }catch(err){
+    console.error(err);
+    c.estado = ''; c.mensaje = '⚠ No se pudieron cargar las listas. Intenta de nuevo.';
+  }
+  render();
+}
+
+// Niveles de inglés de 1° de secundaria: el Administrador carga un Excel (nombre del alumno + nivel)
+// y se guarda nivelesIngles/{claveAlumno} = { nivel }. Los papás solo pueden consultar un nombre exacto.
+function nivelesInglesAdminHtml(){
+  const n = state.nivelesCarga;
+  return `<div class="verifica-pago" style="margin-bottom:18px; border-color: var(--lilac);">
+    <div class="vp-titulo">📘 Nivel de inglés · 1° de secundaria</div>
+    <p style="font-size:0.88rem; margin:4px 0 10px;">Carga un Excel con el nombre de cada alumno y su nivel (Básico o Avanzado). Columnas: <b>Nombre(s)</b>, <b>Apellido paterno</b>, <b>Apellido materno</b> y <b>Nivel</b> (o una sola columna <b>Nombre completo</b> y <b>Nivel</b>). Los papás consultan el nivel escribiendo el nombre completo, y al comprar la lista de 1° de secundaria la tienda les sugiere el libro que les toca.</p>
+    ${n.mensaje ? `<div class="note-box ${n.mensaje.startsWith('⚠')?'error':''}" style="margin-bottom:10px;">${esc(n.mensaje)}</div>` : ''}
+    ${n.filas ? `<div class="note-box neutral" style="margin-bottom:10px;">Listos para guardar: ${n.filas.length} alumnos (${n.filas.filter(f => f.nivel==='BASICO').length} básico, ${n.filas.filter(f => f.nivel==='AVANZADO').length} avanzado)${n.omitidos ? ` · ${n.omitidos} renglones sin nombre o sin nivel se omitieron` : ''}.</div>
+      <button class="btn btn-primary btn-sm" id="nivelesGuardarBtn" ${n.guardando?'disabled':''}>${n.guardando ? 'Guardando…' : 'Guardar niveles'}</button>
+      <button class="btn-ghost" id="nivelesCancelarBtn">Cancelar</button>`
+      : `<label class="btn btn-secondary btn-sm" style="cursor:pointer;">⬆️ Cargar Excel de niveles<input type="file" id="nivelesExcel" accept=".xlsx,.xls,.csv" style="display:none;"></label>`}
+  </div>`;
+}
+async function leerNivelesExcel(file){
+  const wb = XLSX.read(await file.arrayBuffer());
+  const filas = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { defval: '' });
+  const col = (fila, ...nombres) => { const k = Object.keys(fila).find(k => nombres.some(n => normTexto(k).startsWith(n))); return k ? String(fila[k]).trim() : ''; };
+  const out = []; let omitidos = 0;
+  filas.forEach(f => {
+    const completo = col(f, 'nombre completo', 'alumno');
+    const a = completo ? { nombres: completo, apellidoPaterno: '', apellidoMaterno: '' }
+                       : { nombres: col(f, 'nombre'), apellidoPaterno: col(f, 'apellido paterno', 'paterno'), apellidoMaterno: col(f, 'apellido materno', 'materno') };
+    const nv = normTexto(col(f, 'nivel'));
+    const nivel = nv.startsWith('avan') ? 'AVANZADO' : nv.startsWith('bas') ? 'BASICO' : '';
+    if(!(a.nombres || a.apellidoPaterno) || !nivel){ omitidos++; return; }
+    out.push({ clave: claveAlumno(a), nivel });
+  });
+  return { filas: out, omitidos };
+}
+async function guardarNivelesIngles(){
+  const n = state.nivelesCarga;
+  n.guardando = true; render();
+  try{
+    for(let k = 0; k < n.filas.length; k += 400){   // un lote de Firestore admite 500 escrituras
+      const batch = writeBatch(db);
+      n.filas.slice(k, k + 400).forEach(f => batch.set(doc(db, 'nivelesIngles', f.clave), { nivel: f.nivel, grado: '1ro SECUNDARIA', actualizado: new Date().toISOString() }));
+      await batch.commit();
+    }
+    n.mensaje = `✓ Se guardaron ${n.filas.length} niveles de inglés. Ya los pueden consultar los papás.`;
+    n.filas.forEach(f => { state.nivelesIngles[f.clave] = f.nivel; });
+    n.filas = null;
+  }catch(err){ console.error(err); n.mensaje = '⚠ No se pudieron guardar los niveles. Intenta de nuevo.'; }
+  n.guardando = false; render();
+}
+
+// totales de una lista: si hay libros alternativos (opción), el paquete cuenta solo uno
+function totalesLista(items){
+  const primeraOpcion = {};
+  items.forEach(it => { if(it.opcion && !primeraOpcion[it.opcion]) primeraOpcion[it.opcion] = it; });
+  const cuenta = items.filter(it => !it.opcion || primeraOpcion[it.opcion] === it);
+  return { total_libros: cuenta.filter(it => it.seccion === 'LIBROS').reduce((a, it) => a + it.total, 0), total_paquete: cuenta.reduce((a, it) => a + it.total, 0) };
+}
 
 async function guardarLista(){
   const L = state.listaEdit;
   const items = L.items
-    .map(it => ({ seccion: SECCIONES_LISTA.includes(it.seccion) ? it.seccion : seccionDe(it.seccion), descripcion: String(it.descripcion||'').trim(),
-      cantidad: Number(String(it.cantidad).replace(',','.'))||0, precio_unitario: Number(String(it.precio_unitario).replace(/[$,\s]/g,''))||0 }))
+    .map(it => Object.assign({ seccion: SECCIONES_LISTA.includes(it.seccion) ? it.seccion : seccionDe(it.seccion), descripcion: String(it.descripcion||'').trim(),
+      cantidad: Number(String(it.cantidad).replace(',','.'))||0, precio_unitario: Number(String(it.precio_unitario).replace(/[$,\s]/g,''))||0 },
+      String(it.nota||'').trim() ? { nota: String(it.nota).trim() } : {},
+      it.nivel === 'BASICO' || it.nivel === 'AVANZADO' ? { opcion: 'ingles', nivel: it.nivel } : {}))
     .filter(it => it.descripcion);
   if(!items.length){ L.mensaje = '⚠ La lista no tiene artículos.'; render(); return; }
   if(items.some(it => !(it.precio_unitario > 0))){ L.mensaje = '⚠ Hay artículos sin precio. Revisa la columna Precio.'; render(); return; }
@@ -2970,13 +3329,15 @@ async function guardarLista(){
   if(!inventarioUnificado()){ L.mensaje = '⚠ Antes de cambiar listas, unifica el inventario en la pestaña Inventario.'; render(); return; }
   const docId = GRADES[L.grade] ? GRADES[L.grade].docId : slug(L.grade);
   const listaItems = items.map(it => Object.assign(it, { total: it.cantidad * it.precio_unitario }));
-  const total_libros = listaItems.filter(it => it.seccion==='LIBROS').reduce((a,it) => a + it.total, 0);
-  const total_paquete = listaItems.reduce((a,it) => a + it.total, 0);
+  const { total_libros, total_paquete } = totalesLista(listaItems);
+  const info = infoGrado(L.grade);
+  const notas = String(L.notas||'').split('\n').map(x => x.trim()).filter(Boolean);
   L.guardando = true; render();
   try{
     // la lista solo guarda qué lleva y a qué precio; las existencias viven en Inventario (por artículo)
-    await setDoc(doc(db, 'listas', docId), { nombre: L.grade, items: listaItems, total_libros, total_paquete });
-    GRADES[L.grade] = { docId, items: listaItems, total_libros, total_paquete };
+    const datos = { nombre: L.grade, nivel: info.nivel, turno: info.turno, numero: info.numero, items: listaItems, notas, total_libros, total_paquete };
+    await setDoc(doc(db, 'listas', docId), datos);
+    GRADES[L.grade] = Object.assign({ docId }, datos);
     abrirListaEdit(L.grade);
     state.listaEdit.mensaje = `✓ Lista de ${L.grade} guardada (${items.length} artículos, paquete completo ${money(total_paquete)}).`;
   }catch(err){
@@ -2989,7 +3350,7 @@ async function guardarLista(){
 function ventasPedidos(){
   const ahora = new Date();
   const desde = { todo:null, mes:new Date(ahora.getFullYear(), ahora.getMonth(), 1), d30:new Date(ahora - 30*864e5), d7:new Date(ahora - 7*864e5) }[state.ventasPeriodo||'todo'];
-  return state.orders.filter(o => (state.ventasAlcance==='todos' || o.pagoConfirmado) && (!desde || new Date(o.createdAt) >= desde));
+  return state.orders.filter(o => !o.cancelado && (state.ventasAlcance==='todos' || o.pagoConfirmado) && (!desde || new Date(o.createdAt) >= desde));
 }
 
 // tasa de compra por artículo de lista: de las listas pedidas donde aparece el artículo, en cuántas lo compraron.
@@ -3197,6 +3558,8 @@ function eventosNavegacion(){
     el.addEventListener('click', () => {
       const grade = el.getAttribute('data-open-grade');
       if(grade) state.grade = grade;
+      const alumnoNivel = el.getAttribute('data-nivel-nombre') && studentById(el.getAttribute('data-nivel-nombre'));
+      if(alumnoNivel) state.nivelConsulta = { nombres: alumnoNivel.nombres, apellidoPaterno: alumnoNivel.apellidoPaterno, apellidoMaterno: alumnoNivel.apellidoMaterno, buscado: false };
       const target = el.getAttribute('data-nav');
       setTab(target);
     });
@@ -3235,11 +3598,20 @@ function eventosListaUtiles(){
     const qtys = ensureGradeQtys(g);
     GRADES[gradeNameOf(g)].items.forEach((it,i) => {
       if(!utilDisponible(gradeNameOf(g), i)){ qtys[i] = 0; return; }
+      if(it.opcion){ if(preset==='ninguno' || preset==='diario') qtys[i] = 0; return; }   // el libro de inglés se elige aparte
       if(preset==='completo') qtys[i] = it.cantidad;
       else if(preset==='libros') qtys[i] = it.seccion==='LIBROS' ? it.cantidad : 0;
       else if(preset==='diario') qtys[i] = it.seccion!=='LIBROS' ? it.cantidad : 0;
       else if(preset==='ninguno') qtys[i] = 0;
     });
+    if(preset==='completo' || preset==='libros') elegirOpcionPorNivel(g, false);
+    render();
+  }));
+
+  document.querySelectorAll('[data-opcion-pick]').forEach(el => el.addEventListener('click', () => {
+    const g = el.getAttribute('data-grade'), pick = +el.getAttribute('data-opcion-pick');
+    const qtys = ensureGradeQtys(g);
+    GRADES[gradeNameOf(g)].items.forEach((it, i) => { if(it.opcion) qtys[i] = (i === pick) ? 1 : 0; });
     render();
   }));
 
@@ -3272,7 +3644,7 @@ function eventosListaUtiles(){
     const sec = el.getAttribute('data-toggle-section'), g = el.getAttribute('data-grade');
     const qtys = ensureGradeQtys(g);
     const items = GRADES[gradeNameOf(g)].items;
-    const idxs = items.map((it,i)=>it.seccion===sec && utilDisponible(gradeNameOf(g), i)?i:null).filter(i=>i!==null);
+    const idxs = items.map((it,i)=>it.seccion===sec && !it.opcion && utilDisponible(gradeNameOf(g), i)?i:null).filter(i=>i!==null);
     const allOn = idxs.every(i => qtys[i]>0);
     idxs.forEach(i => qtys[i] = allOn ? 0 : items[i].cantidad);
     render();
@@ -3289,6 +3661,9 @@ function eventosUniformes(){
   document.querySelectorAll('[data-uni-dec]').forEach(el => el.addEventListener('click', () => {
     const input = document.querySelector(`[data-uni-qty="${el.getAttribute('data-uni-dec')}"]`);
     input.value = Math.max(1, (parseInt(input.value)||1) - 1);
+  }));
+  document.querySelectorAll('[data-uni-filtro]').forEach(el => el.addEventListener('click', () => {
+    state.uniFiltro = el.getAttribute('data-uni-filtro'); render();
   }));
   document.querySelectorAll('[data-uni-size]').forEach(el => el.addEventListener('change', () => {
     state.uniSel[el.getAttribute('data-uni-size')] = el.value;
@@ -3406,8 +3781,20 @@ function eventosDescargaLista(){
   }));
 }
 
-// rastrear pedido
+// rastrear pedido y consultar nivel de inglés
 function eventosRastreo(){
+  [['niNombres','nombres'],['niApPaterno','apellidoPaterno'],['niApMaterno','apellidoMaterno']].forEach(([id, campo]) => {
+    const el = document.getElementById(id);
+    if(el) el.addEventListener('input', () => { state.nivelConsulta[campo] = el.value; state.nivelConsulta.buscado = false; });
+  });
+  const niBuscarBtn = document.getElementById('niBuscarBtn');
+  if(niBuscarBtn) niBuscarBtn.addEventListener('click', () => {
+    const c = state.nivelConsulta;
+    if(!c.nombres.trim() || !c.apellidoPaterno.trim()){ alert('Escribe al menos el nombre y el apellido paterno.'); return; }
+    c.buscado = true;
+    delete state.nivelesIngles[claveAlumno(c)];   // vuelve a consultar por si el Liceo actualizó la lista
+    consultarNivelIngles(c);
+  });
   // rastrear pedido (cliente)
   const tFolio = document.getElementById('tFolio'), tTel = document.getElementById('tTel');
   if(tFolio) tFolio.addEventListener('input', () => { state.track.folio = tFolio.value; });
@@ -3634,6 +4021,17 @@ function eventosPanelPedidos(){
   const closeOrderBtn = document.querySelector('[data-close-order]');
   if(closeOrderBtn) closeOrderBtn.addEventListener('click', () => { state.adminOrderFolio = null; render(); });
 
+  const cancelarPedidoBtn = document.getElementById('cancelarPedidoBtn');
+  if(cancelarPedidoBtn) cancelarPedidoBtn.addEventListener('click', async () => {
+    const order = state.orders.find(o => o.folio === state.adminOrderFolio);
+    if(!order) return;
+    const sugerido = pedidoVencido(order) ? `no se recogió antes del ${fmtDate(order.recogerAntes)}` : '';
+    const motivo = prompt(`¿Por qué se cancela el pedido ${order.folio}? (se le avisa al papá por correo y las piezas regresan al inventario)`, sugerido);
+    if(motivo === null) return;
+    cancelarPedidoBtn.disabled = true;
+    try{ await cancelarPedido(order, motivo.trim() || 'cancelado por el Liceo'); }
+    catch(err){ console.error(err); alert(err && err.message === 'ya-cancelado' ? 'Este pedido ya estaba cancelado.' : 'No se pudo cancelar el pedido. Intenta de nuevo.'); cancelarPedidoBtn.disabled = false; }
+  });
   const advanceBtn = document.getElementById('advanceStageBtn');
   if(advanceBtn) advanceBtn.addEventListener('click', async () => {
     const order = state.orders.find(o=>o.folio===state.adminOrderFolio);
@@ -3643,15 +4041,17 @@ function eventosPanelPedidos(){
     const newStage = order.stageIndex + 1;
     let msg = null;
     if(newStage === 1) msg = `Tu pedido ${order.folio} ya se está preparando.`;
-    else if(newStage === 2) msg = order.fulfillment==='delivery'
+    const limite = (newStage === 2 && order.fulfillment !== 'delivery') ? limiteRecoger(new Date()) : null;
+    if(newStage === 2) msg = order.fulfillment==='delivery'
       ? `Tu pedido ${order.folio} va en camino.`
-      : `Tu pedido ${order.folio} ya está listo. Puedes pasar a recogerlo: ${STORE_HOURS_TEXT}`;
+      : `Tu pedido ${order.folio} ya está listo. Tienes hasta el ${fmtDate(limite)} para recogerlo (${STORE_HOURS_TEXT}); si no, se cancelará.`;
     const newLog = msg ? [...(order.smsLog||[]), {message:msg, at:new Date().toISOString()}] : (order.smsLog||[]);
     const quien = quienPersonal();
     try{
       await updateDoc(doc(db, 'pedidos', order.folio), {
         stageIndex: newStage, smsLog: newLog,
         historial: arrayUnion({ texto: `Pasó a: ${stageLabel(order, newStage)}`, por: quien, at: new Date().toISOString() }),
+        ...(limite ? { listoAt: new Date().toISOString(), recogerAntes: limite.toISOString() } : {}),
       });
       if(msg && newStage >= 2) enviarCorreoEstado(order, msg); // "preparando" no manda correo, solo listo/en camino/entregado
       // el listener en tiempo real (onSnapshot) actualiza state.orders y vuelve a renderizar solo
@@ -3723,6 +4123,25 @@ function eventosListasAdmin(){
   document.querySelectorAll('[data-li-edit]').forEach(el => el.addEventListener(el.tagName==='SELECT' ? 'change' : 'input', () => {
     state.listaEdit.items[+el.getAttribute('data-li-edit')][el.getAttribute('data-campo')] = el.value;
   }));
+  const cargarListasBtn = document.getElementById('cargarListasBtn');
+  if(cargarListasBtn) cargarListasBtn.addEventListener('click', cargarListasCiclo);
+  const nivelesExcel = document.getElementById('nivelesExcel');
+  if(nivelesExcel) nivelesExcel.addEventListener('change', async () => {
+    const file = nivelesExcel.files && nivelesExcel.files[0];
+    if(!file) return;
+    try{
+      const r = await leerNivelesExcel(file);
+      Object.assign(state.nivelesCarga, r.filas.length ? { filas: r.filas, omitidos: r.omitidos, mensaje: '' }
+        : { filas: null, mensaje: '⚠ No encontré alumnos con nivel. Revisa que el Excel tenga columnas de nombre y una columna Nivel (Básico / Avanzado).' });
+    }catch(err){ console.error(err); state.nivelesCarga.mensaje = '⚠ No se pudo leer el Excel.'; }
+    render();
+  });
+  const nivelesGuardarBtn = document.getElementById('nivelesGuardarBtn');
+  if(nivelesGuardarBtn) nivelesGuardarBtn.addEventListener('click', guardarNivelesIngles);
+  const nivelesCancelarBtn = document.getElementById('nivelesCancelarBtn');
+  if(nivelesCancelarBtn) nivelesCancelarBtn.addEventListener('click', () => { state.nivelesCarga.filas = null; render(); });
+  const listaNotas = document.getElementById('listaNotas');
+  if(listaNotas) listaNotas.addEventListener('input', () => { state.listaEdit.notas = listaNotas.value; });
   document.querySelectorAll('[data-li-quitar]').forEach(el => el.addEventListener('click', () => {
     state.listaEdit.items.splice(+el.getAttribute('data-li-quitar'), 1); render();
   }));
@@ -3741,7 +4160,7 @@ function eventosListasAdmin(){
   const listaExcelBajarBtn = document.getElementById('listaExcelBajarBtn');
   if(listaExcelBajarBtn) listaExcelBajarBtn.addEventListener('click', () => {
     const L = state.listaEdit;
-    const filas = L.items.map(it => ({ 'Sección': it.seccion, 'Descripción': it.descripcion, 'Cantidad': Number(it.cantidad)||0, 'Precio unitario': Number(it.precio_unitario)||0 }));
+    const filas = L.items.map(it => ({ 'Sección': it.seccion, 'Descripción': it.descripcion, 'Nota': it.nota || '', 'Opción inglés': NIVEL_LABEL[it.nivel] || '', 'Cantidad': Number(it.cantidad)||0, 'Precio unitario': Number(it.precio_unitario)||0 }));
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(filas), 'Lista');
     XLSX.writeFile(wb, `Lista ${L.grade}.xlsx`);
@@ -3757,7 +4176,8 @@ function eventosListasAdmin(){
       // las columnas se reconocen sin importar acentos o mayúsculas
       const col = (fila, ...nombres) => { const k = Object.keys(fila).find(k => nombres.some(n => normTexto(k).startsWith(n))); return k ? fila[k] : ''; };
       const items = filas.map(f => ({ seccion: seccionDe(col(f,'seccion')), descripcion: String(col(f,'descripcion','articulo','producto')).trim(),
-        cantidad: col(f,'cantidad','cant'), precio_unitario: col(f,'precio') })).filter(it => it.descripcion);
+        cantidad: col(f,'cantidad','cant'), precio_unitario: col(f,'precio'), nota: String(col(f,'nota')).trim(),
+        nivel: /avan/.test(normTexto(col(f,'opcion'))) ? 'AVANZADO' : /bas/.test(normTexto(col(f,'opcion'))) ? 'BASICO' : '' })).filter(it => it.descripcion);
       if(!items.length) throw new Error('vacio');
       L.items = items;
       L.mensaje = `Se cargaron ${items.length} artículos del Excel. Revísalos y dale "Guardar lista" para que se apliquen en la tienda.`;
@@ -3779,6 +4199,11 @@ function eventosUniformesAdmin(){
       state.uniDraft[id] = Object.assign(state.uniDraft[id]||{}, { [campo]: el.type === 'checkbox' ? el.checked : el.value });
     });
   });
+  document.querySelectorAll('[data-uni-para]').forEach(el => el.addEventListener('change', () => {
+    const id = el.getAttribute('data-uni-para'), g = el.getAttribute('data-grupo');
+    const actual = uniDraftDe(uniInfo(id)).para.filter(x => x !== g);
+    state.uniDraft[id] = Object.assign(state.uniDraft[id]||{}, { para: el.checked ? [...actual, g] : actual });
+  }));
   document.querySelectorAll('[data-uni-guardar]').forEach(el => el.addEventListener('click', async () => {
     const id = el.getAttribute('data-uni-guardar');
     const u = uniInfo(id);
@@ -3788,7 +4213,7 @@ function eventosUniformesAdmin(){
     const tallas = [...new Set(String(d.tallas).split(',').map(t => t.trim()).filter(Boolean))];
     if(!tallas.length){ alert('Pon al menos una talla.'); return; }
     if(!d.name.trim()){ alert('Pon el nombre de la prenda.'); return; }
-    const datos = { name: d.name.trim(), price: precio, tallas, activo: !!d.activo, foto: u.fotos[0] || '', fotos: u.fotos, orden: u.orden ?? 999 };
+    const datos = { name: d.name.trim(), price: precio, tallas, activo: !!d.activo, para: d.para, foto: u.fotos[0] || '', fotos: u.fotos, orden: u.orden ?? 999 };
     state.uniGuardando = id; render();
     try{
       await setDoc(doc(db, 'uniformes', id), datos, { merge: true });

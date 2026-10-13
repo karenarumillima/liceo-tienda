@@ -1,0 +1,3741 @@
+{
+ "ciclo": "2026-2027",
+ "listas": {
+  "1ro PRIMARIA": {
+   "nombre": "1ro PRIMARIA",
+   "nivel": "PRIMARIA",
+   "turno": "MATUTINO",
+   "numero": "1ro",
+   "orden": 0,
+   "items": [
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 4,
+     "precio_unitario": 150,
+     "descripcion": "Cuaderno profesional cuadro chico 100 hojas",
+     "total": 600
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 150,
+     "descripcion": "Cuaderno profesional cuadro chico 100 hojas",
+     "nota": "Inglés",
+     "total": 150
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 50,
+     "descripcion": "Block marquilla 20 hojas",
+     "total": 50
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 150,
+     "descripcion": "Caja de 12 colores",
+     "total": 150
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 10,
+     "descripcion": "Goma de migajón",
+     "total": 10
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 30,
+     "descripcion": "Tijeras de punta roma",
+     "total": 30
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 10,
+     "descripcion": "Lápiz No. 2",
+     "total": 20
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 14,
+     "descripcion": "Lápiz color rojo",
+     "total": 28
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 15,
+     "descripcion": "Regla de 20 cm no flexible",
+     "total": 15
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 35,
+     "descripcion": "Sacapuntas con depósito",
+     "total": 35
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 45,
+     "descripcion": "Cinta masking tape",
+     "total": 45
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 20,
+     "descripcion": "Sobre de plástico transparente",
+     "total": 20
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 70,
+     "descripcion": "Gel antibacterial 225ml",
+     "total": 70
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 40,
+     "descripcion": "Lápiz adhesivo tipo Pritt 22 g",
+     "total": 80
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 60,
+     "descripcion": "Jabón líquido para manos 225 ml",
+     "total": 60
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 50,
+     "descripcion": "Kleenex",
+     "total": 100
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 100,
+     "descripcion": "Paquete de 100 hojas de color tamaño carta",
+     "total": 100
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 200,
+     "descripcion": "Paquete de 500 hojas blancas tamaño carta",
+     "total": 200
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 50,
+     "descripcion": "Paquete de Sanitas",
+     "total": 100
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 65,
+     "descripcion": "Paquete de 50 conos desechables",
+     "total": 65
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 65,
+     "descripcion": "Cinta diurex gruesa",
+     "total": 65
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 6,
+     "precio_unitario": 30,
+     "descripcion": "Metros de papel américa rojo",
+     "total": 180
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 30,
+     "descripcion": "Metro de foami liso color rojo",
+     "total": 30
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 35,
+     "descripcion": "Metro de foami diamantado color rojo",
+     "total": 35
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 15,
+     "descripcion": "Pliego de papel crepé blanco",
+     "total": 15
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 4,
+     "precio_unitario": 35,
+     "descripcion": "Plumón para pizarrón blanco",
+     "nota": "Negro, rojo, verde y azul",
+     "total": 140
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 40,
+     "descripcion": "Silicón frío 100 ml",
+     "total": 40
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 70,
+     "descripcion": "Toallitas húmedas",
+     "total": 70
+    },
+    {
+     "seccion": "PARA FORRAR",
+     "cantidad": 1,
+     "precio_unitario": 200,
+     "descripcion": "Pliego de mica autoadherible para forrar libros y cuadernos",
+     "total": 200
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 1145,
+     "descripcion": "Academy Stars 2nd Ed. Pupil's Book 1. (ISBN:9781035100033)",
+     "total": 1145
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 690,
+     "descripcion": "Academy Stars 2nd Ed. Workbook 1. (ISBN: 9781035100057)",
+     "total": 690
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 1150,
+     "descripcion": "Paquete Montetodo 1 Ed. Montenegro Autor: Maria Elena Aguilar Incluye: Me divierto y aprendo, Mateprácticas/Palabras a la vista, Pasame el acordeón y Financiera, Despiertamentes, Resuelvo y Pratico, Plataforma Digital. ISBN: 9786076279571",
+     "total": 1150
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 230,
+     "descripcion": "Confeti 1° Chubasco de cuentos Ed. Montenegro. ISBN: 9786078374908",
+     "total": 230
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 230,
+     "descripcion": "Juego y Repaso en 1° Ed. Montenegro. ISBN: 9786076277775",
+     "total": 230
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 230,
+     "descripcion": "Lineas y trazos 1° Ed. Montenegro Maria Elena Aguilar ISBN: 9789689181286",
+     "total": 230
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 210,
+     "descripcion": "Libreta de tareas Liceo Alexander Dul",
+     "total": 210
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 182,
+     "descripcion": "Diccionario escolar de la lengua española Larousse",
+     "total": 182
+    }
+   ],
+   "notas": [],
+   "total_libros": 4067,
+   "total_paquete": 6770
+  },
+  "2do PRIMARIA": {
+   "nombre": "2do PRIMARIA",
+   "nivel": "PRIMARIA",
+   "turno": "MATUTINO",
+   "numero": "2do",
+   "orden": 1,
+   "items": [
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 4,
+     "precio_unitario": 150,
+     "descripcion": "Cuaderno profesional cuadro chico 100 hojas",
+     "total": 600
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 150,
+     "descripcion": "Cuaderno profesional cuadro chico 100 hojas",
+     "nota": "Inglés",
+     "total": 150
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 10,
+     "descripcion": "Goma de migajón",
+     "total": 10
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 150,
+     "descripcion": "Caja de 12 Colores",
+     "total": 150
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 10,
+     "descripcion": "Lápiz No. 2",
+     "total": 20
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 14,
+     "descripcion": "Lápiz color rojo",
+     "total": 28
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 15,
+     "descripcion": "Regla de 20 cm no flexible",
+     "total": 15
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 35,
+     "descripcion": "Sacapuntas con depósito",
+     "total": 35
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 30,
+     "descripcion": "Tijeras de punta roma",
+     "total": 30
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 40,
+     "descripcion": "Lápiz adhesivo tipo Pritt 22 g",
+     "total": 80
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 20,
+     "descripcion": "Sobre de plástico transparente",
+     "total": 20
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 70,
+     "descripcion": "Gel Antibacterial 225ml",
+     "total": 70
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 50,
+     "descripcion": "Cinta masking tape grande",
+     "total": 50
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 65,
+     "descripcion": "Cinta diurex gruesa",
+     "total": 65
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 60,
+     "descripcion": "Jabón líquido para manos 225 ml",
+     "total": 60
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 50,
+     "descripcion": "Kleenex",
+     "total": 100
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 30,
+     "descripcion": "Metro de foami liso color morado",
+     "total": 30
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 35,
+     "descripcion": "Metro de foami diamantado color morado",
+     "total": 35
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 5,
+     "precio_unitario": 5,
+     "descripcion": "Hoja de foami tamaño carta",
+     "nota": "Diferentes colores",
+     "total": 25
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 200,
+     "descripcion": "Paquete de 500 hojas blancas tamaño carta",
+     "total": 200
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 50,
+     "descripcion": "Paquete de Sanitas",
+     "total": 100
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 65,
+     "descripcion": "Paquete de 50 conos desechables",
+     "total": 65
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 10,
+     "descripcion": "Cartulina blanca",
+     "total": 20
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 15,
+     "descripcion": "Pliego de papel crepé color rojo",
+     "total": 15
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 6,
+     "precio_unitario": 30,
+     "descripcion": "Metros de papel américa rosa o morado",
+     "total": 180
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 4,
+     "precio_unitario": 35,
+     "descripcion": "Plumón para pizarrón blanco",
+     "nota": "Negro, rojo, verde y azul",
+     "total": 140
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 70,
+     "descripcion": "Toallitas húmedas",
+     "total": 70
+    },
+    {
+     "seccion": "PARA FORRAR",
+     "cantidad": 1,
+     "precio_unitario": 200,
+     "descripcion": "Pliego de mica autoadherible para forrar libros y cuadernos",
+     "total": 200
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 1145,
+     "descripcion": "Academy Stars 2nd Ed. Pupil's Book 2. (ISBN: 9781035100149)",
+     "total": 1145
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 690,
+     "descripcion": "Academy Stars 2nd Ed. Workbook 2. (ISBN: 9781035100200)",
+     "total": 690
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 1150,
+     "descripcion": "Paquete Montetodo 2 Ed. Montenegro Autor: Maria Elena Aguilar Incluye: Me divierto y aprendo, Mateprácticas/Palabras a la vista, Pasame el acordeón y Financiera, Despiertamentes, Resulevo y Pratico, Plataforma digital. ISBN: 9786076279595",
+     "total": 1150
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 230,
+     "descripcion": "Confeti 2° Chubasco de cuentos Ed. Montenegro. ISBN: 9786078374892",
+     "total": 230
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 230,
+     "descripcion": "Juego y Repaso en 2° Ed. Montenegro. ISBN: 9786076277720",
+     "total": 230
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 230,
+     "descripcion": "Lineas y trazos 2° Ed. Montenegro Maria Elena Aguilar ISBN: 9789689181293",
+     "total": 230
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 210,
+     "descripcion": "Libreta de tareas Liceo Alexander Dul",
+     "total": 210
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 182,
+     "descripcion": "Diccionario escolar de la lengua española Larousse",
+     "total": 182
+    }
+   ],
+   "notas": [],
+   "total_libros": 4067,
+   "total_paquete": 6630
+  },
+  "3ro PRIMARIA": {
+   "nombre": "3ro PRIMARIA",
+   "nivel": "PRIMARIA",
+   "turno": "MATUTINO",
+   "numero": "3ro",
+   "orden": 2,
+   "items": [
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 150,
+     "descripcion": "Cuaderno profesional cuadro chico 100 hojas",
+     "total": 300
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 170,
+     "descripcion": "Cuaderno profesional cuadro chico 200 hojas",
+     "total": 170
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 150,
+     "descripcion": "Cuaderno profesional cuadro chico 100 hojas",
+     "nota": "Inglés",
+     "total": 150
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 120,
+     "descripcion": "Cuaderno profesional Norma para música",
+     "total": 120
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 280,
+     "descripcion": "Melódica",
+     "total": 280
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 150,
+     "descripcion": "Caja de 12 colores",
+     "total": 150
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 10,
+     "descripcion": "Goma de migajón",
+     "total": 10
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 14,
+     "descripcion": "Lápiz color rojo",
+     "total": 28
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 10,
+     "descripcion": "Lápiz No. 2",
+     "total": 20
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 15,
+     "descripcion": "Regla de 20 cm no flexible",
+     "total": 15
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 35,
+     "descripcion": "Sacapuntas con depósito",
+     "total": 35
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 30,
+     "descripcion": "Tijeras de punta roma",
+     "total": 30
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 65,
+     "descripcion": "Cinta diurex gruesa",
+     "total": 65
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 40,
+     "descripcion": "Lápiz adhesivo tipo Pritt 22 g",
+     "total": 80
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 40,
+     "descripcion": "Silicón frío 100 ml",
+     "total": 40
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 20,
+     "descripcion": "Sobre de plástico transparente",
+     "total": 20
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 70,
+     "descripcion": "Gel Antibacterial 225ml",
+     "total": 70
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 5,
+     "precio_unitario": 5,
+     "descripcion": "Hoja de foami tamaño carta",
+     "nota": "Diferentes colores",
+     "total": 25
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 50,
+     "descripcion": "Kleenex",
+     "total": 100
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 60,
+     "descripcion": "Jabón líquido para manos 225 ml",
+     "total": 60
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 30,
+     "descripcion": "Metro de foami liso color negro",
+     "total": 30
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 35,
+     "descripcion": "Metro de foami diamantado color negro",
+     "total": 35
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 15,
+     "descripcion": "Pliego de papel crepé amarillo",
+     "total": 15
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 50,
+     "descripcion": "Paquete de Sanitas",
+     "total": 100
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 200,
+     "descripcion": "Paquete de 500 hojas blancas tamaño carta",
+     "total": 200
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 65,
+     "descripcion": "Paquete de 50 conos desechables",
+     "total": 65
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 6,
+     "precio_unitario": 30,
+     "descripcion": "Metros de papel américa color negro",
+     "total": 180
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 4,
+     "precio_unitario": 35,
+     "descripcion": "Plumón para pizarrón blanco",
+     "nota": "Negro, rojo, verde y azul",
+     "total": 140
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 10,
+     "descripcion": "Cartulina blanca",
+     "total": 20
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 70,
+     "descripcion": "Toallitas húmedas",
+     "total": 70
+    },
+    {
+     "seccion": "PARA FORRAR",
+     "cantidad": 1,
+     "precio_unitario": 200,
+     "descripcion": "Pliego de mica autoadherible para forrar libros y cuadernos",
+     "total": 200
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 1145,
+     "descripcion": "Academy Stars 2nd Ed. Pupil's Book 3. (ISBN: 9781035100293)",
+     "total": 1145
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 690,
+     "descripcion": "Academy Stars 2nd Ed. Workbook 3. (ISBN: 9781035100361)",
+     "total": 690
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 200,
+     "descripcion": "Diccionario español-inglés pocket",
+     "total": 200
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 1150,
+     "descripcion": "Paquete Montetodo 3 Ed. Montenegro Autor: Maria Elena Aguilar Incluye: Me divierto y aprendo, Mateprácticas/ Palabras a la vista, Pasame el acordeón y Financiera, Despiertamentes, Resuelvo y Practico, Plataforma Digital. ISBN: 9786076279618",
+     "total": 1150
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 230,
+     "descripcion": "Confeti 3° Chubasco de cuentos Ed. Montenegro. ISBN: 9786078374861",
+     "total": 230
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 230,
+     "descripcion": "Juego y Repaso en 3° Ed. Montenegro. ISBN: 9786076277737",
+     "total": 230
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 230,
+     "descripcion": "Lineas y trazos 3° Ed. Montenegro Maria Elena Aguilar ISBN: 9789689181309",
+     "total": 230
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 210,
+     "descripcion": "Libreta de tareas Liceo Alexander Dul",
+     "total": 210
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 182,
+     "descripcion": "Diccionario escolar de la lengua española Larousse",
+     "total": 182
+    }
+   ],
+   "notas": [],
+   "total_libros": 4267,
+   "total_paquete": 7090
+  },
+  "4to PRIMARIA": {
+   "nombre": "4to PRIMARIA",
+   "nivel": "PRIMARIA",
+   "turno": "MATUTINO",
+   "numero": "4to",
+   "orden": 3,
+   "items": [
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 150,
+     "descripcion": "Cuaderno profesional cuadro chico 100 hojas",
+     "total": 300
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 170,
+     "descripcion": "Cuaderno profesional cuadro chico 200 hojas",
+     "total": 170
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 150,
+     "descripcion": "Cuaderno profesional cuadro chico 100 hojas",
+     "nota": "Inglés",
+     "total": 150
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 120,
+     "descripcion": "Cuaderno profesional Norma para música",
+     "total": 120
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 280,
+     "descripcion": "Melódica",
+     "total": 280
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 280,
+     "descripcion": "Caja de 24 colores",
+     "total": 280
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 10,
+     "descripcion": "Goma de migajón",
+     "total": 10
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 135,
+     "descripcion": "Juego de geometría con compás de precisión",
+     "total": 135
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 10,
+     "descripcion": "Lápiz No. 2",
+     "total": 20
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 35,
+     "descripcion": "Sacapuntas con depósito",
+     "total": 35
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 30,
+     "descripcion": "Tijeras de punta roma",
+     "total": 30
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 40,
+     "descripcion": "Lápiz adhesivo tipo Pritt 22 g",
+     "total": 80
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 40,
+     "descripcion": "Silicón frío 100 ml",
+     "total": 40
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 6,
+     "precio_unitario": 10,
+     "descripcion": "Bolígrafos de tinta azul, negra y roja",
+     "total": 60
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 90,
+     "descripcion": "Cinta doble cara (1.27 x 2.03)",
+     "total": 90
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 20,
+     "descripcion": "Sobre de plástico transparente",
+     "total": 20
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 5,
+     "precio_unitario": 5,
+     "descripcion": "Hoja de foami tamaño carta",
+     "nota": "Diferentes colores",
+     "total": 25
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 60,
+     "descripcion": "Paquete de 200 hojas blancas tamaño carta",
+     "total": 60
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 60,
+     "descripcion": "Jabón líquido para manos 225 ml",
+     "total": 120
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 80,
+     "descripcion": "Nano tape",
+     "total": 80
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 35,
+     "descripcion": "Marcatextos",
+     "total": 35
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 50,
+     "descripcion": "Kleenex",
+     "total": 50
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 50,
+     "descripcion": "Paquete de Sanitas",
+     "total": 50
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 65,
+     "descripcion": "Paquete de 50 conos desechables",
+     "total": 65
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 30,
+     "descripcion": "Metro de foami liso color verde bandera",
+     "total": 30
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 35,
+     "descripcion": "Metro de foami diamantado color verde bandera",
+     "total": 35
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 6,
+     "precio_unitario": 30,
+     "descripcion": "Metros de papel américa de color verde bandera",
+     "total": 180
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 4,
+     "precio_unitario": 35,
+     "descripcion": "Plumón para pizarrón blanco",
+     "nota": "Negro, rojo, verde y azul",
+     "total": 140
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 15,
+     "descripcion": "Pliego de papel crepé color verde bandera",
+     "total": 15
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 17,
+     "descripcion": "Cartulina negra",
+     "total": 34
+    },
+    {
+     "seccion": "PARA FORRAR",
+     "cantidad": 1,
+     "precio_unitario": 200,
+     "descripcion": "Pliego de mica autoadherible para forrar libros y cuadernos",
+     "total": 200
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 1145,
+     "descripcion": "Academy Stars 2nd Ed. Pupil's Book 4. (ISBN: 9781035100446)",
+     "total": 1145
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 690,
+     "descripcion": "Academy Stars 2nd Ed. Workbook 4. (ISBN: 9781035100507)",
+     "total": 690
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 200,
+     "descripcion": "Diccionario español-inglés pocket",
+     "total": 200
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 1150,
+     "descripcion": "Paquete Montetodo 4 Ed. Montenegro Autor: Maria Elena Aguilar Incluye: Me divierto y aprendo, Mateprácticas/ Palabras a la vista, Pasame el acordeón y Financiera, Despiertamentes, Resuelvo y Practico, Plataforma Digital. ISBN: 9786076279632",
+     "total": 1150
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 230,
+     "descripcion": "Confeti 4°Ed. Montenegro. ISBN: 9786078374830",
+     "total": 230
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 230,
+     "descripcion": "Juego y Repaso en 4° Ed. Montenegro. ISBN: 9786076277744",
+     "total": 230
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 230,
+     "descripcion": "Lineas y trazos 4° Ed. Montenegro Maria Elena Aguilar ISBN: 9789689181316",
+     "total": 230
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 210,
+     "descripcion": "Libreta de tareas Liceo Alexander Dul",
+     "total": 210
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 182,
+     "descripcion": "Diccionario escolar de la lengua española Larousse",
+     "total": 182
+    }
+   ],
+   "notas": [],
+   "total_libros": 4267,
+   "total_paquete": 7206
+  },
+  "5to PRIMARIA": {
+   "nombre": "5to PRIMARIA",
+   "nivel": "PRIMARIA",
+   "turno": "MATUTINO",
+   "numero": "5to",
+   "orden": 4,
+   "items": [
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 150,
+     "descripcion": "Cuaderno profesional cuadro chico 100 hojas",
+     "total": 300
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 170,
+     "descripcion": "Cuaderno profesional cuadro chico 200 hojas",
+     "total": 170
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 150,
+     "descripcion": "Cuaderno profesional cuadro chico 100 hojas",
+     "nota": "Inglés",
+     "total": 150
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 120,
+     "descripcion": "Cuaderno profesional Norma para música",
+     "total": 120
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 280,
+     "descripcion": "Melódica",
+     "total": 280
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 280,
+     "descripcion": "Caja de 24 colores",
+     "total": 280
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 10,
+     "descripcion": "Goma de migajón",
+     "total": 10
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 35,
+     "descripcion": "Sacapuntas con depósito",
+     "total": 35
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 135,
+     "descripcion": "Juego de geometría con compás de precisión",
+     "total": 135
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 10,
+     "descripcion": "Lápiz No. 2",
+     "total": 20
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 30,
+     "descripcion": "Tijeras de punta roma",
+     "total": 30
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 50,
+     "descripcion": "Kleenex",
+     "total": 50
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 20,
+     "descripcion": "Sobre de plástico transparente",
+     "total": 20
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 40,
+     "descripcion": "Lápiz adhesivo tipo Pritt 22 g",
+     "total": 40
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 40,
+     "descripcion": "Silicón frío 100 ml",
+     "total": 40
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 6,
+     "precio_unitario": 10,
+     "descripcion": "Bolígrafos de tinta azul, negra y roja",
+     "total": 60
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 60,
+     "descripcion": "Paquete de 200 hojas blancas tamaño carta",
+     "total": 60
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 60,
+     "descripcion": "Jabón líquido para manos 225 ml",
+     "total": 120
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 90,
+     "descripcion": "Cinta doble cara (1.27 x 2.03)",
+     "total": 90
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 80,
+     "descripcion": "Nano tape",
+     "total": 80
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 17,
+     "descripcion": "Cartulina negra",
+     "total": 34
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 5,
+     "precio_unitario": 5,
+     "descripcion": "Hoja de foami tamaño carta",
+     "nota": "Diferentes colores",
+     "total": 25
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 50,
+     "descripcion": "Paquete de Sanitas",
+     "total": 50
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 65,
+     "descripcion": "Paquete de 50 conos desechables",
+     "total": 65
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 6,
+     "precio_unitario": 30,
+     "descripcion": "Metros de papel américa color azul",
+     "total": 180
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 35,
+     "descripcion": "Metro de foami diamantado azul",
+     "total": 35
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 30,
+     "descripcion": "Metro de foami liso color azul",
+     "total": 30
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 4,
+     "precio_unitario": 35,
+     "descripcion": "Plumón para pizarrón blanco",
+     "nota": "Negro, rojo, verde y azul",
+     "total": 140
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 15,
+     "descripcion": "Pliego de papel crepé color naranja",
+     "total": 15
+    },
+    {
+     "seccion": "PARA FORRAR",
+     "cantidad": 1,
+     "precio_unitario": 200,
+     "descripcion": "Pliego de mica autoadherible para forrar libros y cuadernos",
+     "total": 200
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 1145,
+     "descripcion": "Academy Stars 2nd Ed. Pupil's Book 5. (ISBN: 9781035100620)",
+     "total": 1145
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 690,
+     "descripcion": "Academy Stars 2nd Ed. Workbook 5 Ed. (ISBN: 9781035100699)",
+     "total": 690
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 200,
+     "descripcion": "Diccionario español-inglés pocket",
+     "total": 200
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 1150,
+     "descripcion": "Paquete Montetodo 5 Ed. Montenegro Autor: Maria Elena Aguilar Incluye: Me divierto y aprendo, Mateprácticas/ Palabras a la vista, Pasame el acordeón y Financiera, Despiertamentes, Resuelvo y Practico, Plataforma Digital. ISBN: 9786076279656",
+     "total": 1150
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 230,
+     "descripcion": "Confeti 5°Ed. Montenegro. ISBN: 9786078374816",
+     "total": 230
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 230,
+     "descripcion": "Juego y Repaso en 5° Ed. Montenegro. ISBN: 9786076277751",
+     "total": 230
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 230,
+     "descripcion": "Lineas y trazos 5° Ed. Montenegro Maria Elena Aguilar ISBN: 9789689181323",
+     "total": 230
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 210,
+     "descripcion": "Libreta de tareas Liceo Alexander Dul",
+     "total": 210
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 182,
+     "descripcion": "Diccionario escolar de la lengua española Larousse",
+     "total": 182
+    }
+   ],
+   "notas": [],
+   "total_libros": 4267,
+   "total_paquete": 7131
+  },
+  "6to PRIMARIA": {
+   "nombre": "6to PRIMARIA",
+   "nivel": "PRIMARIA",
+   "turno": "MATUTINO",
+   "numero": "6to",
+   "orden": 5,
+   "items": [
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 150,
+     "descripcion": "Cuaderno profesional cuadro chico 100 hojas",
+     "total": 300
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 170,
+     "descripcion": "Cuaderno profesional cuadro chico 200 hojas",
+     "total": 170
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 150,
+     "descripcion": "Cuaderno profesional cuadro chico 100 hojas",
+     "nota": "Inglés",
+     "total": 150
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 120,
+     "descripcion": "Cuaderno profesional Norma para música",
+     "total": 120
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 280,
+     "descripcion": "Melódica",
+     "total": 280
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 280,
+     "descripcion": "Caja de 24 colores",
+     "total": 280
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 10,
+     "descripcion": "Goma de migajón",
+     "total": 10
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 10,
+     "descripcion": "Lápiz No. 2",
+     "total": 20
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 135,
+     "descripcion": "Juego de geometría con compás de precisión",
+     "total": 135
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 35,
+     "descripcion": "Sacapuntas con depósito",
+     "total": 35
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 30,
+     "descripcion": "Tijeras de punta roma",
+     "total": 30
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 6,
+     "precio_unitario": 10,
+     "descripcion": "Bolígrafos de tinta azul, negra y roja",
+     "total": 60
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 40,
+     "descripcion": "Lápiz adhesivo tipo Pritt 22 g",
+     "total": 40
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 50,
+     "descripcion": "Kleenex",
+     "total": 50
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 60,
+     "descripcion": "Paquete de 200 hojas blancas tamaño carta",
+     "total": 60
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 60,
+     "descripcion": "Jabón líquido para manos 225 ml",
+     "total": 120
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 20,
+     "descripcion": "Sobre de plástico transparente",
+     "total": 20
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 35,
+     "descripcion": "Marcatextos",
+     "total": 35
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 90,
+     "descripcion": "Cinta doble cara (1.27 x 2.03)",
+     "total": 90
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 80,
+     "descripcion": "Nano tape",
+     "total": 80
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 17,
+     "descripcion": "Cartulina negra",
+     "total": 34
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 5,
+     "precio_unitario": 5,
+     "descripcion": "Hoja de foami tamaño carta",
+     "nota": "Diferentes colores",
+     "total": 25
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 50,
+     "descripcion": "Paquete de Sanitas",
+     "total": 50
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 65,
+     "descripcion": "Paquete de 50 conos desechables",
+     "total": 65
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 35,
+     "descripcion": "Metro de foami diamantado amarillo",
+     "total": 35
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 6,
+     "precio_unitario": 30,
+     "descripcion": "Metros de papel américa color amarillo",
+     "total": 180
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 30,
+     "descripcion": "Metro de foami liso color amarillo",
+     "total": 30
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 15,
+     "descripcion": "Pliego de papel crepé color azul cielo",
+     "total": 15
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 4,
+     "precio_unitario": 35,
+     "descripcion": "Plumón para pizarrón blanco",
+     "nota": "Negro, rojo, verde y azul",
+     "total": 140
+    },
+    {
+     "seccion": "PARA FORRAR",
+     "cantidad": 1,
+     "precio_unitario": 200,
+     "descripcion": "Pliego de mica autoadherible para forrar libros y cuadernos",
+     "total": 200
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 1145,
+     "descripcion": "Academy Stars 2nd Ed. Pupil's Book 6 (9781035100781)",
+     "total": 1145
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 690,
+     "descripcion": "Academy Stars Workbook 6 Ed. (ISBN: 9781035100859)",
+     "total": 690
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 200,
+     "descripcion": "Diccionario español-inglés pocket",
+     "total": 200
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 1150,
+     "descripcion": "Paquete Montetodo 6 Ed. Montenegro Autor: Maria Elena Aguilar Incluye: Me divierto y aprendo, Mateprácticas/ Palabras a la vista, Pasame el acordeón y Financiera, Despiertamentes, Resuelvo y Practico, Plataforma Digital. ISBN: 9786076279670",
+     "total": 1150
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 230,
+     "descripcion": "Confeti 6°Ed. Montenegro. ISBN: 9786078374809",
+     "total": 230
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 230,
+     "descripcion": "Juego y Repaso en 6° Ed. Montenegro. ISBN: 9786076277768",
+     "total": 230
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 230,
+     "descripcion": "Lineas y trazos 6° Ed. Montenegro Maria Elena Aguilar ISBN: 9789689181330",
+     "total": 230
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 210,
+     "descripcion": "Libreta de tareas Liceo Alexander Dul",
+     "total": 210
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 182,
+     "descripcion": "Diccionario escolar de la lengua española Larousse",
+     "total": 182
+    }
+   ],
+   "notas": [],
+   "total_libros": 4267,
+   "total_paquete": 7126
+  },
+  "1ro SECUNDARIA": {
+   "nombre": "1ro SECUNDARIA",
+   "nivel": "SECUNDARIA",
+   "turno": "MATUTINO",
+   "numero": "1ro",
+   "orden": 10,
+   "items": [
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 3,
+     "precio_unitario": 150,
+     "descripcion": "Cuaderno profesional cuadro chico 100 hojas",
+     "nota": "Francés, educación física (comparten), innovación, socioemocional (comparten) e Historia",
+     "total": 450
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 150,
+     "descripcion": "Cuaderno profesional cuadro chico 100 hojas",
+     "nota": "Inglés",
+     "total": 150
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 150,
+     "descripcion": "Cuaderno profesional cuadro chico 100 hojas",
+     "nota": "Español",
+     "total": 150
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 150,
+     "descripcion": "Cuaderno profesional cuadro chico 100 hojas",
+     "nota": "Matemáticas",
+     "total": 150
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 100,
+     "descripcion": "Constitución Política de los Estados Unidos Mexicanos",
+     "total": 100
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 35,
+     "descripcion": "Block de hojas milimétricas 50 hojas",
+     "total": 35
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 120,
+     "descripcion": "Cuaderno profesional Norma para música",
+     "total": 120
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 10,
+     "descripcion": "Lápiz No. 2",
+     "total": 20
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 150,
+     "descripcion": "Caja de 12 colores",
+     "total": 150
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 30,
+     "descripcion": "Tijeras de punta roma",
+     "total": 30
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 10,
+     "descripcion": "Goma de migajón",
+     "total": 10
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 35,
+     "descripcion": "Sacapuntas con depósito",
+     "total": 35
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 300,
+     "descripcion": "Bata blanca de algodón",
+     "total": 300
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 280,
+     "descripcion": "Melódica",
+     "total": 280
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 135,
+     "descripcion": "Juego de geometría con compás de precisión",
+     "total": 135
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 4,
+     "precio_unitario": 10,
+     "descripcion": "Bolígrafo de tinta negra",
+     "total": 40
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 3,
+     "precio_unitario": 10,
+     "descripcion": "Bolígrafo de tinta azul",
+     "total": 30
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 35,
+     "descripcion": "Marcatextos",
+     "total": 35
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 10,
+     "descripcion": "Bolígrafo de tinta roja",
+     "total": 10
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 210,
+     "descripcion": "Libreta de tareas Colegio Floresta",
+     "total": 210
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 40,
+     "descripcion": "Lápiz adhesivo tipo Pritt 22 g",
+     "total": 40
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 60,
+     "descripcion": "Corrector de cinta",
+     "total": 60
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 20,
+     "descripcion": "Fólder de plástico",
+     "total": 20
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 90,
+     "descripcion": "Block de papel albanene",
+     "total": 90
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 10,
+     "descripcion": "Bolígrafo de tinta rosa",
+     "total": 20
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 4,
+     "precio_unitario": 35,
+     "descripcion": "Plumón para pizarrón blanco",
+     "nota": "Negro, rojo, verde y azul",
+     "total": 140
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 1,
+     "precio_unitario": 75,
+     "descripcion": "Lápiz adhesivo tipo Pritt 42 g",
+     "total": 75
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 2,
+     "precio_unitario": 80,
+     "descripcion": "Nano tape",
+     "total": 160
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 5,
+     "precio_unitario": 7,
+     "descripcion": "Fólder tamaño carta beige",
+     "total": 35
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 1,
+     "precio_unitario": 135,
+     "descripcion": "Paquete de 300 hojas blancas tamaño carta",
+     "total": 135
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 1,
+     "precio_unitario": 25,
+     "descripcion": "Bote de pintura Vinci",
+     "nota": "Cualquier color",
+     "total": 25
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 5,
+     "precio_unitario": 10,
+     "descripcion": "Cartulina blanca",
+     "total": 50
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 2,
+     "precio_unitario": 30,
+     "descripcion": "Pliego de mica",
+     "total": 60
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 5,
+     "precio_unitario": 5,
+     "descripcion": "Hoja de foami tamaño carta",
+     "nota": "Diferentes colores",
+     "total": 25
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 3,
+     "precio_unitario": 15,
+     "descripcion": "Hoja de foami diamantado",
+     "total": 45
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 1,
+     "precio_unitario": 35,
+     "descripcion": "Marcatextos",
+     "total": 35
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 1,
+     "precio_unitario": 60,
+     "descripcion": "Jabón líquido para manos 225 ml",
+     "total": 60
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 3,
+     "precio_unitario": 9,
+     "descripcion": "Sobre amarillo tamaño carta",
+     "total": 27
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 1,
+     "precio_unitario": 125,
+     "descripcion": "Paquete de conos para tomar agua",
+     "total": 125
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 3,
+     "precio_unitario": 50,
+     "descripcion": "Paquete de Sanitas",
+     "total": 150
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 1,
+     "precio_unitario": 40,
+     "descripcion": "Silicón frío 100 ml",
+     "total": 40
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 5280,
+     "descripcion": "Paquete Larousse",
+     "total": 5280
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 1145,
+     "descripcion": "Gateway to the World A1+ Student's book ISBN: 9781380042309",
+     "opcion": "ingles",
+     "nivel": "BASICO",
+     "total": 1145
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 1145,
+     "descripcion": "Gateway to the World A2 Student's book ISBN: 9781380042507",
+     "opcion": "ingles",
+     "nivel": "AVANZADO",
+     "total": 1145
+    }
+   ],
+   "notas": [
+    "Todos los libros de texto se forran solo con plástico transparente y etiqueta con nombre.",
+    "Todos los cuadernos se forran de color amarillo."
+   ],
+   "total_libros": 6425,
+   "total_paquete": 10282
+  },
+  "2do SECUNDARIA": {
+   "nombre": "2do SECUNDARIA",
+   "nivel": "SECUNDARIA",
+   "turno": "MATUTINO",
+   "numero": "2do",
+   "orden": 11,
+   "items": [
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 3,
+     "precio_unitario": 150,
+     "descripcion": "Cuaderno profesional cuadro chico 100 hojas",
+     "nota": "Francés, educación física (comparten), innovación, socioemocional (comparten) e Historia",
+     "total": 450
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 150,
+     "descripcion": "Cuaderno profesional cuadro chico 100 hojas",
+     "nota": "Inglés",
+     "total": 150
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 150,
+     "descripcion": "Cuaderno profesional cuadro chico 100 hojas",
+     "nota": "Español",
+     "total": 150
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 150,
+     "descripcion": "Cuaderno profesional cuadro chico 100 hojas",
+     "nota": "Matemáticas",
+     "total": 150
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 120,
+     "descripcion": "Cuaderno profesional Norma para música",
+     "total": 120
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 100,
+     "descripcion": "Constitución Política de los Estados Unidos Mexicanos",
+     "total": 100
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 40,
+     "descripcion": "Lápiz adhesivo tipo Pritt 22 g",
+     "total": 40
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 10,
+     "descripcion": "Lápiz No. 2",
+     "total": 20
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 150,
+     "descripcion": "Caja de 12 colores",
+     "total": 150
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 30,
+     "descripcion": "Tijeras de punta roma",
+     "total": 30
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 10,
+     "descripcion": "Goma de migajón",
+     "total": 10
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 35,
+     "descripcion": "Sacapuntas con depósito",
+     "total": 35
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 300,
+     "descripcion": "Bata blanca de algodón",
+     "total": 300
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 280,
+     "descripcion": "Melódica",
+     "total": 280
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 135,
+     "descripcion": "Juego de geometría con compás de precisión",
+     "total": 135
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 10,
+     "descripcion": "Bolígrafo de tinta negra",
+     "total": 20
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 10,
+     "descripcion": "Bolígrafo de tinta azul",
+     "total": 20
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 35,
+     "descripcion": "Marcatextos",
+     "total": 70
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 10,
+     "descripcion": "Bolígrafo de tinta roja",
+     "total": 20
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 210,
+     "descripcion": "Libreta de tareas Colegio Floresta",
+     "total": 210
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 20,
+     "descripcion": "Fólder de plástico",
+     "total": 20
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 60,
+     "descripcion": "Corrector de cinta",
+     "total": 60
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 1,
+     "precio_unitario": 135,
+     "descripcion": "Paquete de 300 hojas blancas tamaño carta",
+     "total": 135
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 1,
+     "precio_unitario": 100,
+     "descripcion": "Paquete de 100 hojas de color tamaño carta",
+     "total": 100
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 5,
+     "precio_unitario": 17,
+     "descripcion": "Cartulina de color",
+     "nota": "Diferentes colores",
+     "total": 85
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 4,
+     "precio_unitario": 35,
+     "descripcion": "Plumón para pizarrón blanco",
+     "nota": "Negro, rojo, verde y azul",
+     "total": 140
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 3,
+     "precio_unitario": 10,
+     "descripcion": "Bolígrafo de tinta rosa",
+     "total": 30
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 3,
+     "precio_unitario": 10,
+     "descripcion": "Bolígrafo de tinta azul",
+     "total": 30
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 1,
+     "precio_unitario": 45,
+     "descripcion": "Cinta masking tape",
+     "total": 45
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 5,
+     "precio_unitario": 50,
+     "descripcion": "Paquete de Sanitas",
+     "nota": "2 para laboratorio",
+     "total": 250
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 1,
+     "precio_unitario": 25,
+     "descripcion": "Bote de pintura Vinci",
+     "nota": "Cualquier color",
+     "total": 25
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 1,
+     "precio_unitario": 125,
+     "descripcion": "Paquete de conos para tomar agua",
+     "total": 125
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 3,
+     "precio_unitario": 9,
+     "descripcion": "Sobre amarillo tamaño carta",
+     "total": 27
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 1,
+     "precio_unitario": 60,
+     "descripcion": "Jabón líquido para manos 225 ml",
+     "total": 60
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 5,
+     "precio_unitario": 7,
+     "descripcion": "Fólder tamaño carta beige",
+     "total": 35
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 2,
+     "precio_unitario": 15,
+     "descripcion": "Rollo de papel kraft",
+     "total": 30
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 1,
+     "precio_unitario": 40,
+     "descripcion": "Silicón frío 100 ml",
+     "total": 40
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 5280,
+     "descripcion": "Paquete Larousse",
+     "total": 5280
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 1145,
+     "descripcion": "Gateway to the World A2 Student's book ISBN: 9781380042507",
+     "opcion": "ingles",
+     "nivel": "BASICO",
+     "total": 1145
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 1145,
+     "descripcion": "Gateway to the World B1 Student's book ISBN: 9781380042699",
+     "opcion": "ingles",
+     "nivel": "AVANZADO",
+     "total": 1145
+    }
+   ],
+   "notas": [
+    "Todos los libros de texto se forran solo con plástico transparente y etiqueta con nombre.",
+    "Todos los cuadernos se forran de color rojo."
+   ],
+   "total_libros": 6425,
+   "total_paquete": 10122
+  },
+  "3ro SECUNDARIA": {
+   "nombre": "3ro SECUNDARIA",
+   "nivel": "SECUNDARIA",
+   "turno": "MATUTINO",
+   "numero": "3ro",
+   "orden": 12,
+   "items": [
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 3,
+     "precio_unitario": 150,
+     "descripcion": "Cuaderno profesional cuadro chico 100 hojas",
+     "nota": "Francés, educación física (comparten), innovación, socioemocional (comparten) e Historia",
+     "total": 450
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 150,
+     "descripcion": "Cuaderno profesional cuadro chico 100 hojas",
+     "nota": "Inglés",
+     "total": 150
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 150,
+     "descripcion": "Cuaderno profesional cuadro chico 100 hojas",
+     "nota": "Español",
+     "total": 150
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 150,
+     "descripcion": "Cuaderno profesional cuadro chico 100 hojas",
+     "nota": "Matemáticas",
+     "total": 150
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 120,
+     "descripcion": "Cuaderno profesional Norma para música",
+     "total": 120
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 100,
+     "descripcion": "Constitución Política de los Estados Unidos Mexicanos",
+     "total": 100
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 150,
+     "descripcion": "Caja de 12 colores",
+     "total": 150
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 10,
+     "descripcion": "Lápiz No. 2",
+     "total": 20
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 10,
+     "descripcion": "Bolígrafo de tinta rosa",
+     "total": 20
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 10,
+     "descripcion": "Bolígrafo de tinta negra",
+     "total": 20
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 10,
+     "descripcion": "Bolígrafo de tinta azul",
+     "total": 20
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 10,
+     "descripcion": "Goma de migajón",
+     "total": 10
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 35,
+     "descripcion": "Sacapuntas con depósito",
+     "total": 35
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 40,
+     "descripcion": "Lápiz adhesivo tipo Pritt 22 g",
+     "total": 40
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 30,
+     "descripcion": "Tijeras de punta roma",
+     "total": 30
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 60,
+     "descripcion": "Corrector de cinta",
+     "total": 60
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 135,
+     "descripcion": "Juego de geometría con compás de precisión",
+     "total": 135
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 300,
+     "descripcion": "Bata blanca de algodón",
+     "total": 300
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 280,
+     "descripcion": "Melódica",
+     "total": 280
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 35,
+     "descripcion": "Marcatextos",
+     "total": 70
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 210,
+     "descripcion": "Libreta de tareas Colegio Floresta",
+     "total": 210
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 20,
+     "descripcion": "Fólder de plástico",
+     "total": 20
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 20,
+     "descripcion": "Tabla periódica actualizada Ed. Patria",
+     "total": 20
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 1,
+     "precio_unitario": 135,
+     "descripcion": "Paquete de 300 hojas blancas tamaño carta",
+     "total": 135
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 1,
+     "precio_unitario": 100,
+     "descripcion": "Paquete de 100 hojas de color tamaño carta",
+     "total": 100
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 5,
+     "precio_unitario": 17,
+     "descripcion": "Cartulina de color",
+     "nota": "Diferentes colores",
+     "total": 85
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 4,
+     "precio_unitario": 35,
+     "descripcion": "Plumón para pizarrón blanco",
+     "nota": "Negro, rojo, verde y azul",
+     "total": 140
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 3,
+     "precio_unitario": 10,
+     "descripcion": "Bolígrafo de tinta negra",
+     "total": 30
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 3,
+     "precio_unitario": 10,
+     "descripcion": "Bolígrafo de tinta azul",
+     "total": 30
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 5,
+     "precio_unitario": 13,
+     "descripcion": "Barras de silicón grueso",
+     "total": 65
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 5,
+     "precio_unitario": 10,
+     "descripcion": "Barras de silicón delgado",
+     "total": 50
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 5,
+     "precio_unitario": 50,
+     "descripcion": "Paquete de Sanitas",
+     "nota": "2 para laboratorio",
+     "total": 250
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 2,
+     "precio_unitario": 15,
+     "descripcion": "Rollos papel kraft",
+     "total": 30
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 1,
+     "precio_unitario": 60,
+     "descripcion": "Jabón líquido para manos 225 ml",
+     "total": 60
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 5,
+     "precio_unitario": 7,
+     "descripcion": "Fólder tamaño carta beige",
+     "total": 35
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 2,
+     "precio_unitario": 65,
+     "descripcion": "Cinta diurex gruesa",
+     "total": 130
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 3,
+     "precio_unitario": 9,
+     "descripcion": "Sobre amarillo tamaño carta",
+     "total": 27
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 5280,
+     "descripcion": "Paquete Larousse",
+     "total": 5280
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 1145,
+     "descripcion": "Gateway to the World B1 Student's book ISBN: 9781380042699",
+     "opcion": "ingles",
+     "nivel": "BASICO",
+     "total": 1145
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 1145,
+     "descripcion": "Gateway to the World B1+ Student's book ISBN: 9781380042880",
+     "opcion": "ingles",
+     "nivel": "AVANZADO",
+     "total": 1145
+    }
+   ],
+   "notas": [
+    "Todos los libros de texto se forran solo con plástico transparente y etiqueta con nombre.",
+    "Todos los cuadernos se forran de color azul cielo."
+   ],
+   "total_libros": 6425,
+   "total_paquete": 10152
+  },
+  "1ro SECUNDARIA VESPERTINO": {
+   "nombre": "1ro SECUNDARIA VESPERTINO",
+   "nivel": "SECUNDARIA",
+   "turno": "VESPERTINO",
+   "numero": "1ro",
+   "orden": 20,
+   "items": [
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 5,
+     "precio_unitario": 150,
+     "descripcion": "Cuaderno profesional cuadro chico 100 hojas",
+     "nota": "Español, Inglés (forro naranja), Biología, Geografía, Historia",
+     "total": 750
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 150,
+     "descripcion": "Cuaderno profesional cuadro chico 100 hojas",
+     "nota": "Matemáticas",
+     "total": 150
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 90,
+     "descripcion": "Cuaderno profesional pautado para música",
+     "total": 90
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 280,
+     "descripcion": "Melódica",
+     "total": 280
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 300,
+     "descripcion": "Bata blanca de algodón",
+     "nota": "Con nombre bordado",
+     "total": 300
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 35,
+     "descripcion": "Block de hojas milimétricas 50 hojas",
+     "total": 35
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 150,
+     "descripcion": "Caja de 12 colores",
+     "total": 150
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 70,
+     "descripcion": "Caja de 12 plumones",
+     "total": 70
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 60,
+     "descripcion": "Corrector de cinta",
+     "total": 60
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 10,
+     "descripcion": "Goma de migajón",
+     "nota": "1 para entregar en la escuela",
+     "total": 20
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 135,
+     "descripcion": "Juego de geometría con compás de precisión",
+     "total": 135
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 40,
+     "descripcion": "Lápiz adhesivo tipo Pritt 22 g",
+     "nota": "1 para entregar",
+     "total": 80
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 10,
+     "descripcion": "Lápiz No. 2",
+     "nota": "1 se entrega en la escuela",
+     "total": 20
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 35,
+     "descripcion": "Marcatextos",
+     "nota": "1 para entregar",
+     "total": 70
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 10,
+     "descripcion": "Bolígrafo de tinta negra",
+     "nota": "1 para entregar",
+     "total": 20
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 10,
+     "descripcion": "Bolígrafo de tinta azul",
+     "nota": "1 para entregar",
+     "total": 20
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 10,
+     "descripcion": "Bolígrafo de tinta verde",
+     "nota": "1 para entregar",
+     "total": 20
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 10,
+     "descripcion": "Bolígrafo de tinta roja",
+     "nota": "1 para entregar",
+     "total": 20
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 20,
+     "descripcion": "Regla de 30 cm",
+     "total": 20
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 35,
+     "descripcion": "Sacapuntas con depósito",
+     "total": 35
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 30,
+     "descripcion": "Tijeras de punta roma",
+     "total": 30
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 1,
+     "precio_unitario": 100,
+     "descripcion": "Paquete de 100 hojas de color tamaño carta",
+     "total": 100
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 1,
+     "precio_unitario": 45,
+     "descripcion": "Paquete de 100 hojas blancas tamaño carta",
+     "total": 45
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 1,
+     "precio_unitario": 60,
+     "descripcion": "Jabón líquido para manos 225 ml",
+     "total": 60
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 1,
+     "precio_unitario": 125,
+     "descripcion": "Paquete de conos para tomar agua",
+     "total": 125
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 5,
+     "precio_unitario": 5,
+     "descripcion": "Hoja de foami tamaño carta",
+     "nota": "Diferentes colores",
+     "total": 25
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 3,
+     "precio_unitario": 15,
+     "descripcion": "Hoja de foami diamantado",
+     "total": 45
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 3,
+     "precio_unitario": 50,
+     "descripcion": "Paquete de Sanitas",
+     "total": 150
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 1,
+     "precio_unitario": 80,
+     "descripcion": "Nano tape",
+     "total": 80
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 1,
+     "precio_unitario": 40,
+     "descripcion": "Silicón frío 100 ml",
+     "total": 40
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 2,
+     "precio_unitario": 45,
+     "descripcion": "Fólder de plástico rígido",
+     "total": 90
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 1,
+     "precio_unitario": 20,
+     "descripcion": "Cinta diurex",
+     "total": 20
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 1,
+     "precio_unitario": 45,
+     "descripcion": "Cinta masking tape",
+     "total": 45
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 1,
+     "precio_unitario": 120,
+     "descripcion": "Paquete de 50 protectores de hojas para carpeta",
+     "total": 120
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 2,
+     "precio_unitario": 15,
+     "descripcion": "Pliego de papel lustre",
+     "nota": "Color a elegir",
+     "total": 30
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 1,
+     "precio_unitario": 30,
+     "descripcion": "Pliego de papel américa amarillo",
+     "total": 30
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 2,
+     "precio_unitario": 15,
+     "descripcion": "Pliego de papel kraft",
+     "total": 30
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 3,
+     "precio_unitario": 7,
+     "descripcion": "Fólders tamaño carta",
+     "total": 21
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 4,
+     "precio_unitario": 35,
+     "descripcion": "Plumón para pizarrón blanco",
+     "nota": "Negro, rojo, verde y azul",
+     "total": 140
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 182,
+     "descripcion": "Diccionario escolar de la lengua española Larousse",
+     "total": 182
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 5280,
+     "descripcion": "Paquete Larousse",
+     "total": 5280
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 100,
+     "descripcion": "Constitución Política de los Estados Unidos Mexicanos",
+     "total": 100
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 1040,
+     "descripcion": "Get Involved! A1+ Student's book ISBN: 9781380068750",
+     "opcion": "ingles",
+     "nivel": "BASICO",
+     "total": 1040
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 1040,
+     "descripcion": "Get Involved! B1 Student's book ISBN: 9781380068873",
+     "opcion": "ingles",
+     "nivel": "AVANZADO",
+     "total": 1040
+    }
+   ],
+   "notas": [],
+   "total_libros": 6602,
+   "total_paquete": 10173
+  },
+  "2do SECUNDARIA VESPERTINO": {
+   "nombre": "2do SECUNDARIA VESPERTINO",
+   "nivel": "SECUNDARIA",
+   "turno": "VESPERTINO",
+   "numero": "2do",
+   "orden": 21,
+   "items": [
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 4,
+     "precio_unitario": 150,
+     "descripcion": "Cuaderno profesional cuadro chico 100 hojas",
+     "nota": "Español, Inglés (forro azul), Física, Historia",
+     "total": 600
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 150,
+     "descripcion": "Cuaderno profesional cuadro chico 100 hojas",
+     "nota": "Matemáticas",
+     "total": 150
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 90,
+     "descripcion": "Cuaderno profesional pautado para música",
+     "total": 90
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 280,
+     "descripcion": "Melódica",
+     "total": 280
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 300,
+     "descripcion": "Bata blanca de algodón",
+     "nota": "Con nombre bordado",
+     "total": 300
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 150,
+     "descripcion": "Caja de 12 colores",
+     "total": 150
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 70,
+     "descripcion": "Caja de 12 plumones",
+     "total": 70
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 60,
+     "descripcion": "Corrector de cinta",
+     "total": 60
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 10,
+     "descripcion": "Goma de migajón",
+     "nota": "1 se entrega en la escuela",
+     "total": 20
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 135,
+     "descripcion": "Juego de geometría con compás de precisión",
+     "total": 135
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 40,
+     "descripcion": "Lápiz adhesivo tipo Pritt 22 g",
+     "nota": "1 para entregar",
+     "total": 80
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 10,
+     "descripcion": "Lápiz No. 2",
+     "nota": "1 para entregar",
+     "total": 20
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 35,
+     "descripcion": "Marcatextos",
+     "nota": "1 para entregar",
+     "total": 70
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 10,
+     "descripcion": "Bolígrafo de tinta negra",
+     "nota": "1 para entregar",
+     "total": 20
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 10,
+     "descripcion": "Bolígrafo de tinta azul",
+     "nota": "1 para entregar",
+     "total": 20
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 10,
+     "descripcion": "Bolígrafo de tinta roja",
+     "nota": "1 para entregar",
+     "total": 20
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 20,
+     "descripcion": "Regla de 30 cm",
+     "total": 20
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 35,
+     "descripcion": "Sacapuntas con depósito",
+     "total": 35
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 30,
+     "descripcion": "Tijeras de punta roma",
+     "total": 30
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 1,
+     "precio_unitario": 100,
+     "descripcion": "Paquete de 100 hojas de color tamaño carta",
+     "total": 100
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 1,
+     "precio_unitario": 45,
+     "descripcion": "Paquete de 100 hojas blancas tamaño carta",
+     "total": 45
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 1,
+     "precio_unitario": 60,
+     "descripcion": "Jabón líquido para manos 225 ml",
+     "total": 60
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 1,
+     "precio_unitario": 125,
+     "descripcion": "Paquete de conos para tomar agua",
+     "total": 125
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 1,
+     "precio_unitario": 9,
+     "descripcion": "Sobre amarillo tamaño carta",
+     "total": 9
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 5,
+     "precio_unitario": 5,
+     "descripcion": "Hoja de foami tamaño carta",
+     "nota": "Diferentes colores",
+     "total": 25
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 3,
+     "precio_unitario": 15,
+     "descripcion": "Hoja de foami diamantado",
+     "total": 45
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 3,
+     "precio_unitario": 50,
+     "descripcion": "Paquete de Sanitas",
+     "total": 150
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 1,
+     "precio_unitario": 65,
+     "descripcion": "Cinta diurex gruesa",
+     "total": 65
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 1,
+     "precio_unitario": 40,
+     "descripcion": "Silicón frío 100 ml",
+     "total": 40
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 1,
+     "precio_unitario": 120,
+     "descripcion": "Paquete de 50 protectores de hojas para carpeta",
+     "total": 120
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 2,
+     "precio_unitario": 45,
+     "descripcion": "Sobre de plástico rígido",
+     "total": 90
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 1,
+     "precio_unitario": 30,
+     "descripcion": "Pliego de papel américa amarillo",
+     "total": 30
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 2,
+     "precio_unitario": 15,
+     "descripcion": "Pliego de papel lustre",
+     "nota": "Color a elegir",
+     "total": 30
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 2,
+     "precio_unitario": 15,
+     "descripcion": "Pliego de papel kraft",
+     "total": 30
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 1,
+     "precio_unitario": 45,
+     "descripcion": "Cinta masking tape",
+     "total": 45
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 3,
+     "precio_unitario": 7,
+     "descripcion": "Fólder tamaño carta beige",
+     "total": 21
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 4,
+     "precio_unitario": 35,
+     "descripcion": "Plumón para pizarrón blanco",
+     "nota": "Negro, rojo, verde y azul",
+     "total": 140
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 182,
+     "descripcion": "Diccionario escolar de la lengua española Larousse",
+     "total": 182
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 5280,
+     "descripcion": "Paquete Larousse",
+     "total": 5280
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 100,
+     "descripcion": "Constitución Política de los Estados Unidos Mexicanos",
+     "total": 100
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 1040,
+     "descripcion": "Get Involved! A1+ Student's book ISBN: 9781380068750",
+     "opcion": "ingles",
+     "nivel": "BASICO",
+     "total": 1040
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 1040,
+     "descripcion": "Get Involved! B1 Student's book ISBN: 9781380068873",
+     "opcion": "ingles",
+     "nivel": "AVANZADO",
+     "total": 1040
+    }
+   ],
+   "notas": [],
+   "total_libros": 6602,
+   "total_paquete": 9942
+  },
+  "3ro SECUNDARIA VESPERTINO": {
+   "nombre": "3ro SECUNDARIA VESPERTINO",
+   "nivel": "SECUNDARIA",
+   "turno": "VESPERTINO",
+   "numero": "3ro",
+   "orden": 22,
+   "items": [
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 5,
+     "precio_unitario": 150,
+     "descripcion": "Cuaderno profesional cuadro chico 100 hojas",
+     "nota": "Español, Inglés (forrado color verde), Química, Historia (2",
+     "total": 750
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 150,
+     "descripcion": "Cuaderno profesional cuadro chico 100 hojas",
+     "nota": "Matemáticas",
+     "total": 150
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 90,
+     "descripcion": "Cuaderno profesional pautado para música",
+     "total": 90
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 280,
+     "descripcion": "Melódica",
+     "total": 280
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 300,
+     "descripcion": "Bata blanca de algodón",
+     "nota": "Bordada",
+     "total": 300
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 150,
+     "descripcion": "Caja de 12 colores",
+     "total": 150
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 70,
+     "descripcion": "Caja de 12 plumones",
+     "total": 70
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 60,
+     "descripcion": "Corrector de cinta",
+     "total": 60
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 10,
+     "descripcion": "Goma de migajón",
+     "nota": "1 se entrega en la escuela",
+     "total": 20
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 135,
+     "descripcion": "Juego de geometría con compás de precisión",
+     "total": 135
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 10,
+     "descripcion": "Lápiz No. 2",
+     "nota": "1 para entregar",
+     "total": 20
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 40,
+     "descripcion": "Lápiz adhesivo tipo Pritt 22 g",
+     "nota": "1 para entregar",
+     "total": 80
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 35,
+     "descripcion": "Marcatextos",
+     "nota": "1 para entregar",
+     "total": 70
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 10,
+     "descripcion": "Bolígrafo de tinta roja",
+     "nota": "1 para entregar",
+     "total": 20
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 10,
+     "descripcion": "Bolígrafo de tinta negra",
+     "nota": "1 para entregar",
+     "total": 20
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 2,
+     "precio_unitario": 10,
+     "descripcion": "Bolígrafo de tinta azul",
+     "nota": "1 para entregar",
+     "total": 20
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 35,
+     "descripcion": "Sacapuntas con depósito",
+     "total": 35
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 20,
+     "descripcion": "Tabla periódica actualizada Ed. Patria",
+     "total": 20
+    },
+    {
+     "seccion": "MATERIAL DIARIO",
+     "cantidad": 1,
+     "precio_unitario": 30,
+     "descripcion": "Tijeras de punta roma",
+     "total": 30
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 1,
+     "precio_unitario": 100,
+     "descripcion": "Paquete de 100 hojas de color tamaño carta",
+     "total": 100
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 1,
+     "precio_unitario": 45,
+     "descripcion": "Paquete de 100 hojas blancas tamaño carta",
+     "total": 45
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 1,
+     "precio_unitario": 60,
+     "descripcion": "Jabón líquido para manos 225 ml",
+     "total": 60
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 1,
+     "precio_unitario": 125,
+     "descripcion": "Paquete de conos para tomar agua",
+     "total": 125
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 1,
+     "precio_unitario": 9,
+     "descripcion": "Sobre amarillo tamaño carta",
+     "total": 9
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 5,
+     "precio_unitario": 5,
+     "descripcion": "Hoja de foami tamaño carta",
+     "nota": "Diferentes colores",
+     "total": 25
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 3,
+     "precio_unitario": 15,
+     "descripcion": "Hoja de foami diamantado",
+     "total": 45
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 3,
+     "precio_unitario": 50,
+     "descripcion": "Paquete de Sanitas",
+     "total": 150
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 1,
+     "precio_unitario": 65,
+     "descripcion": "Cinta diurex gruesa",
+     "total": 65
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 1,
+     "precio_unitario": 40,
+     "descripcion": "Silicón frío 100 ml",
+     "total": 40
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 1,
+     "precio_unitario": 120,
+     "descripcion": "Paquete de 50 protectores de hojas para carpeta",
+     "total": 120
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 2,
+     "precio_unitario": 45,
+     "descripcion": "Sobre de plástico rígido",
+     "total": 90
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 1,
+     "precio_unitario": 30,
+     "descripcion": "Pliego de papel américa amarillo",
+     "total": 30
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 2,
+     "precio_unitario": 15,
+     "descripcion": "Pliego de papel lustre",
+     "nota": "Color a elegir",
+     "total": 30
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 2,
+     "precio_unitario": 15,
+     "descripcion": "Pliego de papel kraft",
+     "total": 30
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 1,
+     "precio_unitario": 45,
+     "descripcion": "Cinta masking tape",
+     "total": 45
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 3,
+     "precio_unitario": 7,
+     "descripcion": "Fólders tamaño carta",
+     "total": 21
+    },
+    {
+     "seccion": "PARA ENTREGAR EN EL COLEGIO",
+     "cantidad": 4,
+     "precio_unitario": 35,
+     "descripcion": "Plumón para pizarrón blanco",
+     "nota": "Negro, rojo, verde y azul",
+     "total": 140
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 182,
+     "descripcion": "Diccionario escolar de la lengua española Larousse",
+     "total": 182
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 5280,
+     "descripcion": "Paquete Larousse",
+     "total": 5280
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 100,
+     "descripcion": "Constitución Política de los Estados Unidos Mexicanos",
+     "total": 100
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 1040,
+     "descripcion": "Get Involved! A1+ Student's book ISBN: 9781380068750",
+     "opcion": "ingles",
+     "nivel": "BASICO",
+     "total": 1040
+    },
+    {
+     "seccion": "LIBROS",
+     "cantidad": 1,
+     "precio_unitario": 1040,
+     "descripcion": "Get Involved! B1 Student's book ISBN: 9781380068873",
+     "opcion": "ingles",
+     "nivel": "AVANZADO",
+     "total": 1040
+    }
+   ],
+   "notas": [],
+   "total_libros": 6602,
+   "total_paquete": 10092
+  }
+ },
+ "renombres": {
+  "util_cuaderno_profesionale_cuadro_chico_100_hoja": "util_cuaderno_profesional_cuadro_chico_100_hoja",
+  "util_cuaderno_profesionale_cuadro_chico_100_hoja_ingle": "util_cuaderno_profesional_cuadro_chico_100_hoja",
+  "util_lapiz_madera_no_2": "util_lapiz_no_2",
+  "util_barra_resistol_pritt_22_grm": "util_lapiz_adhesivo_pritt_22_g",
+  "util_jabon_liquido_mano_225ml": "util_jabon_liquido_mano_225_ml",
+  "util_diurex_grueso": "util_cinta_diurex_gruesa",
+  "util_metro_foami_diaantado_color_rojo": "util_metro_foami_diamantado_color_rojo",
+  "util_plumone_pizarron_blanco_color_negro_rojo_azul_verde": "util_plumon_pizarron_blanco",
+  "util_silicon_frio": "util_silicon_frio_100_ml",
+  "util_pliego_mica_autoadeherible_forrar_libro_cuaderno": "util_pliego_mica_autoadherible_forrar_libro_cuaderno",
+  "util_academy_star_2nd_ed_worbook_1_isbn_9781035100057": "util_academy_star_2nd_ed_workbook_1_isbn_9781035100057",
+  "util_libreta_tarea_alexander_dul": "util_libreta_tarea_liceo_alexander_dul",
+  "util_kleneex": "util_kleenex",
+  "util_hoja_fomi_tamano_carta_difente_colore": "util_hoja_foami_tamano_carta",
+  "util_plumone_pizarron_blanco_colore_negro_rojo_verde_azul": "util_plumon_pizarron_blanco",
+  "util_academy_star_2nd_ed_worbook_2_isbn_9781035100200": "util_academy_star_2nd_ed_workbook_2_isbn_9781035100200",
+  "util_plumone_pizarron_negro_rojo_azul_verde": "util_plumon_pizarron_blanco",
+  "util_academy_star_2nd_ed_worbook_3_isbn_9781035100361": "util_academy_star_2nd_ed_workbook_3_isbn_9781035100361",
+  "util_juego_geometria_compa": "util_juego_geometria_compa_precision",
+  "util_boligrafo_tinta_azul_negro_rojo": "util_boligrafo_tinta_azul_negra_roja",
+  "util_200_hoja_blanca_tamano_carta": "util_paquete_200_hoja_blanca_tamano_carta",
+  "util_nano_cinta": "util_nano_tape",
+  "util_metro_foami_dimanantado_color_verde_bandera": "util_metro_foami_diamantado_color_verde_bandera",
+  "util_academy_star_2nd_ed_worbook_4_isbn_9781035100507": "util_academy_star_2nd_ed_workbook_4_isbn_9781035100507",
+  "util_boligrafo_tinta_azul_roja_negro": "util_boligrafo_tinta_azul_negra_roja",
+  "util_cartulina_color_negro": "util_cartulina_negra",
+  "util_academy_star_2nd_ed_worbook_5_ed_isbn_9781035100699": "util_academy_star_2nd_ed_workbook_5_ed_isbn_9781035100699",
+  "util_marca_texto": "util_marcatexto",
+  "util_academy_star_worbook_6_ed_isbn_9781035100859": "util_academy_star_workbook_6_ed_isbn_9781035100859",
+  "util_cuaderno_profesional_100hojas_cuadro_chico_france_educacion_fisica_comparten_innovacion_socioemocional_comparten_e_histo": "util_cuaderno_profesional_cuadro_chico_100_hoja",
+  "util_cuaderno_profesional_cuadro_chico_100_hoja_ingle": "util_cuaderno_profesional_cuadro_chico_100_hoja",
+  "util_cuaderno_profesional_cuadro_chico_100_hoja_espanol": "util_cuaderno_profesional_cuadro_chico_100_hoja",
+  "util_cuaderno_profesional_cuadro_chico_100_hoja_matematica": "util_cuaderno_profesional_cuadro_chico_100_hoja",
+  "util_constitucion_politica_mexico_educacion_civica": "util_constitucion_politica_estado_unido_mexicano",
+  "util_block_hoja_milimetrica_50_hoja_matematica": "util_block_hoja_milimetrica_50_hoja",
+  "util_lapiz": "util_lapiz_no_2",
+  "util_sacapunta": "util_sacapunta_deposito",
+  "util_pluma_tinta_negra": "util_boligrafo_tinta_negra",
+  "util_pluma_tinta_azul": "util_boligrafo_tinta_azul",
+  "util_marca_texto_cualquier_color": "util_marcatexto",
+  "util_pluma_tinta_roja": "util_boligrafo_tinta_roja",
+  "util_libreta_tarea": "util_libreta_tarea_colegio_floresta",
+  "util_lapiz_adhesivo_pritt_220_grs": "util_lapiz_adhesivo_pritt_22_g",
+  "util_pluma_tinta_rosa": "util_boligrafo_tinta_rosa",
+  "util_plumon_pizarron_blanco_magistral_negro_azul_rojo_verde": "util_plumon_pizarron_blanco",
+  "util_lapiz_adhesivo_42gr": "util_lapiz_adhesivo_pritt_42_g",
+  "util_paquete_300_hoja_blanca": "util_paquete_300_hoja_blanca_tamano_carta",
+  "util_bote_pintura_vinci_cualquier_color": "util_bote_pintura_vinci",
+  "util_hoja_foami": "util_hoja_foami_tamano_carta",
+  "util_jabon_liquido_mano": "util_jabon_liquido_mano_225_ml",
+  "util_gateway_to_the_world_a1_student_s_book_basico_isbn_9781380042309": "util_gateway_to_the_world_a1_student_s_book_isbn_9781380042309",
+  "util_gateway_to_the_world_a2_student_s_book_avanzado_isbn_9781380042507": "util_gateway_to_the_world_a2_student_s_book_isbn_9781380042507",
+  "util_lapiz_adhesivo_pritt_22_grs": "util_lapiz_adhesivo_pritt_22_g",
+  "util_goma": "util_goma_migajon",
+  "util_cartulina_color_diferente_colore": "util_cartulina_color",
+  "util_plumon_pizarron_blanco_magistral": "util_plumon_pizarron_blanco",
+  "util_masking": "util_cinta_masking_tape",
+  "util_paquete_sanita_2_laboratorio": "util_paquete_sanita",
+  "util_folder_color_beige_tamano_carta": "util_folder_tamano_carta_beige",
+  "util_silicon_liquido": "util_silicon_frio_100_ml",
+  "util_gateway_to_the_world_a2_student_s_book_basico_isbn_9781380042507": "util_gateway_to_the_world_a2_student_s_book_isbn_9781380042507",
+  "util_gateway_to_the_world_b1_student_s_book_avanzado_isbn_9781380042699": "util_gateway_to_the_world_b1_student_s_book_isbn_9781380042699",
+  "util_pritt_22_gr": "util_lapiz_adhesivo_pritt_22_g",
+  "util_tabla_periodica_ed_patria_actualizada": "util_tabla_periodica_actualizada_ed_patria",
+  "util_gateway_to_the_world_b1_student_s_book_basico_isbn_9781380042699": "util_gateway_to_the_world_b1_student_s_book_isbn_9781380042699",
+  "util_gateway_to_the_world_b1_student_s_book_avanzado_isbn_9781380042880": "util_gateway_to_the_world_b1_student_s_book_isbn_9781380042880",
+  "util_cuaderno_profesional_cuadro_chico_100_hoja_espanol_ingle_forro_naranja_biologia_geografia_historia": "util_cuaderno_profesional_cuadro_chico_100_hoja",
+  "util_bata_blanca_algodon_nombre_bordado": "util_bata_blanca_algodon",
+  "util_goma_1_entregar_escuela": "util_goma_migajon",
+  "util_lapiz_adhesivo_1_entregar": "util_lapiz_adhesivo_pritt_22_g",
+  "util_lapiz_mirado_no_2_1_se_entrega_escuela": "util_lapiz_no_2",
+  "util_marcatexto_diferente_colore_1_entregar": "util_marcatexto",
+  "util_boligrafo_tinta_negra_1_entregar": "util_boligrafo_tinta_negra",
+  "util_boligrafo_tinta_azul_1_entregar": "util_boligrafo_tinta_azul",
+  "util_boligrafo_tinta_verde_1_entregar": "util_boligrafo_tinta_verde",
+  "util_boligrafo_tinta_roja_1_entregar": "util_boligrafo_tinta_roja",
+  "util_silicon_frio_100ml": "util_silicon_frio_100_ml",
+  "util_diurex": "util_cinta_diurex",
+  "util_masking_tape": "util_cinta_masking_tape",
+  "util_pliego_papel_lustre_color_elegir": "util_pliego_papel_lustre",
+  "util_pliego_papel_america_color_amarillo": "util_pliego_papel_america_amarillo",
+  "util_diccionario_escolar_lengua_espanola": "util_diccionario_escolar_lengua_espanola_larousse",
+  "util_get_involved_a1_student_s_book_basico_isbn_9781380068750": "util_get_involved_a1_student_s_book_isbn_9781380068750",
+  "util_get_involved_b1_student_s_book_avanzado_isbn_9781380068873": "util_get_involved_b1_student_s_book_isbn_9781380068873",
+  "util_cuaderno_profesional_cuadro_chico_100_espanol_ingle_forro_azul_fisica_historia": "util_cuaderno_profesional_cuadro_chico_100_hoja",
+  "util_goma_1_se_entrega_escuela": "util_goma_migajon",
+  "util_lapiz_mirado_no_2_1_entregar": "util_lapiz_no_2",
+  "util_marca_texto_diferente_colore_1_entregar": "util_marcatexto",
+  "util_paquete_cono_toma_agua": "util_paquete_cono_tomar_agua",
+  "util_paquete_50_protectore_hoja": "util_paquete_50_protectore_hoja_carpeta",
+  "util_pliego_papel_america_colo_amarillo": "util_pliego_papel_america_amarillo",
+  "util_folder_tamana_carta": "util_folder_tamano_carta_beige",
+  "util_plumon_pizarron_blanco_negro_rojo_verde_azul": "util_plumon_pizarron_blanco",
+  "util_cuaderno_profesional_cuadro_chico_100_espanol_ingle_forrado_color_verde_quimica_historia_2": "util_cuaderno_profesional_cuadro_chico_100_hoja",
+  "util_bata_blanca_algodon_bordada": "util_bata_blanca_algodon",
+  "util_marcatexto_diferente_color_1_entregar": "util_marcatexto",
+  "util_tabla_periodica_actualizada": "util_tabla_periodica_actualizada_ed_patria"
+ }
+}
