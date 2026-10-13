@@ -2919,7 +2919,7 @@ function uniformesAdminView(){
 function abrirListaEdit(grade){
   const g = GRADES[grade];
   state.listaEdit = { grade, guardando:false, mensaje:'',
-    items: g ? g.items.map((it,i) => ({ seccion: it.seccion||'MATERIAL DIARIO', descripcion: it.descripcion, cantidad: it.cantidad, precio_unitario: it.precio_unitario, stock: stockDe(invKeyUtil(grade, i)) })) : [] };
+    items: g ? g.items.map((it,i) => ({ seccion: it.seccion||'MATERIAL DIARIO', descripcion: it.descripcion, cantidad: it.cantidad, precio_unitario: it.precio_unitario })) : [] };
 }
 
 function listasAdminView(){
@@ -2937,18 +2937,17 @@ function listasAdminView(){
       <td><input type="text" data-li-edit="${i}" data-campo="descripcion" value="${esc(it.descripcion)}" style="width:100%; min-width:200px;"></td>
       <td><input type="text" inputmode="decimal" data-li-edit="${i}" data-campo="cantidad" value="${esc(String(it.cantidad))}" style="width:60px;"></td>
       <td><input type="text" inputmode="decimal" data-li-edit="${i}" data-campo="precio_unitario" value="${esc(String(it.precio_unitario))}" style="width:80px;"></td>
-      <td><input type="text" inputmode="numeric" data-li-edit="${i}" data-campo="stock" value="${esc(String(it.stock))}" style="width:60px;"></td>
       <td><button class="btn-ghost" data-li-quitar="${i}" title="Quitar">✖</button></td>
     </tr>`).join('');
   return selector + `
-    <p style="color:var(--ink-soft); margin-top:0;">Edita la lista de <b>${esc(L.grade)}</b> y dale <b>Guardar lista</b>. Para el siguiente ciclo puedes <b>descargar la lista en Excel</b>, cambiarla ahí y volver a <b>cargarla</b>. El Excel lleva las columnas: Sección, Descripción, Cantidad, Precio unitario y Existencias. Los artículos con 0 existencias aparecen como "No disponible" en la tienda.</p>
+    <p style="color:var(--ink-soft); margin-top:0;">Edita la lista de <b>${esc(L.grade)}</b> y dale <b>Guardar lista</b>. Para el siguiente ciclo puedes <b>descargar la lista en Excel</b>, cambiarla ahí y volver a <b>cargarla</b>. El Excel lleva las columnas: Sección, Descripción, Cantidad y Precio unitario. Las existencias se manejan en <b>Inventario</b>; un artículo nuevo empieza en 0 (no disponible) hasta que le pongas existencias ahí. Si un artículo ya viene en otra lista, escríbelo igual para que comparta su existencia.</p>
     <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px;">
       <button class="btn btn-secondary btn-sm" id="listaExcelBajarBtn">⬇️ Descargar Excel</button>
       <label class="btn btn-secondary btn-sm" style="cursor:pointer;">⬆️ Cargar desde Excel<input type="file" id="listaExcelSubir" accept=".xlsx,.xls,.csv" style="display:none;"></label>
     </div>
     ${L.mensaje ? `<div class="note-box ${L.mensaje.startsWith('⚠')?'error':''}" style="margin-bottom:10px;">${esc(L.mensaje)}</div>` : ''}
     <div style="overflow-x:auto;"><table class="cart-table">
-      <thead><tr><th>Sección</th><th>Descripción</th><th>Cant.</th><th>Precio</th><th>Exist.</th><th></th></tr></thead>
+      <thead><tr><th>Sección</th><th>Descripción</th><th>Cant.</th><th>Precio</th><th></th></tr></thead>
       <tbody>${filas}</tbody>
     </table></div>
     <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:12px;">
@@ -2962,36 +2961,21 @@ async function guardarLista(){
   const L = state.listaEdit;
   const items = L.items
     .map(it => ({ seccion: SECCIONES_LISTA.includes(it.seccion) ? it.seccion : seccionDe(it.seccion), descripcion: String(it.descripcion||'').trim(),
-      cantidad: Number(String(it.cantidad).replace(',','.'))||0, precio_unitario: Number(String(it.precio_unitario).replace(/[$,\s]/g,''))||0,
-      stock: Math.max(0, parseInt(it.stock)||0) }))
+      cantidad: Number(String(it.cantidad).replace(',','.'))||0, precio_unitario: Number(String(it.precio_unitario).replace(/[$,\s]/g,''))||0 }))
     .filter(it => it.descripcion);
   if(!items.length){ L.mensaje = '⚠ La lista no tiene artículos.'; render(); return; }
   if(items.some(it => !(it.precio_unitario > 0))){ L.mensaje = '⚠ Hay artículos sin precio. Revisa la columna Precio.'; render(); return; }
+  // con inventario por posición, cambiar la lista movería las existencias de lugar: primero hay que unificar
+  if(!inventarioUnificado()){ L.mensaje = '⚠ Antes de cambiar listas, unifica el inventario en la pestaña Inventario.'; render(); return; }
   const docId = GRADES[L.grade] ? GRADES[L.grade].docId : slug(L.grade);
-  const viejos = GRADES[L.grade] ? GRADES[L.grade].items.length : 0;
-  const listaItems = items.map(({stock, ...it}) => Object.assign(it, { total: it.cantidad * it.precio_unitario }));
+  const listaItems = items.map(it => Object.assign(it, { total: it.cantidad * it.precio_unitario }));
   const total_libros = listaItems.filter(it => it.seccion==='LIBROS').reduce((a,it) => a + it.total, 0);
   const total_paquete = listaItems.reduce((a,it) => a + it.total, 0);
   L.guardando = true; render();
   try{
-    // el inventario de útiles va por posición (docId_índice), así que se reescribe completo para esta lista
-    const batch = writeBatch(db);
-    batch.set(doc(db, 'listas', docId), { nombre: L.grade, items: listaItems, total_libros, total_paquete });
-    const unificado = inventarioUnificado();
-    if(unificado){
-      // inventario por artículo: la existencia es compartida con las otras listas donde venga el mismo artículo
-      items.forEach(it => batch.set(doc(db, 'inventario', claveArticulo(it.descripcion)), { tipo:'util', descripcion:it.descripcion, stock:it.stock }, { merge: true }));
-    } else {
-      items.forEach((it, i) => batch.set(doc(db, 'inventario', docId+'_'+i), { tipo:'util', grado:L.grade, idx:i, descripcion:it.descripcion, precio_unitario:it.precio_unitario, stock:it.stock }));
-      for(let j = items.length; j < viejos; j++) batch.delete(doc(db, 'inventario', docId+'_'+j));
-    }
-    await batch.commit();
+    // la lista solo guarda qué lleva y a qué precio; las existencias viven en Inventario (por artículo)
+    await setDoc(doc(db, 'listas', docId), { nombre: L.grade, items: listaItems, total_libros, total_paquete });
     GRADES[L.grade] = { docId, items: listaItems, total_libros, total_paquete };
-    if(unificado) items.forEach(it => { state.inventory[claveArticulo(it.descripcion)] = it.stock; });
-    else {
-      items.forEach((it, i) => { state.inventory[docId+'_'+i] = it.stock; });
-      for(let j = items.length; j < viejos; j++) delete state.inventory[docId+'_'+j];
-    }
     abrirListaEdit(L.grade);
     state.listaEdit.mensaje = `✓ Lista de ${L.grade} guardada (${items.length} artículos, paquete completo ${money(total_paquete)}).`;
   }catch(err){
@@ -3743,7 +3727,7 @@ function eventosListasAdmin(){
   }));
   const listaAgregarBtn = document.getElementById('listaAgregarBtn');
   if(listaAgregarBtn) listaAgregarBtn.addEventListener('click', () => {
-    state.listaEdit.items.push({ seccion:'MATERIAL DIARIO', descripcion:'', cantidad:1, precio_unitario:'', stock:0 }); render();
+    state.listaEdit.items.push({ seccion:'MATERIAL DIARIO', descripcion:'', cantidad:1, precio_unitario:'' }); render();
   });
   const listaDescartarBtn = document.getElementById('listaDescartarBtn');
   if(listaDescartarBtn) listaDescartarBtn.addEventListener('click', () => {
@@ -3756,7 +3740,7 @@ function eventosListasAdmin(){
   const listaExcelBajarBtn = document.getElementById('listaExcelBajarBtn');
   if(listaExcelBajarBtn) listaExcelBajarBtn.addEventListener('click', () => {
     const L = state.listaEdit;
-    const filas = L.items.map(it => ({ 'Sección': it.seccion, 'Descripción': it.descripcion, 'Cantidad': Number(it.cantidad)||0, 'Precio unitario': Number(it.precio_unitario)||0, 'Existencias': parseInt(it.stock)||0 }));
+    const filas = L.items.map(it => ({ 'Sección': it.seccion, 'Descripción': it.descripcion, 'Cantidad': Number(it.cantidad)||0, 'Precio unitario': Number(it.precio_unitario)||0 }));
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(filas), 'Lista');
     XLSX.writeFile(wb, `Lista ${L.grade}.xlsx`);
@@ -3772,7 +3756,7 @@ function eventosListasAdmin(){
       // las columnas se reconocen sin importar acentos o mayúsculas
       const col = (fila, ...nombres) => { const k = Object.keys(fila).find(k => nombres.some(n => normTexto(k).startsWith(n))); return k ? fila[k] : ''; };
       const items = filas.map(f => ({ seccion: seccionDe(col(f,'seccion')), descripcion: String(col(f,'descripcion','articulo','producto')).trim(),
-        cantidad: col(f,'cantidad','cant'), precio_unitario: col(f,'precio'), stock: col(f,'existencia','stock','inventario') || 0 })).filter(it => it.descripcion);
+        cantidad: col(f,'cantidad','cant'), precio_unitario: col(f,'precio') })).filter(it => it.descripcion);
       if(!items.length) throw new Error('vacio');
       L.items = items;
       L.mensaje = `Se cargaron ${items.length} artículos del Excel. Revísalos y dale "Guardar lista" para que se apliquen en la tienda.`;
