@@ -463,7 +463,16 @@ const STORE_COORDS = { lat: 19.366021, lng: -99.199932 };   // puerta del local,
 const ROAD_FACTOR = 1.3;                                   // la distancia en línea recta se ajusta x1.3 para aproximar calles reales
 
 const STORE_HOURS_TEXT = 'Lunes a Viernes, 8:00 a 15:00 hrs.';
-const DIAS_PARA_RECOGER = 7;   // días para recoger un pedido "listo" en el local; después se puede cancelar
+const DIAS_PARA_RECOGER = 7;   // días HÁBILES (lunes a viernes, sin días inhábiles) para recoger un pedido "listo" en el local; después se puede cancelar
+// días inhábiles (no cuentan para el plazo de recoger), formato AAAA-MM-DD; agrega aquí los cierres de la tienda
+const DIAS_INHABILES = [
+  '2026-11-16', // Revolución mexicana
+  '2026-12-25', // Navidad
+  '2027-01-01', // Año nuevo
+  '2027-02-01', // Día de la Constitución
+  '2027-03-15', // Natalicio de Benito Juárez
+  '2027-09-16', // Independencia
+];
 
 // Envío a domicilio: tarifa por zonas según los km POR CALLES desde el local (sin límite de distancia)
 const ZONAS_ENVIO = [
@@ -533,6 +542,7 @@ let state = {
   grade: null,                 // basketId de la lista que se está viendo/editando
   gradePendingChoice: null,    // nombre de grado cuando hay que elegir "editar" vs "lista nueva" (gemelos)
   gradeQtys: {},               // { [basketId]: { [itemIndex]: cantidad } } — basketId = grado, o grado+'#2','#3'... si hay gemelos
+  gradePreset: {},             // { [basketId]: 'completo'|'libros'|'diario'|'ninguno' } — último paquete que eligió el papá
   gradeAssign: {},              // { [grade]: studentId } — a qué alumno pertenece esa lista
   uniformCart: [],             // [{id, size, qty, assign: {studentId: unidades}}]
   students: [],                 // [{id, nombres, apellidoPaterno, apellidoMaterno, grado}] — alumnos de este pedido (hermanos)
@@ -646,6 +656,8 @@ const SECCION_LABEL = { 'MATERIAL DIARIO':'Material de uso diario', 'PARA FORRAR
 function telValido(t){ return String(t||'').replace(/\D/g,'').length === 10; }
 
 function correoValido(c){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(c||'').trim()); }
+// correo opcional: se acepta vacío; si lo escriben, debe ser válido
+function correoOpcionalOk(c){ return !String(c||'').trim() || correoValido(c); }
 
 function quienPersonal(){ return (state.auth && state.auth.name) || 'Personal'; }
 
@@ -833,6 +845,7 @@ function ensureGradeQtys(basketId){
     const grade = gradeNameOf(basketId);
     GRADES[grade].items.forEach((it,i) => qtys[i] = (it.opcion || !utilDisponible(grade, i)) ? 0 : it.cantidad);
     state.gradeQtys[basketId] = qtys;
+    state.gradePreset[basketId] = 'completo';
     elegirOpcionPorNivel(basketId, false);
   }
   return state.gradeQtys[basketId];
@@ -865,8 +878,10 @@ function cartCount(){ return utilesCount() + uniformsCount(); }
 function cartSubtotal(){ return utilesTotal() + uniformsTotal(); }
 
 // artículos de una lista que no hay en existencia (no se pudieron elegir): el papá debe saber que no
-// se lleva el paquete completo. Lo que él desmarcó a propósito no cuenta aquí.
+// se lleva el paquete completo. Solo aplica si eligió "Paquete completo"; si pidió solo libros o solo
+// material, no se le avisa de lo que de todos modos no iba a llevar.
 function noDisponiblesDeLista(basketId){
+  if((state.gradePreset[basketId] || 'completo') !== 'completo') return [];
   const grade = gradeNameOf(basketId);
   return GRADES[grade].items.map((it,i) => ({ it, i })).filter(({i}) => !utilDisponible(grade, i)).map(({it}) => it);
 }
@@ -888,7 +903,7 @@ function nombreCompleto(cliente){
 }
 
 function clienteValido(){
-  return telValido(state.cliente.telefono) && state.students.length>0;
+  return telValido(state.cliente.telefono) && correoOpcionalOk(state.cliente.correo) && state.students.length>0;
 }
 
 function uniformAssignTotal(u){
@@ -1200,6 +1215,9 @@ function ponerPin(pnt, centrar, direccionYaPuesta){
 
 // dirección (calle y número, colonia, alcaldía, CP) de un punto del mapa: Google Geocoding si está
 // habilitado en el proyecto; si no, OpenStreetMap (gratis, menos preciso con números de casa)
+// texto de la dirección en el cuadro "¿Es aquí tu casa?": siempre la que está en el campo (si el papá la corrige a mano, se ve corregida)
+function textoDireccionConfirma(){ return state.direccion.trim() || 'Escribe abajo tu calle, número y colonia.'; }
+
 async function direccionDePunto(p){
   try{
     const { Geocoder } = await google.maps.importLibrary('geocoding');
@@ -1447,7 +1465,7 @@ async function buildOrder(){
 
 // deja la tienda lista para un pedido nuevo (carrito, alumnos, entrega, pago y mapa en blanco)
 function reiniciarPedido(){
-  state.grade = null; state.gradeQtys = {}; state.gradeAssign = {}; state.uniformCart = []; state.fulfillment = null;
+  state.grade = null; state.gradeQtys = {}; state.gradePreset = {}; state.gradeAssign = {}; state.uniformCart = []; state.fulfillment = null;
   state.students = []; state.pendingAssign = null;
   state.payment = null;
   state.comprobante = null; state.comprobanteFile = null; state.comprobanteRevision = null; state.currentFolio = null;
@@ -1495,12 +1513,24 @@ function nombreAlumnoPorId(order, id){
   return al ? nombreCompleto(al) : '';
 }
 
-// Recoger en el local: cuando el pedido pasa a "listo" se fija recogerAntes = listo + DIAS_PARA_RECOGER días.
-function limiteRecoger(desde){ const d = new Date(desde); d.setDate(d.getDate() + DIAS_PARA_RECOGER); d.setHours(23, 59, 59, 0); return d; }
+// Recoger en el local: cuando el pedido pasa a "listo" se fija recogerAntes = listo + DIAS_PARA_RECOGER días hábiles
+// (se cuentan a partir del día siguiente; sábados, domingos y DIAS_INHABILES no cuentan).
+function esDiaHabil(d){
+  const dia = d.getDay();
+  const iso = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  return dia !== 0 && dia !== 6 && !DIAS_INHABILES.includes(iso);
+}
+function limiteRecoger(desde){
+  const d = new Date(desde);
+  let contados = 0;
+  while(contados < DIAS_PARA_RECOGER){ d.setDate(d.getDate() + 1); if(esDiaHabil(d)) contados++; }
+  d.setHours(23, 59, 59, 0);
+  return d;
+}
 // solo aplica a "recoger en el local" + efectivo: son paquetes apartados que aún no se pagan
 function aplicaPlazoRecoger(o){ return o.fulfillment === 'pickup' && o.payment === 'efectivo'; }
 function pedidoVencido(o){ return !o.cancelado && aplicaPlazoRecoger(o) && o.stageIndex === 2 && !!o.recogerAntes && new Date() > new Date(o.recogerAntes); }
-function avisoPlazoRecoger(){ return `Como pagas en efectivo al recoger: cuando tu pedido esté listo te avisaremos por correo y tendrás ${DIAS_PARA_RECOGER} días para recogerlo y pagarlo. Si no lo recoges en ese plazo, el pedido se cancelará.`; }
+function avisoPlazoRecoger(){ return `Como pagas en efectivo al recoger: cuando tu pedido esté listo te avisaremos por WhatsApp (y por correo, si lo dejaste) y tendrás ${DIAS_PARA_RECOGER} días hábiles (lunes a viernes) para recogerlo y pagarlo. Si no lo recoges en ese plazo, el pedido se cancelará.`; }
 // cancela un pedido y regresa sus piezas al inventario
 async function cancelarPedido(order, motivo){
   const piezas = {};
@@ -1763,7 +1793,7 @@ function homeView(){
         <div class="paso"><div class="num">Paso #1</div><div class="ico">🎒</div><h3>Elige el grado</h3><p>Abre la lista de tu hijo(a) y marca lo que necesitas. Si son hermanos, arma una lista para cada uno.</p></div>
         <div class="paso"><div class="num">Paso #2</div><div class="ico">👕</div><h3>Suma uniformes</h3><p>Escoge prenda y talla. Si no hay, te avisamos cuando llegue.</p></div>
         <div class="paso"><div class="num">Paso #3</div><div class="ico">💳</div><h3>Paga como prefieras</h3><p>Transferencia con comprobante o efectivo al recibir.</p></div>
-        <div class="paso"><div class="num">Paso #4</div><div class="ico">🏫</div><h3>Recoge o recibe</h3><p>En el local o en tu casa. Te avisamos por correo cuando esté listo.</p></div>
+        <div class="paso"><div class="num">Paso #4</div><div class="ico">🏫</div><h3>Recoge o recibe</h3><p>En el local o en tu casa. Te avisamos por WhatsApp cuando esté listo.</p></div>
       </div>
     </div>
 
@@ -2172,18 +2202,18 @@ function avisoUniformeHtml(u, talla){
   const f = state.avisoForm;
   const abierto = f && f.uniId === u.id && f.size === talla;
   if(abierto && f.enviado){
-    return `<div class="note-box">✓ Listo. Te avisaremos al ${esc(f.telefono)} y a ${esc(f.correo)} en cuanto haya talla ${esc(talla)}.</div>`;
+    return `<div class="note-box">✓ Listo. Te avisaremos por WhatsApp al ${esc(f.telefono)}${f.correo.trim() ? ' y a '+esc(f.correo.trim()) : ''} en cuanto haya talla ${esc(talla)}.</div>`;
   }
   if(!abierto){
     return `<div style="color:var(--red); font-weight:700; font-size:0.85rem; margin-bottom:6px;">No hay en talla ${esc(talla)} por ahora</div>
       <button class="btn btn-secondary btn-block btn-sm" data-aviso-abrir="${u.id}">🔔 Avísame cuando haya</button>`;
   }
   const telOk = telValido(f.telefono);
-  const correoOk = correoValido(f.correo);
+  const correoOk = correoOpcionalOk(f.correo);
   return `<div style="color:var(--red); font-weight:700; font-size:0.85rem; margin-bottom:6px;">No hay en talla ${esc(talla)} por ahora</div>
     <div style="font-size:0.82rem; color:var(--ink-soft); margin-bottom:6px;">Déjanos tus datos y te avisamos en cuanto llegue.</div>
-    <div class="field-col"><label>Teléfono (10 dígitos)</label><input type="text" inputmode="tel" autocomplete="tel" id="avisoTel" value="${esc(f.telefono)}" placeholder="Ej. 5512345678"></div>
-    <div class="field-col"><label>Correo electrónico</label><input type="text" inputmode="email" autocomplete="email" id="avisoCorreo" value="${esc(f.correo)}" placeholder="Ej. mama@correo.com"></div>
+    <div class="field-col"><label>Teléfono con WhatsApp (10 dígitos) *</label><input type="text" inputmode="tel" autocomplete="tel" id="avisoTel" value="${esc(f.telefono)}" placeholder="Ej. 5512345678"></div>
+    <div class="field-col"><label>Correo electrónico (opcional)</label><input type="text" inputmode="email" autocomplete="email" id="avisoCorreo" value="${esc(f.correo)}" placeholder="Ej. mama@correo.com"></div>
     ${f.error ? `<div class="split-warning">${esc(f.error)}</div>` : ''}
     <div style="display:flex; gap:8px; margin-top:8px;">
       <button class="btn btn-primary btn-sm" id="avisoGuardarBtn" style="flex:1;" ${telOk && correoOk && !f.saving ? '' : 'disabled'}>${f.saving ? 'Guardando…' : 'Avísenme'}</button>
@@ -2426,13 +2456,14 @@ function deliveryView(){
           : km === null ? ''
           : state.ubicacionConfirmada ? `
             <div class="confirma-ubicacion ok">
-              <div><b>✓ Ubicación confirmada</b> · ${km.toFixed(1)} km por calles${state.rutaMin ? ' (~'+state.rutaMin+' min)' : ''} · Envío <b>${money(fee)}</b></div>
+              <div><b>✓ Ubicación confirmada</b> · ${km.toFixed(1)} km por calles${state.rutaMin ? ' (~'+state.rutaMin+' min)' : ''} · Envío <b>${money(fee)}</b>
+                <div id="cuDireccion" style="font-size:0.85rem; margin-top:2px;">${esc(textoDireccionConfirma())}</div></div>
               <button class="btn-ghost" id="ubicacionCambiarBtn">Cambiar</button>
             </div>`
           : `
             <div class="confirma-ubicacion">
               <div class="cu-titulo">📍 ¿Es aquí tu casa?</div>
-              <div class="cu-dato">${state.direccion ? esc(state.direccion) : 'Escribe abajo tu calle, número y colonia.'}</div>
+              <div class="cu-dato" id="cuDireccion">${esc(textoDireccionConfirma())}</div>
               <div class="cu-dato">${km.toFixed(1)} km por calles desde el local${state.rutaMin ? ' (~'+state.rutaMin+' min)' : ''} · Envío: <b>${money(fee)}</b></div>
               <div class="cu-botones">
                 <button class="btn btn-primary btn-sm" id="ubicacionOkBtn">✓ Sí, aquí es</button>
@@ -2450,7 +2481,7 @@ function deliveryView(){
         ${state.geoMessage ? `<div class="note-box ${state.geoStatus==='error'?'error':'neutral'}" style="margin-top:10px;">${esc(state.geoMessage)}</div>` : ''}
         <div style="font-size:0.78rem; color:var(--ink-soft); margin-top:6px;">Tarifas: ${esc(tarifasEnvioTexto())}</div>
         <div class="note-box neutral" style="margin-top:14px;">
-          Fecha estimada de entrega: ${fmtDate(computeEstimatedReady())}. Te avisaremos por correo conforme avance tu pedido; el repartidor llegará al punto que marcaste en el mapa.
+          Fecha estimada de entrega: ${fmtDate(computeEstimatedReady())}. Te avisaremos por WhatsApp (y por correo, si lo dejaste) conforme avance tu pedido; el repartidor llegará al punto que marcaste en el mapa.
         </div>
       </div>
     ` : ''}
@@ -2600,7 +2631,7 @@ function confirmationView(){
         : `<div class="rline"><span>Entrega:</span><span>Recoger en el local</span></div>
            <div class="rline"><span>Horario de atención:</span><span>${STORE_HOURS_TEXT}</span></div>
            <div class="rline"><span>Listo a partir de:</span><span>${fmtDate(order.estimatedReady)}</span></div>
-           ${aplicaPlazoRecoger(order) ? `<div class="rline"><span>Plazo para recoger:</span><span>${order.recogerAntes ? 'hasta el '+fmtDate(order.recogerAntes) : DIAS_PARA_RECOGER+' días desde que esté listo'}</span></div>
+           ${aplicaPlazoRecoger(order) ? `<div class="rline"><span>Plazo para recoger:</span><span>${order.recogerAntes ? 'hasta el '+fmtDate(order.recogerAntes) : DIAS_PARA_RECOGER+' días hábiles desde que esté listo'}</span></div>
            <div class="note-box neutral" style="margin-top:8px; font-weight:600;">⏰ ${avisoPlazoRecoger()}</div>` : ''}`}
       <div class="rline"><span>Pago:</span><span>${order.payment==='transferencia' ? 'Transferencia (comprobante recibido)' : 'Efectivo'}</span></div>
       <hr>
@@ -2710,7 +2741,7 @@ function adminDashboard(){
       </div>` : '';
   const vencidos = state.orders.filter(pedidoVencido);
   const bannerVencidos = vencidos.length ? `<div class="note-box error" style="margin-top:12px;">
-      ⏰ ${vencidos.length===1 ? 'Un pedido no se recogió' : vencidos.length+' pedidos no se recogieron'} en los ${DIAS_PARA_RECOGER} días: ${vencidos.map(o => `<a href="#" data-open-order="${esc(o.folio)}" style="color:inherit;">${esc(o.folio)}</a>`).join(', ')}. Ábrelos para cancelarlos.
+      ⏰ ${vencidos.length===1 ? 'Un pedido no se recogió' : vencidos.length+' pedidos no se recogieron'} en los ${DIAS_PARA_RECOGER} días hábiles: ${vencidos.map(o => `<a href="#" data-open-order="${esc(o.folio)}" style="color:inherit;">${esc(o.folio)}</a>`).join(', ')}. Ábrelos para cancelarlos.
     </div>` : '';
   const nuevos = state.pedidosNuevos || [];
   const bannerPedido = nuevos.length ? `<div class="note-box" style="margin-top:12px; display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;">
@@ -3123,12 +3154,12 @@ function avisoRowHtml(a, listo){
   const wa = digits.length===10 ? `https://wa.me/52${digits}?text=${encodeURIComponent(mensajeAvisoPapa(a))}` : '';
   return `<div class="item-row">
     <div class="info">
-      <div class="desc">📞 ${esc(a.telefono)} · ✉️ ${esc(a.correo)}</div>
+      <div class="desc">📞 ${esc(a.telefono)}${a.correo ? ' · ✉️ '+esc(a.correo) : ''}</div>
       <div class="qty">Lo pidió el ${esc(new Date(a.createdAt).toLocaleDateString('es-MX', {day:'numeric', month:'short'}))}${a.correoEnviadoAt ? ' · <span style="color:var(--green)">correo enviado</span>' : ''}</div>
     </div>
     <div style="display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end;">
       ${listo && wa ? `<a class="btn btn-secondary btn-sm" target="_blank" rel="noopener" href="${wa}" style="text-decoration:none;">📲 WhatsApp</a>` : ''}
-      ${listo ? `<button class="btn btn-secondary btn-sm" data-aviso-correo="${esc(a.id)}">✉️ Enviar correo</button>` : ''}
+      ${listo && a.correo ? `<button class="btn btn-secondary btn-sm" data-aviso-correo="${esc(a.id)}">✉️ Enviar correo</button>` : ''}
       <button class="btn ${listo?'btn-primary':'btn-secondary'} btn-sm" data-aviso-hecho="${esc(a.id)}">${listo ? '✓ Ya le avisé' : 'Quitar'}</button>
     </div>
   </div>`;
@@ -3728,6 +3759,7 @@ function eventosListaUtiles(){
     const g = el.getAttribute('data-grade');
     const preset = el.getAttribute('data-preset');
     const qtys = ensureGradeQtys(g);
+    state.gradePreset[g] = preset;
     GRADES[gradeNameOf(g)].items.forEach((it,i) => {
       if(!utilDisponible(gradeNameOf(g), i)){ qtys[i] = 0; return; }
       if(it.opcion){ if(preset==='ninguno' || preset==='diario') qtys[i] = 0; return; }   // el libro de inglés se elige aparte
@@ -3842,7 +3874,7 @@ function eventosUniformes(){
     if(el) el.addEventListener('input', () => {
       state.avisoForm[field] = el.value; state.avisoForm.error = '';
       const f = state.avisoForm;
-      habilitar('#avisoGuardarBtn', telValido(f.telefono) && correoValido(f.correo) && !f.saving);
+      habilitar('#avisoGuardarBtn', telValido(f.telefono) && correoOpcionalOk(f.correo) && !f.saving);
     });
   });
   const avisoCancelarBtn = document.getElementById('avisoCancelarBtn');
@@ -3887,6 +3919,8 @@ function eventosDatosYEntrega(){
   if(direccionInput) direccionInput.addEventListener('input', () => {
     state.direccion = direccionInput.value;
     state.direccionAuto = false;
+    const cuDireccion = document.getElementById('cuDireccion');
+    if(cuDireccion) cuDireccion.textContent = textoDireccionConfirma();
     // con mapa, el costo depende del pin, no del texto; sin mapa, el texto es lo que se ubica
     if(!usarGoogleMaps()){
       // sin mapa, el costo depende del texto: si cambia, hay que volver a calcular (se avisa al dejar de escribir)
@@ -4158,7 +4192,7 @@ function eventosPanelPedidos(){
     const order = state.orders.find(o => o.folio === state.adminOrderFolio);
     if(!order) return;
     const sugerido = pedidoVencido(order) ? `no se recogió antes del ${fmtDate(order.recogerAntes)}` : '';
-    const motivo = prompt(`¿Por qué se cancela el pedido ${order.folio}? (se le avisa al papá por correo y las piezas regresan al inventario)`, sugerido);
+    const motivo = prompt(`¿Por qué se cancela el pedido ${order.folio}? (se le avisa al papá por correo si lo dejó; avísale también por WhatsApp. Las piezas regresan al inventario)`, sugerido);
     if(motivo === null) return;
     cancelarPedidoBtn.disabled = true;
     try{ await cancelarPedido(order, motivo.trim() || 'cancelado por el Liceo'); }
